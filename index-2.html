@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pablo Williams | Data & AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Burberry Color Palette */
+            --burberry-tan: #C19A6B;
+            --burberry-camel: #D4A76A;
+            --burberry-cream: #F5F0E8;
+            --burberry-black: #1A1A1A;
+            --burberry-red: #B4272D;
+            --burberry-dark-tan: #8B6914;
+            --bg-primary: #0D0D0D;
+            --bg-secondary: #1A1715;
+            --bg-card: rgba(193, 154, 107, 0.08);
+            --bg-card-hover: rgba(193, 154, 107, 0.15);
+            --text-primary: #F5F0E8;
+            --text-secondary: #C19A6B;
+            --border: rgba(193, 154, 107, 0.2);
+            --border-hover: rgba(193, 154, 107, 0.5);
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 3rem 1.5rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated background pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(193, 154, 107, 0.15), transparent),
+                radial-gradient(ellipse 60% 40% at 80% 80%, rgba(180, 39, 45, 0.08), transparent),
+                radial-gradient(ellipse 50% 30% at 20% 90%, rgba(212, 167, 106, 0.1), transparent);
+            pointer-events: none;
+            z-index: 0;
+            animation: gradientShift 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes gradientShift {
+            0% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+
+        /* Burberry-style diagonal lines overlay */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 100px,
+                rgba(193, 154, 107, 0.02) 100px,
+                rgba(193, 154, 107, 0.02) 101px
+            );
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 440px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Profile Section */
+        .profile {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .avatar-container {
+            position: relative;
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .avatar {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--burberry-tan);
+            box-shadow: 
+                0 0 0 4px var(--bg-primary),
+                0 0 0 6px var(--burberry-red),
+                0 12px 40px rgba(193, 154, 107, 0.3);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .avatar:hover {
+            transform: scale(1.05);
+            box-shadow: 
+                0 0 0 4px var(--bg-primary),
+                0 0 0 6px var(--burberry-red),
+                0 16px 50px rgba(193, 154, 107, 0.4);
+        }
+
+        .avatar-ring {
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            border: 2px solid transparent;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--burberry-tan), var(--burberry-red), var(--burberry-camel)) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: ringRotate 6s linear infinite;
+        }
+
+        @keyframes ringRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .name {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            margin-bottom: 0.6rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--burberry-tan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tagline {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            max-width: 340px;
+            margin: 0 auto;
+            font-weight: 400;
+        }
+
+        .tagline strong {
+            color: var(--burberry-cream);
+            font-weight: 500;
+        }
+
+        .location {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            padding: 0.4rem 1rem;
+            background: var(--bg-card);
+            border-radius: 100px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .location:hover {
+            border-color: var(--border-hover);
+            background: var(--bg-card-hover);
+        }
+
+        .location svg {
+            width: 14px;
+            height: 14px;
+            color: var(--burberry-red);
+        }
+
+        /* Skills Pills */
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .skill {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 0.4rem 0.85rem;
+            border-radius: 100px;
+            font-size: 0.72rem;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+            cursor: default;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 500;
+        }
+
+        .skill:hover {
+            border-color: var(--burberry-tan);
+            color: var(--burberry-cream);
+            background: rgba(193, 154, 107, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .skill.highlight {
+            background: linear-gradient(135deg, rgba(180, 39, 45, 0.2), rgba(193, 154, 107, 0.2));
+            border-color: var(--burberry-red);
+            color: var(--burberry-cream);
+        }
+
+        /* Links Section */
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1rem 1.25rem;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(193, 154, 107, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .link:hover::before {
+            left: 100%;
+        }
+
+        .link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--burberry-red), var(--burberry-tan));
+            transition: width 0.4s ease;
+        }
+
+        .link:hover::after {
+            width: 100%;
+        }
+
+        .link:hover {
+            border-color: var(--border-hover);
+            background: var(--bg-card-hover);
+            transform: translateY(-3px) translateX(3px);
+            box-shadow: 
+                -6px 6px 0 0 var(--burberry-tan),
+                0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .link-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--bg-secondary), rgba(193, 154, 107, 0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .link:hover .link-icon {
+            background: linear-gradient(135deg, var(--burberry-tan), var(--burberry-red));
+            border-color: transparent;
+        }
+
+        .link-icon svg {
+            width: 20px;
+            height: 20px;
+            color: var(--burberry-tan);
+            transition: color 0.3s ease;
+        }
+
+        .link:hover .link-icon svg {
+            color: var(--bg-primary);
+        }
+
+        .link-content {
+            flex: 1;
+            position: relative;
+            z-index: 1;
+        }
+
+        .link-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.2rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .link-desc {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .link-arrow {
+            color: var(--text-secondary);
+            transition: all 0.35s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .link:hover .link-arrow {
+            color: var(--burberry-tan);
+            transform: translateX(5px);
+        }
+
+        /* Project links special styling */
+        .link.project {
+            border-left: 3px solid var(--burberry-red);
+        }
+
+        .link.project:hover {
+            border-left-color: var(--burberry-tan);
+        }
+
+        /* Staggered animations */
+        .link:nth-child(1) { animation: fadeInUp 0.6s ease-out 0.1s both; }
+        .link:nth-child(2) { animation: fadeInUp 0.6s ease-out 0.15s both; }
+        .link:nth-child(3) { animation: fadeInUp 0.6s ease-out 0.2s both; }
+        .link:nth-child(4) { animation: fadeInUp 0.6s ease-out 0.25s both; }
+        .link:nth-child(5) { animation: fadeInUp 0.6s ease-out 0.3s both; }
+        .link:nth-child(6) { animation: fadeInUp 0.6s ease-out 0.35s both; }
+        .link:nth-child(7) { animation: fadeInUp 0.6s ease-out 0.4s both; }
+
+        /* Section divider */
+        .section-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--burberry-tan);
+            margin: 1.5rem 0 0.75rem;
+            padding-left: 0.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--border), transparent);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 2.5rem;
+            text-align: center;
+            animation: fadeInUp 0.6s ease-out 0.5s both;
+        }
+
+        .languages {
+            display: flex;
+            justify-content: center;
+            gap: 1.25rem;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
+        .lang {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .lang:hover {
+            background: var(--bg-card);
+        }
+
+        .lang-flag {
+            font-size: 1.1rem;
+        }
+
+        /* Burberry stripe accent */
+        .burberry-stripe {
+            width: 60px;
+            height: 4px;
+            margin: 1.5rem auto 0;
+            background: linear-gradient(90deg, 
+                var(--burberry-tan) 0%, 
+                var(--burberry-tan) 33%, 
+                var(--burberry-red) 33%, 
+                var(--burberry-red) 66%, 
+                var(--burberry-black) 66%, 
+                var(--burberry-black) 100%
+            );
+            border-radius: 2px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            body {
+                padding: 2rem 1rem;
+            }
+
+            .name {
+                font-size: 1.9rem;
+            }
+
+            .avatar-container {
+                width: 110px;
+                height: 110px;
+            }
+
+            .avatar {
+                width: 110px;
+                height: 110px;
+            }
+
+            .skills {
+                gap: 0.4rem;
+            }
+
+            .skill {
+                font-size: 0.68rem;
+                padding: 0.35rem 0.7rem;
+            }
+        }
+
+        /* Interactive hover effect for entire page */
+        .container:hover .avatar-ring {
+            animation-duration: 3s;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Profile -->
+        <div class="profile">
+            <div class="avatar-container">
+                <div class="avatar-ring"></div>
+                <img src="profile.png" alt="Pablo Williams" class="avatar">
+            </div>
+            <h1 class="name">Pablo Williams</h1>
+            <p class="tagline">
+                <strong>MSc Business Analytics @ UCL</strong> · AI & Machine Learning · Developing Data-Driven Investment Tools
+            </p>
+            <div class="location">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                London, UK
+            </div>
+            <div class="skills">
+                <span class="skill highlight">Python</span>
+                <span class="skill highlight">R</span>
+                <span class="skill">SQL</span>
+                <span class="skill">Tableau</span>
+                <span class="skill">NLP</span>
+                <span class="skill">Machine Learning</span>
+                <span class="skill">Pandas</span>
+                <span class="skill">Scikit-learn</span>
+                <span class="skill">Statistical Modelling</span>
+                <span class="skill">Data Visualisation</span>
+            </div>
+        </div>
+
+        <!-- Connect Links -->
+        <div class="links">
+            <a href="https://www.linkedin.com/in/pablowilliams" target="_blank" rel="noopener" class="link">
+                <div class="link-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/>
+                    </svg>
+                </div>
+                <div class="link-content">
+                    <div class="link-title">LinkedIn</div>
+                    <div class="link-desc">Connect with me</div>
+                </div>
+                <svg class="link-arrow" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </a>
+
+            <a href="https://github.com/pablowilliams" target="_blank" rel="noopener" class="link">
+                <div class="link-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                </div>
+                <div class="link-content">
+                    <div class="link-title">GitHub</div>
+                    <div class="link-desc">View all projects & code</div>
+                </div>
+                <svg class="link-arrow" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </a>
+
+            <a href="mailto:pablowilliams119@gmail.com" class="link">
+                <div class="link-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                </div>
+                <div class="link-content">
+                    <div class="link-title">Email</div>
+                    <div class="link-desc">pablowilliams119@gmail.com</div>
+                </div>
+                <svg class="link-arrow" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </a>
+
+            <!-- Projects Section -->
+            <div class="section-label">Featured Projects</div>
+
+            <a href="https://github.com/pablowilliams/Project-Lockdown" target="_blank" rel="noopener" class="link project">
+                <div class="link-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                    </svg>
+                </div>
+                <div class="link-content">
+                    <div class="link-title">Project Lockdown</div>
+                    <div class="link-desc">Emergency food distribution · VRP optimisation · Python</div>
+                </div>
+                <svg class="link-arrow" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </a>
+
+            <a href="https://github.com/pablowilliams/AI-Strategy-Analysis" target="_blank" rel="noopener" class="link project">
+                <div class="link-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                        <path d="M2 17l10 5 10-5"></path>
+                        <path d="M2 12l10 5 10-5"></path>
+                    </svg>
+                </div>
+                <div class="link-content">
+                    <div class="link-title">AI Strategy Analysis</div>
+                    <div class="link-desc">Machine learning for business strategy · Python</div>
+                </div>
+                <svg class="link-arrow" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </a>
+
+            <a href="https://github.com/pablowilliams/retail-management-system-design" target="_blank" rel="noopener" class="link project">
+                <div class="link-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                        <line x1="8" y1="21" x2="16" y2="21"></line>
+                        <line x1="12" y1="17" x2="12" y2="21"></line>
+                    </svg>
+                </div>
+                <div class="link-content">
+                    <div class="link-title">Retail Management System</div>
+                    <div class="link-desc">Enterprise architecture · DFD · BPM · Python</div>
+                </div>
+                <svg class="link-arrow" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="languages">
+                <span class="lang"><span class="lang-flag">🇮🇹</span> Italian</span>
+                <span class="lang"><span class="lang-flag">🇬🇧</span> English</span>
+                <span class="lang"><span class="lang-flag">🇪🇸</span> Spanish</span>
+            </div>
+            <div class="burberry-stripe"></div>
+        </div>
+    </div>
+</body>
+</html>
