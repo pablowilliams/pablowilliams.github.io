@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pablo Williams | Data Analyst & AI Engineer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --burberry-tan: #C19A6B;
+            --burberry-camel: #D4A76A;
+            --burberry-cream: #F5F0E8;
+            --burberry-black: #1A1A1A;
+            --burberry-red: #B4272D;
+            --burberry-dark-tan: #8B6914;
+            --bg-primary: #0D0D0D;
+            --bg-secondary: #141211;
+            --bg-card: rgba(193, 154, 107, 0.08);
+            --bg-card-hover: rgba(193, 154, 107, 0.15);
+            --text-primary: #F5F0E8;
+            --text-secondary: #C19A6B;
+            --border: rgba(193, 154, 107, 0.2);
+            --border-hover: rgba(193, 154, 107, 0.5);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: rgba(13, 13, 13, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-decoration: none;
+            background: linear-gradient(135deg, var(--text-primary), var(--burberry-tan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--burberry-red);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse 80% 50% at 50% 0%, rgba(193, 154, 107, 0.12), transparent),
+                radial-gradient(ellipse 60% 40% at 90% 80%, rgba(180, 39, 45, 0.08), transparent),
+                radial-gradient(ellipse 50% 30% at 10% 90%, rgba(212, 167, 106, 0.1), transparent);
+            pointer-events: none;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content {
+            animation: fadeInLeft 1s ease-out;
+        }
+
+        .hero-greeting {
+            font-size: 0.9rem;
+            color: var(--burberry-tan);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .hero-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--burberry-tan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-title {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+        }
+
+        .hero-description {
+            font-size: 1rem;
+            color: rgba(245, 240, 232, 0.7);
+            margin-bottom: 2rem;
+            max-width: 500px;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.9rem 2rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--burberry-tan), var(--burberry-red));
+            color: var(--bg-primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(193, 154, 107, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--burberry-tan);
+            background: var(--bg-card);
+        }
+
+        .hero-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeInRight 1s ease-out;
+        }
+
+        .hero-image-container {
+            position: relative;
+            width: 380px;
+            height: 480px;
+        }
+
+        .hero-image-frame {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: -20px;
+            bottom: -20px;
+            border: 2px solid var(--burberry-tan);
+            border-radius: 20px;
+        }
+
+        .hero-image-main {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 3px solid var(--burberry-red);
+        }
+
+        .hero-image-main img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 20%;
+            transition: transform 0.5s ease;
+        }
+
+        .hero-image-container:hover img {
+            transform: scale(1.05);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--burberry-tan);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Section Styling */
+        section {
+            padding: 6rem 2rem;
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-tag {
+            font-size: 0.8rem;
+            color: var(--burberry-red);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--burberry-tan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* About Section */
+        .about {
+            background: var(--bg-secondary);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .about-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .about-content p {
+            color: rgba(245, 240, 232, 0.8);
+            margin-bottom: 1.5rem;
+            line-height: 1.9;
+        }
+
+        .about-highlights {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .highlight-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .highlight-card:hover {
+            border-color: var(--burberry-tan);
+            transform: translateY(-5px);
+        }
+
+        .highlight-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--burberry-tan), var(--burberry-red));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .highlight-icon svg {
+            width: 24px;
+            height: 24px;
+            color: var(--bg-primary);
+        }
+
+        .highlight-card h4 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .highlight-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .skills-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .skill-category {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            border-color: var(--border-hover);
+        }
+
+        .skill-category-title {
+            font-size: 0.75rem;
+            color: var(--burberry-red);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            background: rgba(193, 154, 107, 0.1);
+            border: 1px solid var(--border);
+            padding: 0.4rem 0.8rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            border-color: var(--burberry-tan);
+            color: var(--text-primary);
+            background: rgba(193, 154, 107, 0.2);
+        }
+
+        /* Projects Section */
+        .projects {
+            background: var(--bg-primary);
+        }
+
+        .projects-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+
+        .project-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--burberry-red), var(--burberry-tan));
+        }
+
+        .project-card:hover {
+            border-color: var(--border-hover);
+            transform: translateX(10px);
+            box-shadow: -10px 10px 0 0 var(--burberry-tan);
+        }
+
+        .project-content {
+            padding: 2.5rem;
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .project-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-subtitle {
+            font-size: 0.9rem;
+            color: var(--burberry-tan);
+            font-weight: 500;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .project-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .project-link:hover {
+            background: var(--burberry-tan);
+            border-color: var(--burberry-tan);
+            color: var(--bg-primary);
+        }
+
+        .project-link svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .project-description {
+            color: rgba(245, 240, 232, 0.8);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .project-tech {
+            margin-bottom: 1.5rem;
+        }
+
+        .project-tech-title {
+            font-size: 0.7rem;
+            color: var(--burberry-red);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .project-tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tech-tag {
+            background: linear-gradient(135deg, rgba(180, 39, 45, 0.15), rgba(193, 154, 107, 0.15));
+            border: 1px solid var(--burberry-red);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            color: var(--burberry-cream);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .project-report {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .project-report:hover {
+            border-color: var(--burberry-tan);
+            color: var(--text-primary);
+            background: var(--bg-card-hover);
+        }
+
+        .project-report svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: var(--bg-secondary);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .contact-info h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .contact-info p {
+            color: rgba(245, 240, 232, 0.8);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            border-color: var(--burberry-tan);
+            transform: translateX(10px);
+        }
+
+        .contact-link-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--burberry-tan), var(--burberry-red));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .contact-link-icon svg {
+            width: 20px;
+            height: 20px;
+            color: var(--bg-primary);
+        }
+
+        .contact-link-text {
+            flex: 1;
+        }
+
+        .contact-link-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .contact-link-value {
+            font-weight: 500;
+        }
+
+        .contact-languages {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .contact-languages h4 {
+            font-size: 0.8rem;
+            color: var(--burberry-tan);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+        }
+
+        .languages-list {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .language {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .language-flag {
+            font-size: 1.3rem;
+        }
+
+        .contact-cta {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+        }
+
+        .contact-cta h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .contact-cta p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-stripe {
+            width: 80px;
+            height: 4px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(90deg, 
+                var(--burberry-tan) 0%, 
+                var(--burberry-tan) 33%, 
+                var(--burberry-red) 33%, 
+                var(--burberry-red) 66%, 
+                var(--burberry-black) 66%, 
+                var(--burberry-black) 100%
+            );
+            border-radius: 2px;
+        }
+
+        .footer p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Animations */
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Scroll animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .mobile-menu-btn svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-content {
+                order: 2;
+            }
+
+            .hero-image {
+                order: 1;
+            }
+
+            .hero-name {
+                font-size: 3rem;
+            }
+
+            .hero-description {
+                margin: 0 auto 2rem;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .hero-stats {
+                justify-content: center;
+            }
+
+            .hero-image-container {
+                width: 280px;
+                height: 350px;
+            }
+
+            .about-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2.2rem;
+            }
+
+            .project-title {
+                font-size: 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+
+        @media (max-width: 480px) {
+            section {
+                padding: 4rem 1rem;
+            }
+
+            .hero {
+                padding: 5rem 1rem 3rem;
+            }
+
+            .hero-name {
+                font-size: 2.2rem;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .about-highlights {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-image-container {
+                width: 240px;
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">PW</a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <div class="hero-content">
+                <p class="hero-greeting">Welcome to my portfolio</p>
+                <h1 class="hero-name">Pablo Williams</h1>
+                <p class="hero-title">MSc Business Analytics @ UCL · Developing Data-Driven Investment Tools</p>
+                <p class="hero-description">
+                    Data Analyst and AI Engineer specialising in machine learning, statistical modelling, and NLP. 
+                    Building intelligent systems that transform complex data into actionable investment insights.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary">View Projects</a>
+                    <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-number">4+</div>
+                        <div class="stat-label">Projects</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">Languages</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">2+</div>
+                        <div class="stat-label">Years Experience</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="hero-image-container">
+                    <div class="hero-image-frame"></div>
+                    <div class="hero-image-main">
+                        <img src="profile.png" alt="Pablo Williams">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="section-container">
+            <div class="section-header">
+                <p class="section-tag">About Me</p>
+                <h2 class="section-title">Turning Data Into Decisions</h2>
+                <p class="section-subtitle">Combining technical expertise with business acumen to deliver actionable insights</p>
+            </div>
+            <div class="about-grid">
+                <div class="about-content">
+                    <h3>Background</h3>
+                    <p>
+                        I'm an MSc Business Analytics student at University College London, specialising in Artificial Intelligence and Natural Language Processing. My passion lies at the intersection of finance and technology, where I develop ML-driven investment tools and predictive analytics systems.
+                    </p>
+                    <p>
+                        Currently working as a Data Analyst at APJ Kapital, I transform company filings, earnings calls, and market news into clear, actionable investment insights. My previous experience at MdotM in Milan involved developing AI-driven investment tools that contributed to an AIFIN Financial Innovation Award-winning platform.
+                    </p>
+                    <p>
+                        Trilingual in Italian, English, and Spanish, I bring a global perspective to data analysis and business strategy. I'm actively pursuing opportunities in quantitative finance and AI consulting at leading firms.
+                    </p>
+                    <div class="about-highlights">
+                        <div class="highlight-card">
+                            <div class="highlight-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                            <h4>Data Analysis</h4>
+                            <p>Building SQL pipelines and Tableau dashboards</p>
+                        </div>
+                        <div class="highlight-card">
+                            <div class="highlight-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                </svg>
+                            </div>
+                            <h4>Machine Learning</h4>
+                            <p>Predictive models & customer segmentation</p>
+                        </div>
+                        <div class="highlight-card">
+                            <div class="highlight-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <h4>Investment Analysis</h4>
+                            <p>Financial modelling & market research</p>
+                        </div>
+                        <div class="highlight-card">
+                            <div class="highlight-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                </svg>
+                            </div>
+                            <h4>Data Visualisation</h4>
+                            <p>Interactive dashboards & reporting</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h4 class="skill-category-title">Programming Languages</h4>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">R</span>
+                            <span class="skill-tag">SQL</span>
+                            <span class="skill-tag">LaTeX</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h4 class="skill-category-title">Machine Learning & AI</h4>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Scikit-learn</span>
+                            <span class="skill-tag">TensorFlow</span>
+                            <span class="skill-tag">NLP</span>
+                            <span class="skill-tag">Feature Engineering</span>
+                            <span class="skill-tag">Supervised Learning</span>
+                            <span class="skill-tag">Clustering</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h4 class="skill-category-title">Data Analysis & Visualisation</h4>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Pandas</span>
+                            <span class="skill-tag">NumPy</span>
+                            <span class="skill-tag">Tableau</span>
+                            <span class="skill-tag">ggplot2</span>
+                            <span class="skill-tag">Matplotlib</span>
+                            <span class="skill-tag">Seaborn</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h4 class="skill-category-title">Statistical Methods</h4>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Regression Analysis</span>
+                            <span class="skill-tag">Hypothesis Testing</span>
+                            <span class="skill-tag">Time Series</span>
+                            <span class="skill-tag">A/B Testing</span>
+                            <span class="skill-tag">Causal Inference</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h4 class="skill-category-title">Tools & Frameworks</h4>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Git</span>
+                            <span class="skill-tag">Excel</span>
+                            <span class="skill-tag">Tidyverse</span>
+                            <span class="skill-tag">Jupyter</span>
+                            <span class="skill-tag">VS Code</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects" id="projects">
+        <div class="section-container">
+            <div class="section-header">
+                <p class="section-tag">Portfolio</p>
+                <h2 class="section-title">Featured Projects</h2>
+                <p class="section-subtitle">A selection of my work in data analytics, machine learning, and system design</p>
+            </div>
+            <div class="projects-grid">
+                <!-- Project 1: Project Lockdown -->
+                <div class="project-card animate-on-scroll">
+                    <div class="project-content">
+                        <div class="project-header">
+                            <div>
+                                <h3 class="project-title">Project Lockdown</h3>
+                                <p class="project-subtitle">Emergency Food Distribution System</p>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/pablowilliams/Project-Lockdown" target="_blank" class="project-link" title="View on GitHub">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                        <p class="project-description">
+                            Designed and implemented a comprehensive emergency food distribution system for 52,000 residents during a 28-day lockdown scenario. Combined exponential smoothing demand forecasting with vehicle routing optimisation (VRP) using Google Maps API integration. The system features real-time distance matrix calculations, Monte Carlo simulation for demand validation, and cost-benefit modelling across six operational categories.
+                        </p>
+                        <div class="project-tech">
+                            <p class="project-tech-title">Technical Stack</p>
+                            <div class="project-tech-tags">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Exponential Smoothing</span>
+                                <span class="tech-tag">VRP Heuristics</span>
+                                <span class="tech-tag">Google Maps API</span>
+                                <span class="tech-tag">Monte Carlo Simulation</span>
+                                <span class="tech-tag">Capacity Modelling</span>
+                            </div>
+                        </div>
+                        <a href="reports/project-lockdown-report.pdf" class="project-report" target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Download Full Report (PDF)
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 2: AI Strategy Analysis -->
+                <div class="project-card animate-on-scroll">
+                    <div class="project-content">
+                        <div class="project-header">
+                            <div>
+                                <h3 class="project-title">AI Strategy Analysis</h3>
+                                <p class="project-subtitle">Machine Learning for Business Strategy</p>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/pablowilliams/AI-Strategy-Analysis" target="_blank" class="project-link" title="View on GitHub">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                        <p class="project-description">
+                            Developed a comprehensive machine learning framework for strategic business analysis, leveraging advanced NLP techniques to extract insights from corporate communications. The system processes earnings calls, annual reports, and market commentary to generate sentiment scores and strategic recommendations. Implemented ensemble methods combining BERT embeddings with traditional financial indicators.
+                        </p>
+                        <div class="project-tech">
+                            <p class="project-tech-title">Technical Stack</p>
+                            <div class="project-tech-tags">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">BERT/Transformers</span>
+                                <span class="tech-tag">Sentiment Analysis</span>
+                                <span class="tech-tag">Ensemble Methods</span>
+                                <span class="tech-tag">Feature Extraction</span>
+                                <span class="tech-tag">Pandas/NumPy</span>
+                            </div>
+                        </div>
+                        <a href="reports/ai-strategy-report.pdf" class="project-report" target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Download Full Report (PDF)
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 3: Retail Management System -->
+                <div class="project-card animate-on-scroll">
+                    <div class="project-content">
+                        <div class="project-header">
+                            <div>
+                                <h3 class="project-title">Retail Management System Design</h3>
+                                <p class="project-subtitle">Enterprise Architecture for O2C & P2P Automation</p>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/pablowilliams/retail-management-system-design" target="_blank" class="project-link" title="View on GitHub">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                        <p class="project-description">
+                            Designed enterprise system architecture for Order-to-Cash and Procure-to-Pay automation for a fresh grocery delivery enterprise. Created hierarchical Data Flow Diagrams (Context through Level 2), structured narration tables, and system flowcharts. Developed Python validation modules for automated data flow consistency checking and process completeness verification.
+                        </p>
+                        <div class="project-tech">
+                            <p class="project-tech-title">Technical Stack</p>
+                            <div class="project-tech-tags">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">DFD Modelling</span>
+                                <span class="tech-tag">ERP Architecture</span>
+                                <span class="tech-tag">Business Process Modelling</span>
+                                <span class="tech-tag">System Flowcharting</span>
+                                <span class="tech-tag">API Integration Design</span>
+                            </div>
+                        </div>
+                        <a href="reports/retail-system-report.pdf" class="project-report" target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Download Full Report (PDF)
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 4: London Airbnb Analysis -->
+                <div class="project-card animate-on-scroll">
+                    <div class="project-content">
+                        <div class="project-header">
+                            <div>
+                                <h3 class="project-title">London Airbnb Price Prediction</h3>
+                                <p class="project-subtitle">Machine Learning Pipeline for Real Estate Analytics</p>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/pablowilliams" target="_blank" class="project-link" title="View on GitHub">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                        <p class="project-description">
+                            Built a systematic ML pipeline following Géron's framework to predict Airbnb pricing and guest satisfaction across London boroughs. Implemented comprehensive data preprocessing, feature engineering for spatial and temporal variables, and model comparison across Random Forest, XGBoost, and Neural Network architectures. Achieved 87% accuracy in price bracket prediction.
+                        </p>
+                        <div class="project-tech">
+                            <p class="project-tech-title">Technical Stack</p>
+                            <div class="project-tech-tags">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Scikit-learn</span>
+                                <span class="tech-tag">XGBoost</span>
+                                <span class="tech-tag">Feature Engineering</span>
+                                <span class="tech-tag">Cross-Validation</span>
+                                <span class="tech-tag">Hyperparameter Tuning</span>
+                            </div>
+                        </div>
+                        <a href="reports/airbnb-analysis-report.pdf" class="project-report" target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Download Full Report (PDF)
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 5: European Sustainability Analysis -->
+                <div class="project-card animate-on-scroll">
+                    <div class="project-content">
+                        <div class="project-header">
+                            <div>
+                                <h3 class="project-title">European Sustainability Initiatives Analysis</h3>
+                                <p class="project-subtitle">Statistical Modelling of Waste Reduction Data</p>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/pablowilliams" target="_blank" class="project-link" title="View on GitHub">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                        <p class="project-description">
+                            Conducted comprehensive statistical analysis of European waste reduction initiatives using R. Applied multiple regression modelling, hypothesis testing, and diagnostic analysis to evaluate policy effectiveness across EU member states. Developed visualisations using ggplot2 to communicate findings to non-technical stakeholders.
+                        </p>
+                        <div class="project-tech">
+                            <p class="project-tech-title">Technical Stack</p>
+                            <div class="project-tech-tags">
+                                <span class="tech-tag">R</span>
+                                <span class="tech-tag">Multiple Regression</span>
+                                <span class="tech-tag">Hypothesis Testing</span>
+                                <span class="tech-tag">ggplot2</span>
+                                <span class="tech-tag">Tidyverse</span>
+                                <span class="tech-tag">Statistical Diagnostics</span>
+                            </div>
+                        </div>
+                        <a href="reports/sustainability-report.pdf" class="project-report" target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Download Full Report (PDF)
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 6: Marketing Analytics -->
+                <div class="project-card animate-on-scroll">
+                    <div class="project-content">
+                        <div class="project-header">
+                            <div>
+                                <h3 class="project-title">Marketing Analytics & Causal Inference</h3>
+                                <p class="project-subtitle">A/B Testing & Regression Discontinuity Analysis</p>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/pablowilliams" target="_blank" class="project-link" title="View on GitHub">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                        <p class="project-description">
+                            Designed and analysed marketing experiments using causal inference methodologies. Implemented A/B testing frameworks with proper sample size calculations, instrumental variable analysis, and regression discontinuity designs. Applied these techniques to measure campaign effectiveness and customer lifetime value prediction.
+                        </p>
+                        <div class="project-tech">
+                            <p class="project-tech-title">Technical Stack</p>
+                            <div class="project-tech-tags">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Causal Inference</span>
+                                <span class="tech-tag">A/B Testing</span>
+                                <span class="tech-tag">Instrumental Variables</span>
+                                <span class="tech-tag">RDD Analysis</span>
+                                <span class="tech-tag">StatsModels</span>
+                            </div>
+                        </div>
+                        <a href="reports/marketing-analytics-report.pdf" class="project-report" target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Download Full Report (PDF)
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="section-container">
+            <div class="section-header">
+                <p class="section-tag">Get in Touch</p>
+                <h2 class="section-title">Let's Connect</h2>
+                <p class="section-subtitle">Interested in collaboration or opportunities? I'd love to hear from you.</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>Contact Information</h3>
+                    <p>
+                        I'm currently seeking opportunities in quantitative finance, data science, and AI consulting. 
+                        Whether you have a question, want to discuss a project, or just want to connect, feel free to reach out.
+                    </p>
+                    <div class="contact-links">
+                        <a href="mailto:pablowilliams119@gmail.com" class="contact-link">
+                            <div class="contact-link-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                            <div class="contact-link-text">
+                                <span class="contact-link-label">Email</span>
+                                <span class="contact-link-value">pablowilliams119@gmail.com</span>
+                            </div>
+                        </a>
+                        <a href="https://www.linkedin.com/in/pablowilliams" target="_blank" class="contact-link">
+                            <div class="contact-link-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/>
+                                </svg>
+                            </div>
+                            <div class="contact-link-text">
+                                <span class="contact-link-label">LinkedIn</span>
+                                <span class="contact-link-value">linkedin.com/in/pablowilliams</span>
+                            </div>
+                        </a>
+                        <a href="https://github.com/pablowilliams" target="_blank" class="contact-link">
+                            <div class="contact-link-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                                </svg>
+                            </div>
+                            <div class="contact-link-text">
+                                <span class="contact-link-label">GitHub</span>
+                                <span class="contact-link-value">github.com/pablowilliams</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="contact-languages">
+                        <h4>Languages</h4>
+                        <div class="languages-list">
+                            <span class="language"><span class="language-flag">🇮🇹</span> Italian (Native)</span>
+                            <span class="language"><span class="language-flag">🇬🇧</span> English (Native)</span>
+                            <span class="language"><span class="language-flag">🇪🇸</span> Spanish (Fluent)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-cta">
+                    <h3>Open to Opportunities</h3>
+                    <p>Currently exploring roles in quantitative research, data science, and AI consulting at leading financial institutions and tech companies.</p>
+                    <a href="mailto:pablowilliams119@gmail.com" class="btn btn-primary">Send Message</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-stripe"></div>
+        <p>© 2026 Pablo Williams. Built with passion for data.</p>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navbar background change on scroll
+        const nav = document.querySelector('.nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(13, 13, 13, 0.98)';
+            } else {
+                nav.style.background = 'rgba(13, 13, 13, 0.9)';
+            }
+        });
+    </script>
+</body>
+</html>
