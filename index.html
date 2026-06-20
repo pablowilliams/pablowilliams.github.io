@@ -5171,9 +5171,10 @@ section[data-observe].wipe-hidden{
     });
   }
 
-  /* ---------- 3. Ambient shader background ---------- */
+  /* ---------- 3. Ambient shader background (DISABLED — WebGL was the main lag source) ---------- */
   (() => {
-    if(reduced) return;
+    const sh = document.getElementById('shader'); if(sh) sh.style.display = 'none';
+    return;
     const canvas = document.getElementById('shader');
     if(!canvas) return;
     const gl = canvas.getContext('webgl', { antialias: false, alpha: true });
@@ -5657,8 +5658,9 @@ section[data-observe].wipe-hidden{
     loop();
   })();
 
-  /* ---------- Cursor glow - follows the mouse across the whole page ---------- */
+  /* ---------- Cursor glow (DISABLED — screen-blend repaint on every mouse move was janky) ---------- */
   (() => {
+    return;
     if(reduced || !pointerFine) return;
     // A soft "hollow" light that tracks the cursor everywhere, not just the hero.
     const ov = document.createElement('div');
@@ -5979,7 +5981,7 @@ section[data-observe].wipe-hidden{
       return;
     }
     let last = 0;
-    const FRAME_MS = 1000 / 30;
+    const FRAME_MS = 1000 / 20;
     const tick = (t) => {
       if(t - last >= FRAME_MS){ last = t; sims.forEach(s => { if(s.visible) s.paint(); }); }
       requestAnimationFrame(tick);
