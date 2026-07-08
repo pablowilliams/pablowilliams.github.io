@@ -2231,7 +2231,7 @@ section[data-observe].wipe-hidden{
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
             </a>
             <a href="#contact" class="btn btn-ghost">Get in touch</a>
-            <a href="PWCV-3.pdf" download="PWCV.pdf" type="application/pdf" class="btn btn-ghost" aria-label="Download CV (PDF)">
+            <a href="PWCV.pdf" download="PWCV.pdf" type="application/pdf" class="btn btn-ghost" aria-label="Download CV (PDF)">
               CV
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 4v12M6 10l6 6 6-6M4 20h16"/></svg>
             </a>
@@ -5623,7 +5623,7 @@ section[data-observe].wipe-hidden{
       { title: 'Journey', tag: 'Section', href: '#experience' },
       { title: 'Credentials', tag: 'Section', href: '#credentials' },
       { title: 'Contact', tag: 'Section', href: '#contact' },
-      { title: 'Download CV', tag: 'Quick', cb: () => { const a = document.querySelector('a[href="PWCV-3.pdf"]'); a?.click(); } },
+      { title: 'Download CV', tag: 'Quick', cb: () => { const a = document.querySelector('a[href="PWCV.pdf"]'); a?.click(); } },
     ].forEach(x => corpus.push(x));
 
     let results = corpus.slice(0, 10);
