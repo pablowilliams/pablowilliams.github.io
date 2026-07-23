@@ -665,6 +665,8 @@ section{ padding: clamp(80px, 12vh, 140px) 0; position: relative; z-index: 2; }
   display: flex;
   flex-direction: column;
   min-height: 380px;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 380px;
 }
 .live-card:hover{
   box-shadow: 0 0 0 1px color-mix(in oklab, var(--section-accent, var(--cyan)) 22%, transparent),
@@ -888,6 +890,8 @@ section{ padding: clamp(80px, 12vh, 140px) 0; position: relative; z-index: 2; }
   min-height: 280px;
   transition: transform var(--dur-2) var(--ease), border-color var(--dur-2) var(--ease), box-shadow var(--dur-2) var(--ease);
   overflow: hidden;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 280px;
 }
 .r-card::before{
   content:"";
@@ -4833,7 +4837,13 @@ section[data-observe].wipe-hidden{
     progress.style.setProperty('--p', p + '%');
     if(h.scrollTop > 30) header.classList.add('is-scrolled'); else header.classList.remove('is-scrolled');
   };
-  document.addEventListener('scroll', onScroll, { passive: true });
+  let scrollPending = false;
+  const onScrollSched = () => {
+    if(scrollPending) return;
+    scrollPending = true;
+    requestAnimationFrame(() => { scrollPending = false; onScroll(); });
+  };
+  document.addEventListener('scroll', onScrollSched, { passive: true });
   onScroll();
 
   // -------- Intersection reveals --------
@@ -5758,10 +5768,19 @@ section[data-observe].wipe-hidden{
         .catch(() => { /* silent */ })
         .finally(() => clearTimeout(timer));
     };
+    const startLazy = () => {
+      if(!('IntersectionObserver' in window)){ rows.forEach(fire); return; }
+      const io = new IntersectionObserver((entries, obs) => {
+        for(const e of entries){
+          if(e.isIntersecting){ obs.unobserve(e.target); fire(e.target); }
+        }
+      }, { rootMargin: '200px' });
+      rows.forEach(r => io.observe(r));
+    };
     if(document.readyState === 'loading'){
-      document.addEventListener('DOMContentLoaded', () => rows.forEach(fire), { once: true });
+      document.addEventListener('DOMContentLoaded', startLazy, { once: true });
     } else {
-      rows.forEach(fire);
+      startLazy();
     }
   })();
 
@@ -6005,8 +6024,19 @@ section[data-observe].wipe-hidden{
       return { cv, ctx, renderer, st, rnd, frame: 0, visible: false, fit, paint(){ if(!this.fit()) return; this.ctx.clearRect(0,0,W,H); RENDER[this.renderer](this.ctx, W, H, this.st, this.rnd, this.frame++); } };
     });
 
+    let last = 0, tickRaf = 0;
+    const FRAME_MS = 1000 / 20;
+    const anyVisible = () => sims.some(s => s.visible);
+    const tick = (t) => {
+      if(document.hidden || !anyVisible()){ tickRaf = 0; return; }
+      if(t - last >= FRAME_MS){ last = t; sims.forEach(s => { if(s.visible) s.paint(); }); }
+      tickRaf = requestAnimationFrame(tick);
+    };
+    const startTick = () => { if(!tickRaf && !reduced && !document.hidden && anyVisible()) tickRaf = requestAnimationFrame(tick); };
+
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => { const sim = sims.find(s => s.cv === e.target); if(sim) sim.visible = e.isIntersecting; });
+      startTick();
     }, { threshold: 0.05 });
     sims.forEach(s => io.observe(s.cv));
 
@@ -6016,13 +6046,8 @@ section[data-observe].wipe-hidden{
       sims.forEach(s => { for(let k = 0; k < 44; k++) s.paint(); });
       return;
     }
-    let last = 0;
-    const FRAME_MS = 1000 / 20;
-    const tick = (t) => {
-      if(t - last >= FRAME_MS){ last = t; sims.forEach(s => { if(s.visible) s.paint(); }); }
-      requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
+    document.addEventListener('visibilitychange', () => { if(!document.hidden) startTick(); });
+    startTick();
     window.addEventListener('resize', () => sims.forEach(s => s.fit()), { passive: true });
   })();
 
@@ -6215,7 +6240,9 @@ section[data-observe].wipe-hidden{
   }
 
   // amplitude → orb pulse
+  let ampRaf = 0, lastAmpStr = '';
   function ampLoop(t){
+    if(document.hidden){ ampRaf = 0; return; }
     let amp = 0;
     if(analyser && currentAudio && !currentAudio.paused){
       analyser.getByteFrequencyData(dataArr);
@@ -6225,11 +6252,16 @@ section[data-observe].wipe-hidden{
       amp = 0.42 + 0.40 * Math.abs(Math.sin(t / 130));
     }
     if(reduced) amp = 0;
-    orb.style.setProperty('--amp', amp.toFixed(3));
-    if(dockOrb) dockOrb.style.setProperty('--amp', amp.toFixed(3));
-    requestAnimationFrame(ampLoop);
+    const a = amp.toFixed(3);
+    if(a !== lastAmpStr){
+      lastAmpStr = a;
+      if(orb) orb.style.setProperty('--amp', a);
+      if(dockOrb) dockOrb.style.setProperty('--amp', a);
+    }
+    ampRaf = requestAnimationFrame(ampLoop);
   }
-  requestAnimationFrame(ampLoop);
+  ampRaf = requestAnimationFrame(ampLoop);
+  document.addEventListener('visibilitychange', () => { if(!document.hidden && !ampRaf) ampRaf = requestAnimationFrame(ampLoop); });
 
   // The intro video has the greeting voice baked in. It autoplays MUTED at load;
   // the first interaction (a mouse move counts) unmutes it and restarts from the
