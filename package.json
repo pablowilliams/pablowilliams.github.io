@@ -1,0 +1,27 @@
+{
+  "name": "pablowilliams-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "python3 -m http.server 8000",
+    "start": "python3 -m http.server 8000",
+    "build": "node scripts/build.mjs",
+    "results": "node scripts/reproduce.mjs",
+    "lint": "node scripts/quality.mjs",
+    "typecheck": "tsc --noEmit",
+    "test:unit": "node --test --experimental-test-coverage --test-coverage-include=scripts/site-model.mjs --test-coverage-lines=80 --test-coverage-functions=80 --test-coverage-branches=80 tests/unit/*.test.mjs",
+    "test:e2e": "playwright test",
+    "test": "npm run test:unit && npm run test:e2e",
+    "report": "python3 scripts/build_report.py",
+    "verify": "npm run results && npm run lint && npm run typecheck && npm test && npm run build"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@types/node": "24.3.1",
+    "typescript": "5.9.2"
+  }
+}

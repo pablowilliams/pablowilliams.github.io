@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If this portfolio implementation supports your work, please cite it as follows."
+authors:
+  - family-names: Williams
+    given-names: Pablo
+title: "Pablo Williams Portfolio"
+type: software
+version: 1.0.0
+date-released: 2026-09-16
+url: "https://pablowilliams.github.io/"
+repository-code: "https://github.com/pablowilliams/pablowilliams.github.io"
+license: MIT
