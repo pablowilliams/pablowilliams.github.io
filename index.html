@@ -727,7 +727,6 @@ section{ padding: clamp(80px, 12vh, 140px) 0; position: relative; z-index: 2; }
   font-family: var(--mono); font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase;
   color: var(--ink-2); background: color-mix(in oklab, var(--bg) 62%, transparent);
   border: 1px solid var(--line-2); border-radius: 99px; padding: 4px 9px;
-  -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px);
 }
 /* Real screenshot previews on featured cards (replace decorative art). */
 .live-cover.has-shot > .art, .live-cover.has-shot > .art-wave{ display: none; }
@@ -771,12 +770,11 @@ section{ padding: clamp(80px, 12vh, 140px) 0; position: relative; z-index: 2; }
   color: var(--cyan);
   border-color: var(--cyan);
 }
+.live-card{ content-visibility: auto; contain-intrinsic-size: auto 420px; }
 .live-card .go{
   position: absolute;
   top: 16px; right: 16px;
-  background: rgba(15,30,24,.7);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(15,30,24,.92);
   border: 1px solid var(--line-3);
   color: var(--ink);
   padding: 7px 12px 7px 14px;
@@ -1892,9 +1890,7 @@ section[data-observe].wipe-hidden{
   font-size: 10px;
   letter-spacing: .14em;
   color: var(--ink-3);
-  background: rgba(15,30,24,.7);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(15,30,24,.92);
   border: 1px solid var(--line-2);
   padding: 7px 10px;
   border-radius: 999px;
@@ -2102,7 +2098,6 @@ section[data-observe].wipe-hidden{
 .jarvis-btn:focus-visible, .jarvis-chip:focus-visible, .jarvis-mute:focus-visible{ outline: 2px solid var(--focus); outline-offset: 3px; }
 .jarvis-dock{ position: fixed; right: 20px; bottom: 20px; z-index: 90; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; opacity: 0; transform: translateY(14px); pointer-events: none; transition: opacity .5s var(--ease), transform .5s var(--ease); }
 .jarvis-dock.show{ opacity: 1; transform: none; pointer-events: auto; }
-.jarvis-dock__caption{ max-width: 320px; font-family: var(--mono); font-size: 12.5px; line-height: 1.5; color: var(--ink); background: color-mix(in oklab, var(--bg) 80%, transparent); border: 1px solid var(--line-2); border-radius: 14px 14px 4px 14px; padding: 12px 15px; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); opacity: 0; transform: translateY(6px); transition: opacity .3s var(--ease), transform .3s var(--ease); }
 .jarvis-dock__caption.show{ opacity: 1; transform: none; }
 .jarvis-chips{ display: flex; flex-wrap: wrap; gap: 7px; justify-content: flex-end; max-width: 340px; }
 .jarvis-chip{ font-family: var(--mono); font-size: 11px; letter-spacing: .04em; cursor: pointer; color: var(--ink-2); background: color-mix(in oklab, var(--bg) 70%, transparent); border: 1px solid var(--line-2); border-radius: 99px; padding: 7px 13px; transition: all var(--ease) .2s; }
@@ -2113,7 +2108,7 @@ section[data-observe].wipe-hidden{
 .jarvis-mute:hover{ color: var(--cyan); border-color: var(--cyan); }
 .jarvis-mute[aria-pressed="true"]{ color: var(--ink-4); }
 @media (prefers-reduced-motion: reduce){ .orb, .jarvis-dock__orb{ transform: none !important; } .orb.idle, .orb__ring.r2, .orb__ring.r3{ animation: none !important; } }
-@media (max-width: 560px){ .jarvis-dock__caption{ max-width: 70vw; } }
+@media (max-width: 560px){  }
 
 </style>
 </head>
