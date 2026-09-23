@@ -5950,7 +5950,7 @@ section[data-observe].wipe-hidden{
   })();
 
   /* ---------- Real screenshot previews ----------
-     Any card with a screenshot at assets/previews/<slug>.png shows it as the
+     Any card with a screenshot at assets/previews/<slug>.webp shows it as the
      cover. data-slug cards use their slug; the original featured cards map by
      their go-link. The image only swaps in once it actually loads, so a missing
      file gracefully leaves the generative art in place. */
@@ -5974,11 +5974,11 @@ section[data-observe].wipe-hidden{
       const slug = card.dataset.slug;
       if(slug){
         const name = (card.querySelector('h3')?.textContent || slug).trim();
-        setCover(card, 'assets/previews/' + slug + '.png', 'Screenshot of ' + name);
+        setCover(card, 'assets/previews/' + slug + '.webp', 'Screenshot of ' + name);
         return;
       }
       const href = card.querySelector('a.go')?.getAttribute('href') || '';
-      for(const k in featured){ if(href.includes(k)){ setCover(card, 'assets/previews/' + featured[k][0] + '.png', 'Screenshot of ' + featured[k][1]); break; } }
+      for(const k in featured){ if(href.includes(k)){ setCover(card, 'assets/previews/' + featured[k][0] + '.webp', 'Screenshot of ' + featured[k][1]); break; } }
     });
   })();
 
