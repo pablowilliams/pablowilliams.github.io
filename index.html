@@ -1676,7 +1676,7 @@ section[data-observe].wipe-hidden{
   animation: backdropIn .2s ease-out;
 }
 .modal-backdrop.open{ display: flex; }
-@keyframes backdropIn{ from{ opacity: 0; } to{ opacity: 1; } }
+
 .modal-card{
   width: min(640px, 92vw);
   background: var(--bg-2); border: 1px solid var(--line-2);
@@ -2041,113 +2041,17 @@ section[data-observe].wipe-hidden{
 /* ================================================================
    JARVIS boot agent - pulsing orb, boot overlay, assistant dock
 ================================================================ */
-.jarvis-boot{
-  position: fixed; inset: 0; z-index: 9999;
-  display: grid; place-items: center;
-  background:
-    radial-gradient(60% 50% at 50% 42%, color-mix(in oklab, var(--cyan) 14%, transparent) 0%, transparent 60%),
-    linear-gradient(180deg, var(--bg-2) 0%, var(--bg) 70%);
-  transition: opacity .8s var(--ease), visibility .8s var(--ease);
-}
-.jarvis-boot.gone{ opacity: 0; visibility: hidden; pointer-events: none; }
 /* full-screen cinematic loader video */
-.jarvis-loader{ position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
-.jarvis-boot.has-loader::before, .jarvis-boot.has-loader::after{ display: none; }
-.jarvis-boot.has-loader{ background: #040A07; }
-.jarvis-stage{ position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 24px; max-width: 720px; }
 /* the intro video is a complete boot animation, so hide our orb entirely */
-.jarvis-boot.has-loader .orb{ display: none; }
-.jarvis-boot.has-loader .jarvis-status{ display: none; }
 /* greeting subtitle, shown over the video while JARVIS speaks */
-.jarvis-boot.has-loader .jarvis-caption{
-  position: fixed; left: 50%; bottom: 13vh; transform: translateX(-50%);
-  margin: 0; width: min(84vw, 620px); max-width: none; padding: 14px 22px;
-  text-align: center;
-  background: color-mix(in oklab, var(--bg) 56%, transparent);
-  border: 1px solid var(--line-2); border-radius: 14px;
-  -webkit-backdrop-filter: blur(7px); backdrop-filter: blur(7px);
-  font-size: clamp(15px, 1.9vw, 21px); line-height: 1.5; color: var(--ink);
-}
-.jarvis-boot.has-loader .jarvis-caption:empty{ display: none; }
-.orb{
-  --amp: 0;
-  position: relative; width: clamp(150px, 30vw, 260px); aspect-ratio: 1; border-radius: 50%;
-  display: grid; place-items: center;
-  transform: scale(calc(1 + var(--amp) * 0.10));
-  transition: transform .08s linear;
-}
-.orb__core{
-  position: absolute; inset: 22%; border-radius: 50%;
-  background: radial-gradient(circle at 50% 38%, var(--cyan-hi), var(--cyan) 45%, color-mix(in oklab, var(--cyan) 40%, var(--bg)) 100%);
-  box-shadow: 0 0 calc(40px + var(--amp) * 60px) color-mix(in oklab, var(--cyan) 70%, transparent), inset 0 0 30px color-mix(in oklab, var(--cyan-hi) 60%, transparent);
-}
-.orb__ring{ position: absolute; inset: 0; border-radius: 50%; border: 1px solid color-mix(in oklab, var(--cyan) 35%, transparent); }
-.orb__ring.r2{ inset: 9%; border-color: color-mix(in oklab, var(--cyan) 22%, transparent); border-style: dashed; animation: orbSpin 14s linear infinite; }
-.orb__ring.r3{ inset: -8%; border-color: color-mix(in oklab, var(--cyan) 14%, transparent); animation: orbSpin 26s linear infinite reverse; }
-.orb__glow{ position: absolute; inset: -30%; border-radius: 50%; pointer-events: none; background: radial-gradient(circle, color-mix(in oklab, var(--cyan) calc(18% + var(--amp) * 30%), transparent), transparent 60%); }
-@keyframes orbSpin{ to{ transform: rotate(360deg); } }
-@keyframes orbBreathe{ 0%,100%{ transform: scale(1); } 50%{ transform: scale(1.03); } }
-.orb.idle{ animation: orbBreathe 3.6s var(--ease) infinite; }
-.jarvis-caption{ margin-top: 38px; min-height: 3.2em; max-width: 36ch; font-family: var(--mono); font-size: clamp(14px, 1.6vw, 18px); line-height: 1.5; color: var(--ink); }
-.jarvis-status{ margin-top: 6px; font-family: var(--mono); font-size: 10.5px; letter-spacing: .26em; text-transform: uppercase; color: var(--cyan); }
-.jarvis-actions{ margin-top: 34px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
-.jarvis-btn{ font-family: var(--mono); font-size: 12.5px; letter-spacing: .12em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 9px; padding: 14px 26px; border-radius: 99px; cursor: pointer; border: 1px solid var(--line-2); color: var(--ink); background: rgba(20,34,54,.4); transition: all var(--ease) .25s; }
-.jarvis-btn:hover{ border-color: var(--cyan); color: var(--cyan); transform: translateY(-2px); }
-.jarvis-btn.primary{ background: var(--cyan); color: var(--bg); border-color: var(--cyan); font-weight: 600; }
-.jarvis-btn.primary:hover{ background: var(--cyan-hi); border-color: var(--cyan-hi); color: var(--bg); }
-.jarvis-btn:focus-visible, .jarvis-chip:focus-visible, .jarvis-mute:focus-visible{ outline: 2px solid var(--focus); outline-offset: 3px; }
-.jarvis-dock{ position: fixed; right: 20px; bottom: 20px; z-index: 90; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; opacity: 0; transform: translateY(14px); pointer-events: none; transition: opacity .5s var(--ease), transform .5s var(--ease); }
-.jarvis-dock.show{ opacity: 1; transform: none; pointer-events: auto; }
-.jarvis-dock__caption.show{ opacity: 1; transform: none; }
-.jarvis-chips{ display: flex; flex-wrap: wrap; gap: 7px; justify-content: flex-end; max-width: 340px; }
-.jarvis-chip{ font-family: var(--mono); font-size: 11px; letter-spacing: .04em; cursor: pointer; color: var(--ink-2); background: color-mix(in oklab, var(--bg) 70%, transparent); border: 1px solid var(--line-2); border-radius: 99px; padding: 7px 13px; transition: all var(--ease) .2s; }
-.jarvis-chip:hover{ color: var(--cyan); border-color: var(--cyan); }
-.jarvis-dock__bar{ display: flex; align-items: center; gap: 10px; }
-.jarvis-dock__orb{ width: 54px; height: 54px; border-radius: 50%; flex: none; cursor: pointer; position: relative; border: 1px solid color-mix(in oklab, var(--cyan) 40%, transparent); background: radial-gradient(circle at 50% 38%, var(--cyan-hi), var(--cyan) 55%, color-mix(in oklab, var(--cyan) 30%, var(--bg))); box-shadow: 0 0 calc(10px + var(--amp,0) * 34px) color-mix(in oklab, var(--cyan) 60%, transparent); transform: scale(calc(1 + var(--amp,0) * 0.12)); }
-.jarvis-mute{ width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; cursor: pointer; border: 1px solid var(--line-2); background: color-mix(in oklab, var(--bg) 70%, transparent); color: var(--ink-2); }
-.jarvis-mute:hover{ color: var(--cyan); border-color: var(--cyan); }
-.jarvis-mute[aria-pressed="true"]{ color: var(--ink-4); }
-@media (prefers-reduced-motion: reduce){ .orb, .jarvis-dock__orb{ transform: none !important; } .orb.idle, .orb__ring.r2, .orb__ring.r3{ animation: none !important; } }
+
+
 @media (max-width: 560px){  }
 
-</style>
-<style>.r-card[id]{scroll-margin-top:110px}.r-card.is-deeplinked{outline:2px solid var(--cyan,#34d399);outline-offset:4px}</style>
-<style id="pwintro-style">
-  #pwintro-root{position:fixed;inset:0;z-index:2147483000;background:#000;
-    transition:opacity .7s ease;}
-  #pwintro-root.pwintro-done{opacity:0;pointer-events:none;}
-  #pwintro-cv{position:fixed;inset:0;width:100%;height:100%;display:block;background:#000;}
-  #pwintro-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
-    flex-direction:column;background:#000;transition:opacity .5s ease;
-    font-family:"SF Mono","Roboto Mono",ui-monospace,Menlo,monospace;}
-  #pwintro-ttl{color:#34d399;letter-spacing:.35em;font-weight:600;font-size:clamp(1.2rem,3.5vw,2rem);
-    margin:0 0 1.4em;text-shadow:0 0 18px rgba(52,211,153,.45);}
-  #pwintro-start{font-family:inherit;font-size:.95rem;letter-spacing:.08em;color:#34d399;
-    background:#0a0f0d;border:1px solid #2a3a32;border-radius:2px;padding:.55em 1.6em;cursor:pointer;}
-  #pwintro-start:hover{background:#101713;border-color:#34d399;}
-  #pwintro-start:active{background:#182219;}
-  #pwintro-start:focus-visible{outline:2px solid #4ade80;outline-offset:2px;}
-  #pwintro-start::before{content:"$ ";color:#4a5a52;}
-  #pwintro-replay{position:fixed;left:50%;bottom:12%;transform:translateX(-50%);font-family:"SF Mono",monospace;
-    font-size:.8rem;letter-spacing:.25em;text-transform:uppercase;color:#34d399;background:rgba(52,211,153,.08);
-    border:1px solid rgba(52,211,153,.5);border-radius:999px;padding:.7em 2em;cursor:pointer;display:none;}
-  #pwintro-replay:focus-visible{outline:3px solid #4ade80;outline-offset:3px;}
-  .pwintro-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;clip:rect(0 0 0 0);
-    clip-path:inset(50%);overflow:hidden;white-space:nowrap;}
-  body.pwintro-lock{overflow:hidden !important;}
 </style>
 </head>
 
 <body>
-<div id="pwintro-root" role="dialog" aria-modal="true" aria-label="Site intro">
-  <canvas id="pwintro-cv" aria-hidden="true"></canvas>
-  <p class="pwintro-sr" id="pwintro-status" tabindex="-1" aria-live="polite"></p>
-  <button id="pwintro-replay" type="button">Replay</button>
-  <div id="pwintro-overlay">
-    <button id="pwintro-start" type="button" aria-label="Start — play the intro with sound, then enter the site">start</button>
-  </div>
-</div>
-<p class="pwintro-sr">Intro voiceover transcript: Hey, welcome back. Booting up now. And we're online — everything's ready and running. Shall we?</p>
 
 <a class="skip-link" href="#main">Skip to main content</a>
 <div class="progress" id="progress" aria-hidden="true"></div>
@@ -3027,79 +2931,6 @@ section[data-observe].wipe-hidden{
       </div>
 
       <div class="r-grid stagger" id="research-grid" role="region" aria-roledescription="carousel" aria-label="Research papers" tabindex="0">
-        <article class="r-card" id="pipelinepulse" data-theme="ops" data-tags="ops">
-          <div class="r-head"><span class="tag">Operations</span><span class="r-id">R/30</span></div>
-          <h3>PipelinePulse</h3>
-          <p class="sub">GitLab delivery analytics</p>
-          <p>Turns GitLab CI/CD and merge-request data into DORA metrics, flaky-test detection, pipeline slowdown alerts and CI cost, behind 44 data-quality checks that block publishing. On 436k seeded job runs it caught 14 of 14 injected slowdowns with no false alarms. Specified in Kiro and delivered through GitLab CI.</p>
-          <div class="stack"><span>DuckDB</span><span>SQL</span><span>GitLab CI</span><span>Kiro</span></div>
-        </article>
-
-        <article class="r-card" id="stratum" data-theme="finance" data-tags="finance">
-          <div class="r-head"><span class="tag">Quant finance</span><span class="r-id">R/31</span></div>
-          <h3>Stratum Analytics</h3>
-          <p class="sub">Tableau investment reporting suite</p>
-          <p>Investment reporting for a simulated &euro;755m family office: a Tableau workbook with 4 dashboards and 59 calculated fields, plus a matching web dashboard. Its data checks caught all 16 planted trade errors among 9,373 trades with no false alarms, where a simple threshold rule raised 267, and its attribution reconciles to 0.00 bp.</p>
-          <div class="stack"><span>Tableau</span><span>Python</span><span>DuckDB</span><span>VaR</span></div>
-        </article>
-
-        <article class="r-card" id="longstop" data-theme="finance" data-tags="finance">
-          <div class="r-head"><span class="tag">Quant finance</span><span class="r-id">R/32</span></div>
-          <h3>Longstop</h3>
-          <p class="sub">M&amp;A deal-break research</p>
-          <p>Labels 10,051 US public-target mergers since 2001 straight from SEC EDGAR filings, and shows that of 437 filings that looked like failed deals, 216 were unrelated contracts and only 121 were real deal breaks. Includes an accretion and dilution merger model with a closed-form synergy break-even.</p>
-          <div class="stack"><span>EDGAR</span><span>Python</span><span>React</span><span>M&amp;A</span></div>
-          <div class="links">
-            <a href="https://pablowilliams.github.io/longstop/" target="_blank" rel="noopener">Dashboard</a>
-            <a href="https://github.com/pablowilliams/longstop" target="_blank" rel="noopener">GitHub</a>
-          </div>
-        </article>
-
-        <article class="r-card" id="processlab" data-theme="ops" data-tags="ops">
-          <div class="r-head"><span class="tag">Operations</span><span class="r-id">R/33</span></div>
-          <h3>ProcessLab</h3>
-          <p class="sub">Process discovery and business case</p>
-          <p>Maps queues, effort and rework in a synthetic insurance-claims process handling 5,200 claims a month, then builds a stress-tested business case: about 1,070 adjuster hours a month freed and a 5.4-month payback that halves if exceptions climb.</p>
-          <div class="stack"><span>Process mapping</span><span>Business case</span><span>JavaScript</span></div>
-          <div class="links">
-            <a href="https://github.com/pablowilliams/processlab" target="_blank" rel="noopener">GitHub</a>
-          </div>
-        </article>
-
-        <article class="r-card" id="vendorboard" data-theme="ops" data-tags="ops">
-          <div class="r-head"><span class="tag">Operations</span><span class="r-id">R/34</span></div>
-          <h3>VendorBoard</h3>
-          <p class="sub">Stakeholder decision analysis</p>
-          <p>Scores three fictional AI-platform vendors on five weighted criteria under four stakeholder views, with a UK data-residency knockout that removes 1 of the 3 whatever it scores. The CFO weighting changes the recommendation, which is the conversation procurement actually needs.</p>
-          <div class="stack"><span>Decision analysis</span><span>Stakeholders</span><span>JavaScript</span></div>
-          <div class="links">
-            <a href="https://github.com/pablowilliams/vendorboard" target="_blank" rel="noopener">GitHub</a>
-          </div>
-        </article>
-
-        <article class="r-card" id="touchstone" data-theme="applied" data-tags="applied">
-          <div class="r-head"><span class="tag">Applied ML</span><span class="r-id">R/35</span></div>
-          <h3>Touchstone</h3>
-          <p class="sub">Governed AI reference architecture</p>
-          <p>An AI solution architecture for a fictional regulated client, with a verifier that stopped every one of 59 attempts to slip an ungrounded number past it. Architected for Azure and validated, not deployed.</p>
-          <div class="stack"><span>RAG</span><span>Evaluation</span><span>Azure</span><span>FastAPI</span></div>
-          <div class="links">
-            <a href="https://github.com/pablowilliams/touchstone" target="_blank" rel="noopener">GitHub</a>
-          </div>
-        </article>
-
-        <article class="r-card" id="signalops" data-theme="ops" data-tags="ops">
-          <div class="r-head"><span class="tag">Operations</span><span class="r-id">R/36</span></div>
-          <h3>SignalOps</h3>
-          <p class="sub">Data incident detection and A/B analysis</p>
-          <p>Spots service incidents in 60,480 hours of seeded telemetry with 87.9% precision and 93.5% recall, against 11.9% precision for a rolling z-score, cutting false-alarm episodes from 111 to 4. Also runs a CUPED-adjusted A/B test analysis across 12,000 units.</p>
-          <div class="stack"><span>dbt</span><span>FastAPI</span><span>Next.js</span><span>A/B testing</span></div>
-          <div class="links">
-            <a href="https://github.com/pablowilliams/signalops" target="_blank" rel="noopener">GitHub</a>
-          </div>
-        </article>
-
-
 
         <article class="r-card" data-theme="interp" data-tags="interp">
           <div class="r-head"><span class="tag">Interpretability</span><span class="r-id">R/01</span></div>
@@ -3149,11 +2980,11 @@ section[data-observe].wipe-hidden{
           </div>
         </article>
 
-        <article class="r-card" id="calibration" data-theme="finance" data-tags="finance">
+        <article class="r-card" data-theme="finance" data-tags="finance">
           <div class="r-head"><span class="tag">Quant finance</span><span class="r-id">R/05</span></div>
           <h3>Calibration Optimised Equity</h3>
           <p class="sub">ECE optimised portfolio strategy</p>
-          <p>Tested whether better-calibrated classifiers pick better stocks across 457 S&amp;P 500 names (2010 to 2024 data). Random Forest calibrated best (ECE 0.026) and its portfolio returned 68.1 percent over the 2021 to 2024 test, ahead of SPY at 66.1 percent, though with a lower Sharpe (0.77 vs 0.83).</p>
+          <p>Tested whether ECE optimised classifiers deliver better portfolio returns under half Kelly sizing across 457 S&amp;P 500 stocks from 2010 to 2024. Random Forest hit the best calibration at ECE 0.026, a Sharpe of 0.77 and 68.1 percent total return.</p>
           <div class="stack"><span>XGBoost</span><span>LightGBM</span><span>SHAP</span></div>
           <div class="links">
             <a href="https://github.com/pablowilliams/MSIN0097-Calibration-Portfolio/raw/main/MSIN0097_FINAL_REPORT_25088283.pdf" target="_blank" rel="noopener">Report</a>
@@ -3277,11 +3108,11 @@ section[data-observe].wipe-hidden{
           </div>
         </article>
 
-        <article class="r-card" id="churn-propensity" data-theme="applied" data-tags="applied">
+        <article class="r-card" data-theme="applied" data-tags="applied">
           <div class="r-head"><span class="tag">Applied ML</span><span class="r-id">R/16</span></div>
           <h3>Churn Propensity Modelling</h3>
           <p class="sub">Telco customer attrition</p>
-          <p>End to end churn pipeline on the IBM Telco dataset. Compares Logistic Regression, Random Forest and XGBoost with business oriented evaluation via cumulative lift, calibration analysis and decile level targeting. On 7,043 customers, targeting the riskiest 20 percent reaches 55 percent of churners, a 2.7x lift over random outreach.</p>
+          <p>End to end churn pipeline on the IBM Telco dataset. Compares Logistic Regression, Random Forest and XGBoost with business oriented evaluation via cumulative lift, calibration analysis and decile level targeting. Top 20 percent captures 55 percent of churners.</p>
           <div class="stack"><span>XGBoost</span><span>Calibration</span><span>Lift</span></div>
           <div class="links">
             <a href="https://github.com/pablowilliams/churn-propensity-modelling/raw/main/paper/report.pdf" target="_blank" rel="noopener">Report</a>
@@ -3289,11 +3120,11 @@ section[data-observe].wipe-hidden{
           </div>
         </article>
 
-        <article class="r-card" id="topic-discovery" data-theme="applied" data-tags="applied">
+        <article class="r-card" data-theme="applied" data-tags="applied">
           <div class="r-head"><span class="tag">Applied ML</span><span class="r-id">R/17</span></div>
           <h3>Online Community Topic Discovery</h3>
           <p class="sub">NLP topic modelling for problem solving</p>
-          <p>Unsupervised topic modelling on 14,000 plus discussion posts. LDA found 17 topics with twice the coherence of NMF (0.65 vs 0.32). Adds urgency scoring, pain point extraction, extractive summarisation, severity clustering and topic category cross analysis.</p>
+          <p>Unsupervised topic modelling on 14,000 plus discussion posts comparing LDA and NMF. Adds urgency scoring, pain point extraction, extractive summarisation, severity clustering and topic category cross analysis.</p>
           <div class="stack"><span>Gensim</span><span>LDA</span><span>NMF</span></div>
           <div class="links">
             <a href="https://github.com/pablowilliams/consumer-complaints-topic-discovery/raw/main/paper/report.pdf" target="_blank" rel="noopener">Report</a>
@@ -3336,7 +3167,7 @@ section[data-observe].wipe-hidden{
           </div>
         </article>
 
-        <article class="r-card" id="riskterrain" data-theme="applied" data-tags="applied">
+        <article class="r-card" data-theme="applied" data-tags="applied">
           <div class="r-head"><span class="tag">Applied ML</span><span class="r-id">R/21</span></div>
           <h3>RiskTerrain</h3>
           <p class="sub">Geospatial S&amp;P 500 risk intelligence</p>
@@ -6265,399 +6096,9 @@ section[data-observe].wipe-hidden{
 <!-- HUD hint -->
 <div class="hud-hint" aria-hidden="true">Press <kbd>?</kbd> for shortcuts · <kbd>Ctrl K</kbd> to search</div>
 
-<script>
-/* ============== JARVIS boot agent ============== */
-(() => {
-  const LINES = window.JARVIS_LINES || [];
-  if(!LINES.length) return;
-  const byId = Object.fromEntries(LINES.map(l => [l.id, l]));
-  const group = g => LINES.filter(l => l.group === g);
-  const pick = arr => arr[Math.floor(Math.random() * arr.length)];
-  const wait = ms => new Promise(r => setTimeout(r, ms));
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  const boot = document.getElementById('jarvis-boot');
-  const orb = document.getElementById('jarvis-orb');
-  const dock = document.getElementById('jarvis-dock');
-  const dockOrb = document.getElementById('jarvis-dock-orb');
-  const bootCap = document.getElementById('jarvis-caption');
-  const dockCap = document.getElementById('jarvis-dock-caption');
-  const statusEl = document.getElementById('jarvis-status');
-  const muteBtn = document.getElementById('jarvis-mute');
-  const loader = document.getElementById('jarvis-loader');
-  // The loader video is muted, so it autoplays. Pause it (poster only) for
-  // reduced-motion users; nudge play() in case a browser held it.
-  if(loader){
-    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) loader.pause();
-    else { const pl = loader.play(); if(pl && pl.catch) pl.catch(() => {}); }
-  }
-
-  let muted = false, booted = false, speaking = false, autoTimer = 0;
-
-  // ---- subtle background music: fades to 15% when the intro ends, loops on ----
-  const MUSIC_SRC = 'assets/audio/ambient.mp3';
-  const MUSIC_VOL = 0.15;
-  let music = null, musicFade = 0;
-  function fadeMusic(target, ms){
-    if(!music) return;
-    clearInterval(musicFade);
-    const from = music.volume, t0 = performance.now();
-    musicFade = setInterval(() => {
-      const k = Math.min(1, (performance.now() - t0) / ms);
-      music.volume = Math.max(0, Math.min(1, from + (target - from) * k));
-      if(k >= 1) clearInterval(musicFade);
-    }, 40);
-  }
-  function startMusic(){
-    if(muted || music) return;
-    const a = new Audio(MUSIC_SRC);
-    a.loop = true; a.preload = 'auto'; a.volume = 0;
-    const p = a.play();
-    if(p && p.catch) p.catch(() => { music = null; });   // missing file or blocked
-    music = a;
-    fadeMusic(MUSIC_VOL, 2000);                            // 2s fade-in to 15%
-  }
-  let audioCtx, analyser, dataArr, currentAudio = null, fakeOn = false;
-
-  function ensureAudio(){
-    if(audioCtx) return;
-    try{
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      analyser = audioCtx.createAnalyser(); analyser.fftSize = 256;
-      dataArr = new Uint8Array(analyser.frequencyBinCount);
-      analyser.connect(audioCtx.destination);
-    }catch(e){ audioCtx = null; }
-  }
-  const setStatus = s => { if(statusEl) statusEl.textContent = s; };
-  function caption(el, text){
-    if(!el) return;
-    el.textContent = text;
-    if(el === dockCap){ dockCap.classList.add('show'); clearTimeout(dockCap._t); dockCap._t = setTimeout(() => dockCap.classList.remove('show'), Math.max(4500, text.length * 55)); }
-  }
-  function stopCurrent(){
-    try{ if(currentAudio){ currentAudio.pause(); currentAudio.currentTime = 0; } }catch(e){}
-    if('speechSynthesis' in window) speechSynthesis.cancel();
-    currentAudio = null; fakeOn = false; speaking = false;
-  }
-
-  // Browser TTS fallback (used until you generate the ElevenLabs clips)
-  function ttsFallback(text, done){
-    if(!('speechSynthesis' in window)){ fakeOn = true; setTimeout(() => { fakeOn = false; done(); }, 1400); return; }
-    const u = new SpeechSynthesisUtterance(text);
-    u.rate = 0.98; u.pitch = 0.9;
-    const vs = speechSynthesis.getVoices();
-    u.voice = vs.find(v => /Daniel|Arthur|Google UK English Male|UK English/i.test(v.name)) || vs.find(v => /en-GB/i.test(v.lang)) || vs.find(v => /^en/i.test(v.lang)) || null;
-    u.onend = () => { fakeOn = false; done(); };
-    u.onerror = () => { fakeOn = false; done(); };
-    fakeOn = true;
-    speechSynthesis.cancel();
-    speechSynthesis.speak(u);
-  }
-
-  function speak(line, capEl){
-    return new Promise(resolve => {
-      if(!line){ resolve(); return; }
-      stopCurrent();
-      caption(capEl, line.text);
-      if(muted){ resolve(); return; }
-      speaking = true; setStatus('Speaking');
-      let settled = false, wd;
-      const settle = () => { if(settled) return; settled = true; clearTimeout(wd); speaking = false; setStatus(booted ? 'Online' : 'Standby'); currentAudio = null; resolve(); };
-      const audio = new Audio('assets/voice/' + line.id + '.mp3');
-      let fell = false;
-      const fall = () => { if(fell) return; fell = true; currentAudio = null; ttsFallback(line.text, settle); };
-      audio.addEventListener('ended', settle, { once: true });
-      audio.addEventListener('error', fall, { once: true });
-      try{
-        ensureAudio();
-        if(audioCtx){ audioCtx.createMediaElementSource(audio).connect(analyser); }
-      }catch(e){}
-      currentAudio = audio;
-      const p = audio.play();
-      if(p && p.catch) p.catch(() => fall());
-      // Watchdog: if the browser blocks audio entirely, still advance the boot.
-      wd = setTimeout(settle, Math.max(2600, line.text.length * 75) + 1500);
-    });
-  }
-
-  // amplitude → orb pulse
-  let ampRaf = 0, lastAmpStr = '';
-  function ampLoop(t){
-    if(document.hidden){ ampRaf = 0; return; }
-    let amp = 0;
-    if(analyser && currentAudio && !currentAudio.paused){
-      analyser.getByteFrequencyData(dataArr);
-      let s = 0; for(let i = 0; i < dataArr.length; i++) s += dataArr[i];
-      amp = Math.min(1, (s / dataArr.length) / 96);
-    } else if(fakeOn){
-      amp = 0.42 + 0.40 * Math.abs(Math.sin(t / 130));
-    }
-    if(reduced) amp = 0;
-    const a = amp.toFixed(3);
-    if(a !== lastAmpStr){
-      lastAmpStr = a;
-      if(orb) orb.style.setProperty('--amp', a);
-      if(dockOrb) dockOrb.style.setProperty('--amp', a);
-    }
-    ampRaf = requestAnimationFrame(ampLoop);
-  }
-  ampRaf = requestAnimationFrame(ampLoop);
-  document.addEventListener('visibilitychange', () => { if(!document.hidden && !ampRaf) ampRaf = requestAnimationFrame(ampLoop); });
-
-  // The intro video has the greeting voice baked in. It autoplays MUTED at load;
-  // the first interaction (a mouse move counts) unmutes it and restarts from the
-  // top so the greeting is heard in full. Captions follow the spikes for a11y.
-  const SPIKE_TIMES = [4.4, 6.2, 8.0, 10.2];        // subtitle sync to the spoken parts
-  const bootParts = group('boot');                  // 4 phrases (caption text only)
-  let greeted = false, revealed = false, revealFallback = 0, partTimers = [];
-
-  function reveal(){
-    if(revealed) return; revealed = true; booted = true;
-    clearTimeout(revealFallback); partTimers.forEach(clearTimeout);
-    boot.classList.add('gone');
-    dock.classList.add('show');
-    setStatus('Online');
-    startAuto();
-    startMusic();   // subtle ambient fades in as the portfolio appears
-  }
-  function startGreeting(){
-    if(greeted || revealed) return;
-    greeted = true;
-    setStatus('Online');
-    clearTimeout(revealFallback);
-    if(loader){
-      try{
-        loader.muted = false; loader.currentTime = 0;
-        const lp = loader.play(); if(lp && lp.catch) lp.catch(() => {});
-        loader.addEventListener('ended', reveal, { once: true });   // reveal when the intro finishes
-      }catch(e){}
-    }
-    // no on-screen text during the intro - the voice is in the video itself
-    revealFallback = setTimeout(reveal, 14500);      // backstop ≈ video length
-  }
-  function runBoot(){
-    setStatus('Booting');
-    // video autoplays muted; greeting (with sound) begins on the first interaction
-    revealFallback = setTimeout(reveal, 17000);      // reveal even if nobody interacts
-  }
-  // ---- random voice bursts: YOUR own mp3s, played at a random interval ----
-  // Drop files in assets/voice/ named burst-1.mp3, burst-2.mp3, … (start at 1,
-  // no gaps). They auto-discover; a random one plays every BURST_MIN–MAX seconds.
-  const BURST_MIN = 20;   // seconds - soonest a burst can play
-  const BURST_MAX = 40;   // seconds - longest gap between bursts
-  let bursts = [], burstTimer = 0;
-
-  /* Burst clips are declared, not discovered.
-
-     This used to probe assets/voice/burst-1.mp3, burst-2.mp3 ... sequentially
-     until one 404'd, which meant 31 serialised network round-trips on every
-     page load before the first ambient line could ever play. The file count is
-     known when the clips are generated, so it belongs here as a constant.
-     Update BURST_COUNT when you add clips; the generator script writes them
-     with no gaps. */
-  const BURST_COUNT = 30;
-  function discoverBursts(){
-    return Array.from({ length: BURST_COUNT }, (_, i) => 'assets/voice/burst-' + (i + 1) + '.mp3');
-  }
-  function playClip(src){
-    return new Promise(res => {
-      if(muted){ res(); return; }
-      stopCurrent();
-      const audio = new Audio(src);   // play straight to the speakers
-      speaking = true; setStatus('Speaking');
-      const done = () => { speaking = false; setStatus(booted ? 'Online' : 'Standby'); currentAudio = null; res(); };
-      audio.addEventListener('ended', done, { once: true });
-      audio.addEventListener('error', done, { once: true });
-      currentAudio = audio;
-      const p = audio.play(); if(p && p.catch) p.catch(done);
-    });
-  }
-  function scheduleBurst(){
-    clearTimeout(burstTimer);
-    const delay = (BURST_MIN + Math.random() * (BURST_MAX - BURST_MIN)) * 1000;
-    burstTimer = setTimeout(async () => {
-      if(!muted && !speaking && !document.hidden && bursts.length) await playClip(pick(bursts));
-      scheduleBurst();
-    }, delay);
-  }
-  function startAuto(){
-    bursts = discoverBursts();
-    if(bursts.length) scheduleBurst();
-  }
-
-  muteBtn.addEventListener('click', () => {
-    muted = !muted;
-    muteBtn.setAttribute('aria-pressed', String(muted));
-    if(muted){
-      stopCurrent();
-      if(music){ fadeMusic(0, 400); setTimeout(() => { if(muted && music){ music.pause(); } }, 450); }
-      setStatus(booted ? 'Muted' : 'Standby');
-    } else {
-      if(music){ const p = music.play(); if(p && p.catch) p.catch(() => {}); fadeMusic(MUSIC_VOL, 800); }
-      else if(booted){ startMusic(); }
-      setStatus('Online');
-    }
-  });
-
-  // Auto-initialise on load. Browsers block audio until the first interaction,
-  // so the boot runs visually right away and sound switches on at the first
-  // pointer/key/touch - no button required.
-  // The first interaction (a mouse move counts) starts the greeting if autoplay
-  // was blocked at load.
-  const enableSound = () => { startGreeting(); if(revealed && !muted && !music) startMusic(); };
-  ['pointerdown','pointermove','keydown','touchstart','scroll'].forEach(ev => window.addEventListener(ev, enableSound, { passive: true }));
-  const kickoff = () => setTimeout(runBoot, 450);
-  if(document.readyState === 'loading') window.addEventListener('DOMContentLoaded', kickoff, { once: true });
-  else kickoff();
-  // warm up TTS voices
-  if('speechSynthesis' in window){ speechSynthesis.getVoices(); speechSynthesis.onvoiceschanged = () => speechSynthesis.getVoices(); }
-})();
-</script>
 
 
-<audio id="pwintro-voice" preload="none" src="assets/voice/pwintro-voice.mp3"></audio>
 
 
-<script>
-/* Deep links: a CV or email linking to /#longstop should land on that card.
-   Other scripts focus elements near the top after load, which scrolls back up,
-   so land instantly and re-check for ~2.5s, stopping once the visitor scrolls. */
-(function(){
-  var id=decodeURIComponent(location.hash.slice(1)); if(!id) return;
-  var el=document.getElementById(id); if(!el||!el.classList.contains("r-card")) return;
-  var moved=false,tries=0;
-  ["wheel","touchstart","keydown","mousedown"].forEach(function(ev){addEventListener(ev,function(){moved=true;},{once:true,passive:true});});
-  function land(){
-    var r=el.getBoundingClientRect();
-    if(r.top<0||r.bottom>innerHeight){el.scrollIntoView({block:"center",behavior:"instant"});}
-    el.classList.add("is-deeplinked");
-    if(++tries<7&&!moved) setTimeout(land,400);
-  }
-  if(document.readyState==="complete") setTimeout(land,100); else addEventListener("load",function(){setTimeout(land,100);});
-})();
-</script>
-
-<!-- ============== JARVIS BOOT OVERLAY ============== -->
-<div class="jarvis-boot has-loader" id="jarvis-boot" role="status" aria-label="System boot">
-  <video class="jarvis-loader" id="jarvis-loader" autoplay muted playsinline preload="metadata" poster="assets/jarvis-intro-poster.jpg" aria-hidden="true">
-    <source src="assets/jarvis-intro.mp4" type="video/mp4" />
-  </video>
-  <div class="jarvis-stage">
-    <div class="orb idle" id="jarvis-orb" aria-hidden="true">
-      <span class="orb__glow"></span>
-      <span class="orb__ring r3"></span>
-      <span class="orb__ring r2"></span>
-      <span class="orb__ring"></span>
-      <span class="orb__core"></span>
-    </div>
-    <p class="jarvis-caption" id="jarvis-caption" aria-live="polite"></p>
-    <p class="jarvis-status" id="jarvis-status">Booting</p>
-  </div>
-</div>
-
-<!-- JARVIS: hidden caption (for screen readers) + a single mute control -->
-<div class="jarvis-dock" id="jarvis-dock" aria-label="Assistant">
-  <div class="jarvis-dock__caption sr-only" id="jarvis-dock-caption" aria-live="polite"></div>
-  <button class="jarvis-mute" id="jarvis-mute" type="button" aria-pressed="false" aria-label="Mute assistant" title="Mute assistant">
-    <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a9 9 0 0 1 0 14"/></svg>
-  </button>
-</div>
-
-<audio id="pwintro-voice" preload="none" src="assets/voice/pwintro-voice.mp3"></audio>
-<script>
-(function(){
-  "use strict";
-  var ENV=[0.0062, 0.0435, 0.1264, 0.2223, 0.2836, 0.2896, 0.243, 0.1747, 0.1189, 0.0767, 0.0364, 0.0091, 0.0011, 0.0002, 0.0001, 0.0001, 0.0064, 0.0606, 0.23, 0.4741, 0.6437, 0.6298, 0.4897, 0.4058, 0.4617, 0.5865, 0.6942, 0.7762, 0.7387, 0.5164, 0.2407, 0.0806, 0.034, 0.0189, 0.0067, 0.0012, 0.0002, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0012, 0.039, 0.2057, 0.4661, 0.6588, 0.6731, 0.7234, 0.8281, 0.9238, 0.8873, 0.8314, 0.691, 0.4608, 0.2332, 0.1583, 0.2177, 0.2819, 0.3036, 0.2973, 0.2706, 0.2296, 0.1839, 0.143, 0.0947, 0.0459, 0.0139, 0.0022, 0.0002, 0.0001, 0.0001, 0.0001, 0.0001, 0.0024, 0.0163, 0.0522, 0.1183, 0.234, 0.3836, 0.414, 0.2985, 0.2433, 0.4365, 0.7681, 0.9737, 0.9668, 0.8332, 0.7896, 0.8809, 0.9942, 1.0, 0.9317, 0.8699, 0.8198, 0.8137, 0.8206, 0.751, 0.5745, 0.3966, 0.2693, 0.1771, 0.1092, 0.0648, 0.0315, 0.0096, 0.0015, 0.0002, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.008, 0.0664, 0.2522, 0.56, 0.7449, 0.6353, 0.364, 0.1683, 0.0904, 0.1353, 0.3179, 0.521, 0.5573, 0.389, 0.1953, 0.205, 0.4612, 0.7548, 0.9176, 0.9495, 0.9592, 0.8983, 0.7175, 0.4873, 0.3543, 0.3228, 0.3029, 0.2553, 0.1934, 0.1649, 0.1767, 0.1815, 0.1545, 0.1906, 0.3771, 0.6306, 0.732, 0.6912, 0.6354, 0.6173, 0.5733, 0.5772, 0.6567, 0.7404, 0.6445, 0.448, 0.3917, 0.531, 0.6398, 0.6179, 0.5046, 0.358, 0.2287, 0.1503, 0.1, 0.0617, 0.0323, 0.0098, 0.0014, 0.0002, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0018, 0.0128, 0.0447, 0.1078, 0.194, 0.266, 0.2956, 0.3001, 0.3475, 0.4516, 0.5453, 0.5254, 0.3748, 0.1847, 0.0574, 0.0118, 0.0019, 0.0003, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001], FPS=24, RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var T_DRAW0=0.3,T_DRAW1=2.3,T_SPIN0=2.3,T_SPIN1=3.3,T_IGN0=3.3,T_IGN1=3.9,T_AUDIO=3.9;
-  var AUDIO_DUR=ENV.length/FPS,T_END=T_AUDIO+AUDIO_DUR,T_COL0=T_END+0.10,T_COL1=T_END+1.0,DUR=T_COL1+0.3,NSPK=160;
-  function mul(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
-  var rnd=mul(7),freq=[],phase=[],bias=[];
-  for(var i=0;i<NSPK;i++){freq.push(0.6+rnd()*1.6);phase.push(rnd()*6.283);bias.push(0.3+rnd()*0.7);}
-  var root=document.getElementById("pwintro-root"),cv=document.getElementById("pwintro-cv"),ctx=cv.getContext("2d");
-  var overlay=document.getElementById("pwintro-overlay"),startBtn=document.getElementById("pwintro-start");
-  var statusEl=document.getElementById("pwintro-status"),replayBtn=document.getElementById("pwintro-replay");
-  var voice=document.getElementById("pwintro-voice"),W,H,DPR;
-  function resize(){DPR=Math.min(window.devicePixelRatio||1,1.25);W=cv.width=Math.floor(innerWidth*DPR);H=cv.height=Math.floor(innerHeight*DPR);}
-  addEventListener("resize",resize);resize();
-  function smooth(a,b,x){if(x<=a)return 0;if(x>=b)return 1;var t=(x-a)/(b-a);return t*t*(3-2*t);}
-  var started=false,audioOn=false,startT=0,raf=0,finished=false;
-  function amp(t){if(audioOn&&!voice.paused){var idx=Math.floor(voice.currentTime*FPS);return(idx>=0&&idx<ENV.length)?ENV[idx]:0;}
-    if(t>=T_AUDIO){var j=Math.floor((t-T_AUDIO)*FPS);return(j>=0&&j<ENV.length)?ENV[j]:0;}return 0;}
-  function render(t){
-    ctx.setTransform(1,0,0,1,0,0);ctx.globalCompositeOperation="source-over";ctx.globalAlpha=1;
-    ctx.fillStyle="#000";ctx.fillRect(0,0,W,H);
-    var col=smooth(T_COL0,T_COL1,t),scale=1-col,fade=1-smooth(T_COL0,T_COL1+0.05,t);
-    if(scale<=0.001||fade<=0.001)return;
-    var cx=W/2,cy=H/2,R=Math.min(W,H)*0.26*scale;
-    var drawP=RM?1:smooth(T_DRAW0,T_DRAW1,t);
-    var spin=RM?0:(smooth(T_SPIN0,T_SPIN1,t)*2*Math.PI+Math.max(0,t-T_SPIN1)*0.12);
-    var app=smooth(T_IGN0,T_IGN1,t),a2=amp(t),aR=RM?0:a2,lead=drawP*2*Math.PI;
-    ctx.globalAlpha=fade;ctx.globalCompositeOperation="lighter";ctx.lineCap="round";
-    var inner=[],spokes=[];
-    ctx.shadowBlur=0;
-    for(var i=0;i<NSPK;i++){
-      var ang=2*Math.PI*i/NSPK;
-      if(!RM&&t<T_SPIN1&&ang>lead+1e-3)continue;
-      var a=ang+spin,sx=Math.sin(a),sy=-Math.cos(a),bx=cx+R*sx,by=cy+R*sy,L=0;
-      if(app>0){var n=0.5+0.5*Math.sin(2*Math.PI*(freq[i]*t)+phase[i]);
-        var idle=(0.14+0.42*n)*bias[i],voiceL=aR*(0.45+0.85*n)*bias[i];
-        L=(idle*0.045+voiceL*0.52)*R*app;}
-      var ex=cx+(R+L)*sx,ey=cy+(R+L)*sy;
-      spokes.push(bx,by,ex,ey);
-      var ix=cx+(R-6*scale)*sx,iy=cy+(R-6*scale)*sy;
-      inner.push(ix,iy,bx,by);
-    }
-        // glow pass: one wide translucent path for all 160 spokes
-    ctx.beginPath();
-    for(var q=0;q<spokes.length;q+=4){ctx.moveTo(spokes[q],spokes[q+1]);ctx.lineTo(spokes[q+2],spokes[q+3]);}
-    ctx.strokeStyle="rgba(52,211,153,0.16)";ctx.lineWidth=Math.max(5,11*scale);ctx.stroke();
-    // core pass: same path, narrow and bright
-    ctx.strokeStyle="rgba(120,255,190,0.95)";ctx.lineWidth=Math.max(1.4,2.6*scale);ctx.stroke();
-    // inner segments, one batched path
-    ctx.strokeStyle="rgba(40,170,110,0.75)";ctx.lineWidth=Math.max(1,2*scale);ctx.beginPath();
-    for(var q=0;q<inner.length;q+=4){ctx.moveTo(inner[q],inner[q+1]);ctx.lineTo(inner[q+2],inner[q+3]);}
-    ctx.stroke();
-    if(!RM&&t>T_DRAW0&&t<T_DRAW1){var la=lead+spin,lx=cx+R*Math.sin(la),ly=cy-R*Math.cos(la);
-      ctx.fillStyle="rgba(220,255,235,1)";ctx.shadowBlur=0;
-      ctx.beginPath();ctx.arc(lx,ly,6*scale,0,7);ctx.fill();}
-    if(app>0){var CR=Math.min(W,H)*0.045*scale,cb=app*(0.8+0.6*aR);
-      var g=ctx.createRadialGradient(cx,cy,0,cx,cy,CR*3.6);
-      g.addColorStop(0,"rgba(255,255,255,"+(0.95*cb)+")");g.addColorStop(0.25,"rgba(130,255,195,"+(0.9*cb)+")");
-      g.addColorStop(0.6,"rgba(52,211,153,"+(0.32*cb)+")");g.addColorStop(1,"rgba(52,211,153,0)");
-      ctx.shadowBlur=0;ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,CR*3.6,0,7);ctx.fill();
-      if(!RM){ctx.strokeStyle="rgba(190,255,215,"+(0.5*cb)+")";ctx.lineWidth=2*scale;
-        ctx.shadowBlur=0;
-        for(var k=0;k<6;k++){var aa=k*Math.PI/3+0.2,ln=CR*3*(0.6+0.8*a2);
-          ctx.beginPath();ctx.moveTo(cx-ln*Math.cos(aa),cy-ln*Math.sin(aa));
-          ctx.lineTo(cx+ln*Math.cos(aa),cy+ln*Math.sin(aa));ctx.stroke();}}}
-  }
-  function loop(now){if(document.hidden){raf=requestAnimationFrame(loop);return;}var t=(now-startT)/1000;
-    if(!audioOn&&t>=T_AUDIO){audioOn=true;try{voice.currentTime=0;voice.play();}catch(e){}}
-    render(t);if(t<DUR){raf=requestAnimationFrame(loop);}else{endIntro();}}
-  function start(){if(started)return;started=true;finished=false;audioOn=false;
-    document.body.classList.add("pwintro-lock");
-    overlay.style.opacity="0";setTimeout(function(){overlay.style.display="none";},500);
-    replayBtn.style.display="none";cv.setAttribute("aria-hidden","true");
-    statusEl.textContent="Playing intro";statusEl.focus();
-    try{voice.play().then(function(){voice.pause();voice.currentTime=0;}).catch(function(){});}catch(e){}
-    startT=performance.now();raf=requestAnimationFrame(loop);}
-  function endIntro(){if(finished)return;finished=true;started=false;
-    cancelAnimationFrame(raf);try{voice.pause();}catch(e){}
-    // reveal the portfolio underneath
-    root.classList.add("pwintro-done");
-    document.body.classList.remove("pwintro-lock");
-    setTimeout(function(){root.style.display="none";
-      var tgt=document.querySelector("main,h1,[role=main]");
-      if(tgt){tgt.setAttribute("tabindex","-1");try{tgt.focus();}catch(e){}}
-    },750);}
-  function skip(){if(!started)return;startT=performance.now()-DUR*1000;}
-  startBtn.addEventListener("click",start);
-  replayBtn.addEventListener("click",function(){root.style.display="";root.classList.remove("pwintro-done");start();});
-  addEventListener("keydown",function(e){if(e.key==="Escape"&&started)skip();});
-  // lock scroll while the intro is up, land focus on Start
-  document.body.classList.add("pwintro-lock");
-  startBtn.focus();
-})();
-</script>
 </body>
 </html>
