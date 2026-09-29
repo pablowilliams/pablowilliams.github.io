@@ -2111,9 +2111,43 @@ section[data-observe].wipe-hidden{
 @media (max-width: 560px){  }
 
 </style>
+<style>.r-card[id]{scroll-margin-top:110px}.r-card.is-deeplinked{outline:2px solid var(--cyan,#34d399);outline-offset:4px}</style>
+<style id="pwintro-style">
+  #pwintro-root{position:fixed;inset:0;z-index:2147483000;background:#000;
+    transition:opacity .7s ease;}
+  #pwintro-root.pwintro-done{opacity:0;pointer-events:none;}
+  #pwintro-cv{position:fixed;inset:0;width:100%;height:100%;display:block;background:#000;}
+  #pwintro-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+    flex-direction:column;background:#000;transition:opacity .5s ease;
+    font-family:"SF Mono","Roboto Mono",ui-monospace,Menlo,monospace;}
+  #pwintro-ttl{color:#34d399;letter-spacing:.35em;font-weight:600;font-size:clamp(1.2rem,3.5vw,2rem);
+    margin:0 0 1.4em;text-shadow:0 0 18px rgba(52,211,153,.45);}
+  #pwintro-start{font-family:inherit;font-size:.95rem;letter-spacing:.08em;color:#34d399;
+    background:#0a0f0d;border:1px solid #2a3a32;border-radius:2px;padding:.55em 1.6em;cursor:pointer;}
+  #pwintro-start:hover{background:#101713;border-color:#34d399;}
+  #pwintro-start:active{background:#182219;}
+  #pwintro-start:focus-visible{outline:2px solid #4ade80;outline-offset:2px;}
+  #pwintro-start::before{content:"$ ";color:#4a5a52;}
+  #pwintro-replay{position:fixed;left:50%;bottom:12%;transform:translateX(-50%);font-family:"SF Mono",monospace;
+    font-size:.8rem;letter-spacing:.25em;text-transform:uppercase;color:#34d399;background:rgba(52,211,153,.08);
+    border:1px solid rgba(52,211,153,.5);border-radius:999px;padding:.7em 2em;cursor:pointer;display:none;}
+  #pwintro-replay:focus-visible{outline:3px solid #4ade80;outline-offset:3px;}
+  .pwintro-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;clip:rect(0 0 0 0);
+    clip-path:inset(50%);overflow:hidden;white-space:nowrap;}
+  body.pwintro-lock{overflow:hidden !important;}
+</style>
 </head>
 
 <body>
+<div id="pwintro-root" role="dialog" aria-modal="true" aria-label="Site intro">
+  <canvas id="pwintro-cv" aria-hidden="true"></canvas>
+  <p class="pwintro-sr" id="pwintro-status" tabindex="-1" aria-live="polite"></p>
+  <button id="pwintro-replay" type="button">Replay</button>
+  <div id="pwintro-overlay">
+    <button id="pwintro-start" type="button" aria-label="Start — play the intro with sound, then enter the site">start</button>
+  </div>
+</div>
+<p class="pwintro-sr">Intro voiceover transcript: Hey, welcome back. Booting up now. And we're online — everything's ready and running. Shall we?</p>
 
 <a class="skip-link" href="#main">Skip to main content</a>
 <div class="progress" id="progress" aria-hidden="true"></div>
@@ -2993,6 +3027,79 @@ section[data-observe].wipe-hidden{
       </div>
 
       <div class="r-grid stagger" id="research-grid" role="region" aria-roledescription="carousel" aria-label="Research papers" tabindex="0">
+        <article class="r-card" id="pipelinepulse" data-theme="ops" data-tags="ops">
+          <div class="r-head"><span class="tag">Operations</span><span class="r-id">R/30</span></div>
+          <h3>PipelinePulse</h3>
+          <p class="sub">GitLab delivery analytics</p>
+          <p>Turns GitLab CI/CD and merge-request data into DORA metrics, flaky-test detection, pipeline slowdown alerts and CI cost, behind 44 data-quality checks that block publishing. On 436k seeded job runs it caught 14 of 14 injected slowdowns with no false alarms. Specified in Kiro and delivered through GitLab CI.</p>
+          <div class="stack"><span>DuckDB</span><span>SQL</span><span>GitLab CI</span><span>Kiro</span></div>
+        </article>
+
+        <article class="r-card" id="stratum" data-theme="finance" data-tags="finance">
+          <div class="r-head"><span class="tag">Quant finance</span><span class="r-id">R/31</span></div>
+          <h3>Stratum Analytics</h3>
+          <p class="sub">Tableau investment reporting suite</p>
+          <p>Investment reporting for a simulated &euro;755m family office: a Tableau workbook with 4 dashboards and 59 calculated fields, plus a matching web dashboard. Its data checks caught all 16 planted trade errors among 9,373 trades with no false alarms, where a simple threshold rule raised 267, and its attribution reconciles to 0.00 bp.</p>
+          <div class="stack"><span>Tableau</span><span>Python</span><span>DuckDB</span><span>VaR</span></div>
+        </article>
+
+        <article class="r-card" id="longstop" data-theme="finance" data-tags="finance">
+          <div class="r-head"><span class="tag">Quant finance</span><span class="r-id">R/32</span></div>
+          <h3>Longstop</h3>
+          <p class="sub">M&amp;A deal-break research</p>
+          <p>Labels 10,051 US public-target mergers since 2001 straight from SEC EDGAR filings, and shows that of 437 filings that looked like failed deals, 216 were unrelated contracts and only 121 were real deal breaks. Includes an accretion and dilution merger model with a closed-form synergy break-even.</p>
+          <div class="stack"><span>EDGAR</span><span>Python</span><span>React</span><span>M&amp;A</span></div>
+          <div class="links">
+            <a href="https://pablowilliams.github.io/longstop/" target="_blank" rel="noopener">Dashboard</a>
+            <a href="https://github.com/pablowilliams/longstop" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </article>
+
+        <article class="r-card" id="processlab" data-theme="ops" data-tags="ops">
+          <div class="r-head"><span class="tag">Operations</span><span class="r-id">R/33</span></div>
+          <h3>ProcessLab</h3>
+          <p class="sub">Process discovery and business case</p>
+          <p>Maps queues, effort and rework in a synthetic insurance-claims process handling 5,200 claims a month, then builds a stress-tested business case: about 1,070 adjuster hours a month freed and a 5.4-month payback that halves if exceptions climb.</p>
+          <div class="stack"><span>Process mapping</span><span>Business case</span><span>JavaScript</span></div>
+          <div class="links">
+            <a href="https://github.com/pablowilliams/processlab" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </article>
+
+        <article class="r-card" id="vendorboard" data-theme="ops" data-tags="ops">
+          <div class="r-head"><span class="tag">Operations</span><span class="r-id">R/34</span></div>
+          <h3>VendorBoard</h3>
+          <p class="sub">Stakeholder decision analysis</p>
+          <p>Scores three fictional AI-platform vendors on five weighted criteria under four stakeholder views, with a UK data-residency knockout that removes 1 of the 3 whatever it scores. The CFO weighting changes the recommendation, which is the conversation procurement actually needs.</p>
+          <div class="stack"><span>Decision analysis</span><span>Stakeholders</span><span>JavaScript</span></div>
+          <div class="links">
+            <a href="https://github.com/pablowilliams/vendorboard" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </article>
+
+        <article class="r-card" id="touchstone" data-theme="applied" data-tags="applied">
+          <div class="r-head"><span class="tag">Applied ML</span><span class="r-id">R/35</span></div>
+          <h3>Touchstone</h3>
+          <p class="sub">Governed AI reference architecture</p>
+          <p>An AI solution architecture for a fictional regulated client, with a verifier that stopped every one of 59 attempts to slip an ungrounded number past it. Architected for Azure and validated, not deployed.</p>
+          <div class="stack"><span>RAG</span><span>Evaluation</span><span>Azure</span><span>FastAPI</span></div>
+          <div class="links">
+            <a href="https://github.com/pablowilliams/touchstone" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </article>
+
+        <article class="r-card" id="signalops" data-theme="ops" data-tags="ops">
+          <div class="r-head"><span class="tag">Operations</span><span class="r-id">R/36</span></div>
+          <h3>SignalOps</h3>
+          <p class="sub">Data incident detection and A/B analysis</p>
+          <p>Spots service incidents in 60,480 hours of seeded telemetry with 87.9% precision and 93.5% recall, against 11.9% precision for a rolling z-score, cutting false-alarm episodes from 111 to 4. Also runs a CUPED-adjusted A/B test analysis across 12,000 units.</p>
+          <div class="stack"><span>dbt</span><span>FastAPI</span><span>Next.js</span><span>A/B testing</span></div>
+          <div class="links">
+            <a href="https://github.com/pablowilliams/signalops" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </article>
+
+
 
         <article class="r-card" data-theme="interp" data-tags="interp">
           <div class="r-head"><span class="tag">Interpretability</span><span class="r-id">R/01</span></div>
@@ -3042,11 +3149,11 @@ section[data-observe].wipe-hidden{
           </div>
         </article>
 
-        <article class="r-card" data-theme="finance" data-tags="finance">
+        <article class="r-card" id="calibration" data-theme="finance" data-tags="finance">
           <div class="r-head"><span class="tag">Quant finance</span><span class="r-id">R/05</span></div>
           <h3>Calibration Optimised Equity</h3>
           <p class="sub">ECE optimised portfolio strategy</p>
-          <p>Tested whether ECE optimised classifiers deliver better portfolio returns under half Kelly sizing across 457 S&amp;P 500 stocks from 2010 to 2024. Random Forest hit the best calibration at ECE 0.026, a Sharpe of 0.77 and 68.1 percent total return.</p>
+          <p>Tested whether better-calibrated classifiers pick better stocks across 457 S&amp;P 500 names (2010 to 2024 data). Random Forest calibrated best (ECE 0.026) and its portfolio returned 68.1 percent over the 2021 to 2024 test, ahead of SPY at 66.1 percent, though with a lower Sharpe (0.77 vs 0.83).</p>
           <div class="stack"><span>XGBoost</span><span>LightGBM</span><span>SHAP</span></div>
           <div class="links">
             <a href="https://github.com/pablowilliams/MSIN0097-Calibration-Portfolio/raw/main/MSIN0097_FINAL_REPORT_25088283.pdf" target="_blank" rel="noopener">Report</a>
@@ -3170,11 +3277,11 @@ section[data-observe].wipe-hidden{
           </div>
         </article>
 
-        <article class="r-card" data-theme="applied" data-tags="applied">
+        <article class="r-card" id="churn-propensity" data-theme="applied" data-tags="applied">
           <div class="r-head"><span class="tag">Applied ML</span><span class="r-id">R/16</span></div>
           <h3>Churn Propensity Modelling</h3>
           <p class="sub">Telco customer attrition</p>
-          <p>End to end churn pipeline on the IBM Telco dataset. Compares Logistic Regression, Random Forest and XGBoost with business oriented evaluation via cumulative lift, calibration analysis and decile level targeting. Top 20 percent captures 55 percent of churners.</p>
+          <p>End to end churn pipeline on the IBM Telco dataset. Compares Logistic Regression, Random Forest and XGBoost with business oriented evaluation via cumulative lift, calibration analysis and decile level targeting. On 7,043 customers, targeting the riskiest 20 percent reaches 55 percent of churners, a 2.7x lift over random outreach.</p>
           <div class="stack"><span>XGBoost</span><span>Calibration</span><span>Lift</span></div>
           <div class="links">
             <a href="https://github.com/pablowilliams/churn-propensity-modelling/raw/main/paper/report.pdf" target="_blank" rel="noopener">Report</a>
@@ -3182,11 +3289,11 @@ section[data-observe].wipe-hidden{
           </div>
         </article>
 
-        <article class="r-card" data-theme="applied" data-tags="applied">
+        <article class="r-card" id="topic-discovery" data-theme="applied" data-tags="applied">
           <div class="r-head"><span class="tag">Applied ML</span><span class="r-id">R/17</span></div>
           <h3>Online Community Topic Discovery</h3>
           <p class="sub">NLP topic modelling for problem solving</p>
-          <p>Unsupervised topic modelling on 14,000 plus discussion posts comparing LDA and NMF. Adds urgency scoring, pain point extraction, extractive summarisation, severity clustering and topic category cross analysis.</p>
+          <p>Unsupervised topic modelling on 14,000 plus discussion posts. LDA found 17 topics with twice the coherence of NMF (0.65 vs 0.32). Adds urgency scoring, pain point extraction, extractive summarisation, severity clustering and topic category cross analysis.</p>
           <div class="stack"><span>Gensim</span><span>LDA</span><span>NMF</span></div>
           <div class="links">
             <a href="https://github.com/pablowilliams/consumer-complaints-topic-discovery/raw/main/paper/report.pdf" target="_blank" rel="noopener">Report</a>
@@ -3229,7 +3336,7 @@ section[data-observe].wipe-hidden{
           </div>
         </article>
 
-        <article class="r-card" data-theme="applied" data-tags="applied">
+        <article class="r-card" id="riskterrain" data-theme="applied" data-tags="applied">
           <div class="r-head"><span class="tag">Applied ML</span><span class="r-id">R/21</span></div>
           <h3>RiskTerrain</h3>
           <p class="sub">Geospatial S&amp;P 500 risk intelligence</p>
@@ -6409,6 +6516,54 @@ section[data-observe].wipe-hidden{
 
 
 <audio id="pwintro-voice" preload="none" src="assets/voice/pwintro-voice.mp3"></audio>
+
+
+<script>
+/* Deep links: a CV or email linking to /#longstop should land on that card.
+   Other scripts focus elements near the top after load, which scrolls back up,
+   so land instantly and re-check for ~2.5s, stopping once the visitor scrolls. */
+(function(){
+  var id=decodeURIComponent(location.hash.slice(1)); if(!id) return;
+  var el=document.getElementById(id); if(!el||!el.classList.contains("r-card")) return;
+  var moved=false,tries=0;
+  ["wheel","touchstart","keydown","mousedown"].forEach(function(ev){addEventListener(ev,function(){moved=true;},{once:true,passive:true});});
+  function land(){
+    var r=el.getBoundingClientRect();
+    if(r.top<0||r.bottom>innerHeight){el.scrollIntoView({block:"center",behavior:"instant"});}
+    el.classList.add("is-deeplinked");
+    if(++tries<7&&!moved) setTimeout(land,400);
+  }
+  if(document.readyState==="complete") setTimeout(land,100); else addEventListener("load",function(){setTimeout(land,100);});
+})();
+</script>
+
+<!-- ============== JARVIS BOOT OVERLAY ============== -->
+<div class="jarvis-boot has-loader" id="jarvis-boot" role="status" aria-label="System boot">
+  <video class="jarvis-loader" id="jarvis-loader" autoplay muted playsinline preload="metadata" poster="assets/jarvis-intro-poster.jpg" aria-hidden="true">
+    <source src="assets/jarvis-intro.mp4" type="video/mp4" />
+  </video>
+  <div class="jarvis-stage">
+    <div class="orb idle" id="jarvis-orb" aria-hidden="true">
+      <span class="orb__glow"></span>
+      <span class="orb__ring r3"></span>
+      <span class="orb__ring r2"></span>
+      <span class="orb__ring"></span>
+      <span class="orb__core"></span>
+    </div>
+    <p class="jarvis-caption" id="jarvis-caption" aria-live="polite"></p>
+    <p class="jarvis-status" id="jarvis-status">Booting</p>
+  </div>
+</div>
+
+<!-- JARVIS: hidden caption (for screen readers) + a single mute control -->
+<div class="jarvis-dock" id="jarvis-dock" aria-label="Assistant">
+  <div class="jarvis-dock__caption sr-only" id="jarvis-dock-caption" aria-live="polite"></div>
+  <button class="jarvis-mute" id="jarvis-mute" type="button" aria-pressed="false" aria-label="Mute assistant" title="Mute assistant">
+    <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a9 9 0 0 1 0 14"/></svg>
+  </button>
+</div>
+
+<audio id="pwintro-voice" preload="none" src="assets/voice/pwintro-voice.mp3"></audio>
 <script>
 (function(){
   "use strict";
@@ -6418,13 +6573,11 @@ section[data-observe].wipe-hidden{
   function mul(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
   var rnd=mul(7),freq=[],phase=[],bias=[];
   for(var i=0;i<NSPK;i++){freq.push(0.6+rnd()*1.6);phase.push(rnd()*6.283);bias.push(0.3+rnd()*0.7);}
-  var root=document.getElementById("pwintro-root");
-  if(!root)return;
-  var cv=document.getElementById("pwintro-cv"),ctx=cv.getContext("2d");
+  var root=document.getElementById("pwintro-root"),cv=document.getElementById("pwintro-cv"),ctx=cv.getContext("2d");
   var overlay=document.getElementById("pwintro-overlay"),startBtn=document.getElementById("pwintro-start");
   var statusEl=document.getElementById("pwintro-status"),replayBtn=document.getElementById("pwintro-replay");
   var voice=document.getElementById("pwintro-voice"),W,H,DPR;
-  function resize(){DPR=Math.min(window.devicePixelRatio||1,2);W=cv.width=Math.floor(innerWidth*DPR);H=cv.height=Math.floor(innerHeight*DPR);}
+  function resize(){DPR=Math.min(window.devicePixelRatio||1,1.25);W=cv.width=Math.floor(innerWidth*DPR);H=cv.height=Math.floor(innerHeight*DPR);}
   addEventListener("resize",resize);resize();
   function smooth(a,b,x){if(x<=a)return 0;if(x>=b)return 1;var t=(x-a)/(b-a);return t*t*(3-2*t);}
   var started=false,audioOn=false,startT=0,raf=0,finished=false;
@@ -6440,6 +6593,8 @@ section[data-observe].wipe-hidden{
     var spin=RM?0:(smooth(T_SPIN0,T_SPIN1,t)*2*Math.PI+Math.max(0,t-T_SPIN1)*0.12);
     var app=smooth(T_IGN0,T_IGN1,t),a2=amp(t),aR=RM?0:a2,lead=drawP*2*Math.PI;
     ctx.globalAlpha=fade;ctx.globalCompositeOperation="lighter";ctx.lineCap="round";
+    var inner=[],spokes=[];
+    ctx.shadowBlur=0;
     for(var i=0;i<NSPK;i++){
       var ang=2*Math.PI*i/NSPK;
       if(!RM&&t<T_SPIN1&&ang>lead+1e-3)continue;
@@ -6448,13 +6603,22 @@ section[data-observe].wipe-hidden{
         var idle=(0.14+0.42*n)*bias[i],voiceL=aR*(0.45+0.85*n)*bias[i];
         L=(idle*0.045+voiceL*0.52)*R*app;}
       var ex=cx+(R+L)*sx,ey=cy+(R+L)*sy;
-      ctx.strokeStyle="rgba(70,235,155,0.95)";ctx.shadowColor="rgba(52,211,153,0.9)";ctx.shadowBlur=(RM?4:12)*scale;
-      ctx.lineWidth=Math.max(1.5,3*scale);ctx.beginPath();ctx.moveTo(bx,by);ctx.lineTo(ex,ey);ctx.stroke();
-      var ix=cx+(R-6*scale)*sx,iy=cy+(R-6*scale)*sy;ctx.strokeStyle="rgba(40,170,110,0.75)";
-      ctx.beginPath();ctx.moveTo(ix,iy);ctx.lineTo(bx,by);ctx.stroke();
+      spokes.push(bx,by,ex,ey);
+      var ix=cx+(R-6*scale)*sx,iy=cy+(R-6*scale)*sy;
+      inner.push(ix,iy,bx,by);
     }
+        // glow pass: one wide translucent path for all 160 spokes
+    ctx.beginPath();
+    for(var q=0;q<spokes.length;q+=4){ctx.moveTo(spokes[q],spokes[q+1]);ctx.lineTo(spokes[q+2],spokes[q+3]);}
+    ctx.strokeStyle="rgba(52,211,153,0.16)";ctx.lineWidth=Math.max(5,11*scale);ctx.stroke();
+    // core pass: same path, narrow and bright
+    ctx.strokeStyle="rgba(120,255,190,0.95)";ctx.lineWidth=Math.max(1.4,2.6*scale);ctx.stroke();
+    // inner segments, one batched path
+    ctx.strokeStyle="rgba(40,170,110,0.75)";ctx.lineWidth=Math.max(1,2*scale);ctx.beginPath();
+    for(var q=0;q<inner.length;q+=4){ctx.moveTo(inner[q],inner[q+1]);ctx.lineTo(inner[q+2],inner[q+3]);}
+    ctx.stroke();
     if(!RM&&t>T_DRAW0&&t<T_DRAW1){var la=lead+spin,lx=cx+R*Math.sin(la),ly=cy-R*Math.cos(la);
-      ctx.fillStyle="rgba(220,255,235,1)";ctx.shadowColor="rgba(200,255,225,1)";ctx.shadowBlur=22*scale;
+      ctx.fillStyle="rgba(220,255,235,1)";ctx.shadowBlur=0;
       ctx.beginPath();ctx.arc(lx,ly,6*scale,0,7);ctx.fill();}
     if(app>0){var CR=Math.min(W,H)*0.045*scale,cb=app*(0.8+0.6*aR);
       var g=ctx.createRadialGradient(cx,cy,0,cx,cy,CR*3.6);
@@ -6462,12 +6626,12 @@ section[data-observe].wipe-hidden{
       g.addColorStop(0.6,"rgba(52,211,153,"+(0.32*cb)+")");g.addColorStop(1,"rgba(52,211,153,0)");
       ctx.shadowBlur=0;ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,CR*3.6,0,7);ctx.fill();
       if(!RM){ctx.strokeStyle="rgba(190,255,215,"+(0.5*cb)+")";ctx.lineWidth=2*scale;
-        ctx.shadowColor="rgba(130,255,195,0.9)";ctx.shadowBlur=16;
+        ctx.shadowBlur=0;
         for(var k=0;k<6;k++){var aa=k*Math.PI/3+0.2,ln=CR*3*(0.6+0.8*a2);
           ctx.beginPath();ctx.moveTo(cx-ln*Math.cos(aa),cy-ln*Math.sin(aa));
           ctx.lineTo(cx+ln*Math.cos(aa),cy+ln*Math.sin(aa));ctx.stroke();}}}
   }
-  function loop(now){var t=(now-startT)/1000;
+  function loop(now){if(document.hidden){raf=requestAnimationFrame(loop);return;}var t=(now-startT)/1000;
     if(!audioOn&&t>=T_AUDIO){audioOn=true;try{voice.currentTime=0;voice.play();}catch(e){}}
     render(t);if(t<DUR){raf=requestAnimationFrame(loop);}else{endIntro();}}
   function start(){if(started)return;started=true;finished=false;audioOn=false;
@@ -6495,6 +6659,5 @@ section[data-observe].wipe-hidden{
   startBtn.focus();
 })();
 </script>
-
 </body>
 </html>
