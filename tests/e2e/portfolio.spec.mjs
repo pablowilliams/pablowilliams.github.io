@@ -100,8 +100,28 @@ test("no horizontal overflow at 320px", async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 900 });
   // Load at the target viewport so responsive layout is settled before it is measured.
   await page.reload();
-  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
-  expect(overflow).toBe(0);
+  const layout = await page.evaluate(() => {
+    const viewportWidth = document.documentElement.clientWidth;
+    const offenders = Array.from(document.querySelectorAll("body *"))
+      .map((element) => {
+        const rect = element.getBoundingClientRect();
+        return {
+          tag: element.tagName.toLowerCase(),
+          id: element.id,
+          className: typeof element.className === "string" ? element.className : "",
+          left: Math.round(rect.left),
+          right: Math.round(rect.right),
+          width: Math.round(rect.width),
+        };
+      })
+      .filter(({ left, right }) => left < 0 || right > viewportWidth)
+      .slice(0, 12);
+    return {
+      overflow: document.documentElement.scrollWidth - viewportWidth,
+      offenders,
+    };
+  });
+  expect(layout.overflow, JSON.stringify(layout.offenders)).toBe(0);
 });
 
 test("reduced motion removes the ambient canvas and settles the hero", async ({ browser }) => {
