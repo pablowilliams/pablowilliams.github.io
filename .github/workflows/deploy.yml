@@ -19,6 +19,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Checkout GraphShield
+        uses: actions/checkout@v4
+        with:
+          repository: pablowilliams/graphshield
+          path: _published/graphshield
+      - name: Checkout SignalOps
+        uses: actions/checkout@v4
+        with:
+          repository: pablowilliams/signalops
+          path: _published/signalops
+      - name: Checkout Payment Risk Workbench
+        uses: actions/checkout@v4
+        with:
+          repository: pablowilliams/payment-risk-workbench
+          path: _published/payment-risk-workbench
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -26,6 +41,19 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - run: npm run verify
+      - name: Build static product editions
+        run: |
+          npm ci --prefix _published/graphshield
+          npm run build:pages --prefix _published/graphshield
+          npm ci --prefix _published/signalops
+          npm run build:pages --prefix _published/signalops
+          npm ci --prefix _published/payment-risk-workbench
+          npm run build:pages --prefix _published/payment-risk-workbench
+          mkdir -p dist/graphshield dist/signalops dist/payment-risk-workbench
+          cp -R _published/graphshield/dist-pages/. dist/graphshield/
+          cp -R _published/signalops/dist-pages/. dist/signalops/
+          cp -R _published/payment-risk-workbench/dist-pages/. dist/payment-risk-workbench/
+          touch dist/.nojekyll
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

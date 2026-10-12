@@ -1,6 +1,14 @@
 # Pablo Williams Portfolio
 This Output is produced by Claude
 
+## Published product editions
+
+- [GraphShield](https://pablowilliams.github.io/graphshield/) - static investigation workspace using deterministic synthetic evidence
+- [SignalOps](https://pablowilliams.github.io/signalops/) - static incident-intelligence workspace using the checked-in evaluation dataset
+- [Payment Risk Workbench](https://pablowilliams.github.io/payment-risk-workbench/) - static financial-crime operations workspace using synthetic records
+
+These GitHub Pages editions preserve the interactive product interfaces while replacing server persistence with explicit local/reference behaviour. The repository links remain the source of truth for each complete application.
+
 This is the public index for Pablo Williams's applied AI, data, quantitative research and frontend work. A recruiter can move from a short professional overview to live demonstrations, source code, research reports and contact routes without an account, an intro gate or a hidden workflow. The [live site](https://pablowilliams.github.io/) is a static deployment with no runtime credentials.
 
 ![Portfolio at desktop width](reports/figures/portfolio-desktop.jpg)
