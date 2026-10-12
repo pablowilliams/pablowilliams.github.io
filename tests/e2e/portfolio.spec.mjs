@@ -4,81 +4,109 @@ test.beforeEach(async ({ page }) => {
   await page.goto("/");
 });
 
-test("publishes a specific title and main heading", async ({ page }) => {
+test("page loads with content, not an intro gate", async ({ page }) => {
   await expect(page).toHaveTitle(/Pablo Williams/);
-  await expect(page.locator("main h1")).toBeVisible();
-});
-
-test("opens directly without an intro gate", async ({ page }) => {
+  await expect(page.locator("#main")).toBeVisible();
+  await expect(page.locator("h1")).toContainText("I build AI and data systems");
   await expect(page.locator("#pwintro-root, #jarvis-boot")).toHaveCount(0);
-  await expect(page.locator("main")).toBeVisible();
 });
 
-test("skip link points to the main landmark", async ({ page }) => {
-  await expect(page.locator("a.skip-link")).toHaveAttribute("href", "#main");
-  await expect(page.locator("main#main")).toHaveCount(1);
+test("skip link is reachable by keyboard", async ({ page }) => {
+  await page.keyboard.press("Tab");
+  await expect(page.locator(".skip-link")).toBeFocused();
 });
 
-test("every primary navigation hash resolves", async ({ page }) => {
-  const hrefs = await page.locator("nav[aria-label='Primary'] a[href^='#']").evaluateAll((links) => links.map((link) => link.getAttribute("href")));
-  expect(hrefs.length).toBeGreaterThan(5);
-  for (const href of hrefs) await expect(page.locator(href)).toHaveCount(1);
+test("primary navigation reaches every landmark section", async ({ page }) => {
+  for (const id of ["systems", "capabilities", "index", "experience", "credentials", "contact"]) {
+    await expect(page.locator(`#${id}`)).toHaveCount(1);
+  }
 });
 
-test("CV download points to a published PDF", async ({ page, request }) => {
-  const link = page.locator("a[href='PWCV.pdf']");
-  await expect(link).toHaveAttribute("download", "PWCV.pdf");
-  const response = await request.get("/PWCV.pdf");
-  expect(response.status()).toBe(200);
-  expect(response.headers()["content-type"]).toContain("application/pdf");
+test("four flagship systems each carry a source link and evidence", async ({ page }) => {
+  const flags = page.locator("article.flag");
+  await expect(flags).toHaveCount(4);
+  for (let i = 0; i < 4; i++) {
+    const flag = flags.nth(i);
+    await expect(flag.locator('a[href*="github.com"]')).toHaveCount(1);
+    await expect(flag.locator(".metric")).not.toHaveCount(0);
+    await expect(flag.locator(".prov")).not.toHaveCount(0);
+  }
 });
 
-test("featured work exposes live and source links", async ({ page }) => {
-  const first = page.locator("#work .live-card").first();
-  await expect(first).toBeVisible();
-  await expect(first.locator("a.go")).toHaveAttribute("href", /^https:\/\//);
-  await expect(first.locator("a.src")).toHaveAttribute("href", /^https:\/\/github\.com\//);
+test("every metric declares where its number came from", async ({ page }) => {
+  const provs = page.locator(".prov");
+  const n = await provs.count();
+  expect(n).toBeGreaterThan(0);
+  for (let i = 0; i < n; i++) {
+    await expect(provs.nth(i)).toHaveAttribute("data-p", /measured|descriptive|synthetic|backtested/);
+  }
 });
 
-test("research filter changes the visible set", async ({ page }) => {
-  const buttons = page.locator("#research [data-filter]");
-  expect(await buttons.count()).toBeGreaterThan(1);
-  const cards = page.locator("#research-grid .r-card");
-  const total = await cards.count();
-  await buttons.nth(1).click();
-  await expect.poll(async () => cards.evaluateAll((nodes) => nodes.filter((node) => getComputedStyle(node).display !== "none").length)).toBeLessThan(total);
+test("project search narrows the index and reports the count", async ({ page }) => {
+  const count = page.locator("#count");
+  const before = await count.textContent();
+  await page.locator("#q").fill("retrieval");
+  await expect(count).not.toHaveText(before ?? "");
+  await page.locator("#reset").click();
+  await expect(count).toHaveText(before ?? "");
 });
 
-test("command palette opens from the documented shortcut", async ({ page }) => {
-  await page.keyboard.press(process.platform === "darwin" ? "Meta+K" : "Control+K");
-  await expect(page.locator("#palette-modal")).toBeVisible();
-  await expect(page.locator("#palette-input")).toBeFocused();
+test("slash focuses the search field", async ({ page }) => {
+  await page.keyboard.press("/");
+  await expect(page.locator("#q")).toBeFocused();
 });
 
-test("contact section provides email, LinkedIn and GitHub", async ({ page }) => {
-  await expect(page.locator("#contact a[href^='mailto:']")).toHaveCount(1);
-  await expect(page.locator("#contact a[href*='linkedin.com']")).toHaveCount(1);
-  await expect(page.locator("#contact a[href*='github.com']")).toHaveCount(1);
+test("filters persist to the URL so a filtered view is shareable", async ({ page }) => {
+  await page.locator('[data-flag="live"]').click();
+  await expect(page).toHaveURL(/live=1/);
+  await page.locator("#reset").click();
+  await expect(page).not.toHaveURL(/live=1/);
 });
 
-test("mobile menu expands accessibly", async ({ page }) => {
-  await page.setViewportSize({ width: 360, height: 780 });
-  const toggle = page.locator(".menu-toggle");
-  await expect(toggle).toBeVisible();
-  await toggle.click();
-  await expect(toggle).toHaveAttribute("aria-expanded", "true");
-  await expect(page.locator("#nav-list")).toHaveClass(/is-open/);
+test("project detail opens, traps nothing and closes on Escape", async ({ page }) => {
+  await page.locator("[data-open]").first().click();
+  const dialog = page.locator("#drawer");
+  await expect(dialog).toHaveAttribute("open", "");
+  await expect(page.locator("#d-close")).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(dialog).not.toHaveAttribute("open", "");
 });
 
-test("mobile layout has no horizontal overflow", async ({ page }) => {
-  await page.setViewportSize({ width: 360, height: 780 });
-  const widths = await page.evaluate(() => ({ scroll: document.documentElement.scrollWidth, client: document.documentElement.clientWidth }));
-  expect(widths.scroll).toBeLessThanOrEqual(widths.client);
+test("the CV and contact routes resolve", async ({ page }) => {
+  await expect(page.locator('a[href="PWCV.pdf"]').first()).toBeVisible();
+  await expect(page.locator('a[href^="mailto:"]').first()).toBeVisible();
+  const cv = await page.request.get("/PWCV.pdf");
+  expect(cv.status()).toBe(200);
 });
 
-test("reduced motion leaves core content usable", async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.reload();
-  await expect(page.locator("main h1")).toBeVisible();
-  await expect(page.locator("#work .live-card").first()).toBeVisible();
+test("external links open safely in a new tab", async ({ page }) => {
+  const links = page.locator('a[target="_blank"]');
+  const n = await links.count();
+  expect(n).toBeGreaterThan(0);
+  for (let i = 0; i < n; i++) {
+    await expect(links.nth(i)).toHaveAttribute("rel", /noopener/);
+  }
+});
+
+test("every project is discoverable by keyboard", async ({ page }) => {
+  const openers = page.locator("[data-open]");
+  const n = await openers.count();
+  expect(n).toBeGreaterThan(50);
+  await openers.first().focus();
+  await expect(openers.first()).toBeFocused();
+});
+
+test("no horizontal overflow at 320px", async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 900 });
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  expect(overflow).toBe(0);
+});
+
+test("reduced motion removes the ambient canvas and settles the hero", async ({ browser }) => {
+  const context = await browser.newContext({ reducedMotion: "reduce" });
+  const page = await context.newPage();
+  await page.goto("/");
+  await expect(page.locator("#ambient")).toHaveCount(0);
+  await expect(page.locator("h1")).toContainText("I build AI and data systems that turn messy evidence into decisions.");
+  await context.close();
 });

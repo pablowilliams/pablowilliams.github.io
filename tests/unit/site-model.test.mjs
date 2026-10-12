@@ -52,6 +52,11 @@ test("auditDocument validates internal targets", () => assert.deepEqual(auditDoc
 test("auditDocument reports missing targets once", () => assert.deepEqual(auditDocument(fixture + '<a href="#absent">A</a><a href="#absent">B</a>').missingTargets, ["absent"]));
 test("auditDocument reports duplicate IDs", () => assert.deepEqual(auditDocument(fixture.replace("</main>", '<p id="main"></p></main>')).duplicateIds, ["main"]));
 test("auditDocument counts card types", () => assert.deepEqual([auditDocument(fixture).liveProjectCards, auditDocument(fixture).researchCards], [1, 1]));
+test("auditDocument counts the revamped card types", () => {
+  const page = '<article class="flag" id="a"></article><article class="card" id="b"></article><span class="prov" data-p="measured">measured</span>';
+  const audit = auditDocument(page);
+  assert.deepEqual([audit.flagshipCards, audit.projectCards, audit.provenanceLabels], [1, 1, 1]);
+});
 test("auditDocument counts external and GitHub links", () => assert.deepEqual([auditDocument(fixture).externalLinkCount, auditDocument(fixture).githubLinkCount], [1, 1]));
 test("auditDocument counts mail and image elements", () => assert.deepEqual([auditDocument(fixture).mailtoCount, auditDocument(fixture).imageCount], [1, 1]));
 test("auditDocument finds semantic and metadata features", () => {
@@ -68,7 +73,7 @@ test("auditDocument defaults absent title and description", () => {
 });
 test("publicSummary creates a stable evidence envelope", () => {
   const summary = publicSummary(auditDocument(fixture), 1000, 2000);
-  assert.equal(summary.sourceDate, "2026-09-16");
+  assert.match(summary.sourceDate, /^\d{4}-\d{2}-\d{2}$/, "sourceDate is regenerated, so assert the shape rather than a frozen day");
   assert.equal(summary.page.htmlBytes, 1000);
   assert.equal(summary.page.cvBytes, 2000);
   assert.deepEqual(summary.integrity.missingInternalTargets, []);

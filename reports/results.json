@@ -1,15 +1,18 @@
 {
-  "sourceDate": "2026-09-16",
+  "sourceDate": "2026-10-12",
   "page": {
-    "title": "Pablo Williams, Data Analyst and AI Engineer",
-    "htmlBytes": 347015,
-    "sectionCount": 14,
-    "liveProjectCards": 49,
-    "researchCards": 37,
-    "externalLinkCount": 188,
-    "githubLinkCount": 108,
-    "imageCount": 1,
-    "cvBytes": 93605
+    "title": "Pablo Williams, applied AI engineer and data analyst",
+    "htmlBytes": 156787,
+    "sectionCount": 8,
+    "liveProjectCards": 0,
+    "researchCards": 0,
+    "flagshipCards": 4,
+    "projectCards": 79,
+    "provenanceLabels": 12,
+    "externalLinkCount": 154,
+    "githubLinkCount": 84,
+    "imageCount": 0,
+    "cvBytes": 96453
   },
   "integrity": {
     "duplicateIds": [],

@@ -1,0 +1,2315 @@
+{
+  "generatedFrom": "index.html",
+  "counts": {
+    "total": 86,
+    "live": 49,
+    "research": 37,
+    "withLiveUrl": 55,
+    "withSource": 84,
+    "credentials": 17,
+    "issuers": 8
+  },
+  "duplicateKeys": [
+    "attention-lens",
+    "vol-surface-arbitrage-scanner",
+    "toneshift",
+    "core-protocol-pulse"
+  ],
+  "projects": [
+    {
+      "key": "toneshift",
+      "ref": "W/01",
+      "title": "ToneShift",
+      "kind": "live",
+      "category": "NLP",
+      "isLive": true,
+      "summary": "FinBERT fine-tuned on 1.1M SEC filings. Tone vector per sentence, exponential decay aggregation at document level, hedge-language detection trained on management guidance revisions. Flags tone shifts ahead of analyst consensus updates.",
+      "kpis": [
+        {
+          "label": "Corpus",
+          "value": "1.1M"
+        },
+        {
+          "label": "F1",
+          "value": "0.81"
+        },
+        {
+          "label": "Latency",
+          "value": "340ms"
+        }
+      ],
+      "flow": "-> EDGAR -> FinBERT -> pgvector -> React",
+      "stack": [
+        "React",
+        "TypeScript",
+        "Supabase",
+        "FinBERT"
+      ],
+      "live": "https://tone-shift.com",
+      "source": "https://github.com/pablowilliams/toneshift"
+    },
+    {
+      "key": "signaledge",
+      "ref": "W/02",
+      "title": "SignalEdge",
+      "kind": "live",
+      "category": "TRADING",
+      "isLive": true,
+      "summary": "Hybrid forecast ensemble. Social sentiment via FinBERT, Polymarket mid-price across seven contracts, LSTM-Transformer on 1-minute OHLCV with 60-second refresh. Signals reconciled through a Bayesian confidence layer.",
+      "kpis": [
+        {
+          "label": "Markets",
+          "value": "7"
+        },
+        {
+          "label": "MAE",
+          "value": "0.032"
+        },
+        {
+          "label": "Refresh",
+          "value": "60s"
+        }
+      ],
+      "flow": "-> Reddit·X·Polymarket -> LSTM-T -> signal API -> React",
+      "stack": [
+        "React",
+        "LSTM"
+      ],
+      "live": "https://signal-edge-trading-tool.lovable.app",
+      "source": "https://github.com/pablowilliams/signaledge"
+    },
+    {
+      "key": "core-protocol-pulse",
+      "ref": "W/03",
+      "title": "Core Protocol Pulse",
+      "kind": "live",
+      "category": "RAG",
+      "isLive": true,
+      "summary": "82k EDGAR filings chunked, embedded with bge-small, indexed in pgvector. Semantic search with BM25 re-rank, grounded RAG with per-claim citation tooltips, anomaly detection on filing cadence via IsolationForest.",
+      "kpis": [
+        {
+          "label": "Filings",
+          "value": "82k"
+        },
+        {
+          "label": "R@10",
+          "value": "0.74"
+        },
+        {
+          "label": "Embed",
+          "value": "384d"
+        }
+      ],
+      "flow": "-> EDGAR -> chunk -> bge embed -> RAG -> React",
+      "stack": [
+        "React",
+        "Supabase"
+      ],
+      "live": "https://core-protocol-pulse.lovable.app",
+      "source": "https://github.com/pablowilliams/core-protocol-pulse"
+    },
+    {
+      "key": "vol-surface-arbitrage-scanner",
+      "ref": "W/04",
+      "title": "Vol Surface Arbitrage Scanner",
+      "kind": "live",
+      "category": "QUANT",
+      "isLive": true,
+      "summary": "SVI parametric fit on listed option chains, neural residual network closes the mid-price gap. Three static arbitrage scanners - butterfly, calendar, vertical spread - enforce no-arbitrage constraints in real time. Rendered as a live WebGL surface.",
+      "kpis": [
+        {
+          "label": "RMSE",
+          "value": "0.004"
+        },
+        {
+          "label": "Surface",
+          "value": "3D"
+        },
+        {
+          "label": "Checks",
+          "value": "3"
+        }
+      ],
+      "flow": "-> Opt chain -> SVI + residual -> arb scan -> Three.js",
+      "stack": [
+        "Python",
+        "PyTorch",
+        "Three.js",
+        "WebGL"
+      ],
+      "live": "https://pablowilliams.github.io/vol-surface-scanner/dashboard/",
+      "source": "https://github.com/pablowilliams/vol-surface-scanner"
+    },
+    {
+      "key": "attention-lens",
+      "ref": "W/05",
+      "title": "Attention Lens",
+      "kind": "live",
+      "category": "INTERP",
+      "isLive": true,
+      "summary": "GPT-2 small running locally via ONNX on WebGPU kernels. All 144 attention heads captured per forward pass, rendered as interactive heatmaps and token-to-token Bezier links.",
+      "kpis": [
+        {
+          "label": "Params",
+          "value": "124M"
+        },
+        {
+          "label": "Heads",
+          "value": "144"
+        }
+      ],
+      "flow": "-> ONNX -> WebGPU -> attention tensors -> Canvas",
+      "stack": [
+        "Transformers.js",
+        "WebGPU",
+        "ONNX",
+        "Canvas"
+      ],
+      "live": "https://pablowilliams.github.io/attention-lens/",
+      "source": "https://github.com/pablowilliams/attention-lens"
+    },
+    {
+      "key": "alpha-factor-vae",
+      "ref": "W/06",
+      "title": "Alpha Factor VAE",
+      "kind": "live",
+      "category": "QUANT",
+      "isLive": true,
+      "summary": "Variational autoencoder on cross-sectional equity returns. Learns a low-rank latent representation that disentangles systematic style exposures from residual alpha. Orthogonality enforced via KL regularisation, factors ranked by monthly information coefficient.",
+      "kpis": [
+        {
+          "label": "Latent",
+          "value": "32"
+        },
+        {
+          "label": "IC",
+          "value": "0.06"
+        },
+        {
+          "label": "Universe",
+          "value": "500"
+        }
+      ],
+      "flow": "-> Returns -> encoder -> factor loadings -> IC rank -> Plotly",
+      "stack": [
+        "Python",
+        "PyTorch",
+        "NumPy",
+        "Plotly"
+      ],
+      "live": "https://pablowilliams.github.io/alpha-factor-vae/",
+      "source": "https://github.com/pablowilliams/alpha-factor-vae"
+    },
+    {
+      "key": "chinchilla-lite",
+      "ref": "W/07",
+      "title": "Chinchilla Lite",
+      "kind": "live",
+      "category": "LLM",
+      "isLive": true,
+      "summary": "Compute-optimal scaling experiments on a 120M-parameter GPT-2 derivative. Sweeps model size, token budget and learning rate to empirically re-derive the 20 tokens-per-parameter rule at a tractable scale. Full loss curves and isoFLOP contours rendered in-browser.",
+      "kpis": [
+        {
+          "label": "Params",
+          "value": "120M"
+        },
+        {
+          "label": "Tokens",
+          "value": "2.4B"
+        },
+        {
+          "label": "Loss",
+          "value": "3.21"
+        }
+      ],
+      "flow": "-> OpenWebText -> tokenize -> train -> isoFLOP -> Plot",
+      "stack": [
+        "Python",
+        "PyTorch",
+        "W&amp;B",
+        "CUDA"
+      ],
+      "live": "https://pablowilliams.github.io/chinchilla-lite/",
+      "source": "https://github.com/pablowilliams/chinchilla-lite"
+    },
+    {
+      "key": "sentimenttradingview",
+      "ref": "W/08",
+      "title": "SentimentTradingView",
+      "kind": "live",
+      "category": "TRADING",
+      "isLive": true,
+      "summary": "Monte Carlo portfolio simulator over a 10-ticker TradingView watchlist. Geometric Brownian Motion engine calibrated on live drift and EWMA volatility, 100 to 10k paths across four horizons. Strategy signals fuse RSI, moving-average crossover and MC upside asymmetry, overlaid with per-ticker X sentiment.",
+      "kpis": [
+        {
+          "label": "Paths",
+          "value": "10k"
+        },
+        {
+          "label": "Tickers",
+          "value": "10"
+        },
+        {
+          "label": "VaR",
+          "value": "95%"
+        }
+      ],
+      "flow": "-> Watchlist -> GBM MC -> RSI+MA fuse -> X sentiment -> Dashboard",
+      "stack": [
+        "JavaScript",
+        "Monte Carlo",
+        "Canvas",
+        "WCAG AA"
+      ],
+      "live": "https://pablowilliams.github.io/SentimentTradingView/",
+      "source": "https://github.com/pablowilliams/SentimentTradingView"
+    },
+    {
+      "key": "signalscribe",
+      "ref": "W/09",
+      "title": "SignalScribe",
+      "kind": "live",
+      "category": "NLP",
+      "isLive": true,
+      "summary": "AI text likelihood reviewer. Thirteen detection signals adapted from GLTR, DetectGPT, Binoculars and Ghostbuster, combined into a confidence band rather than a fake precise percentage. Runs entirely in the browser, no text ever leaves the page.",
+      "kpis": [
+        {
+          "label": "Signals",
+          "value": "13"
+        },
+        {
+          "label": "Min input",
+          "value": "200 words"
+        },
+        {
+          "label": "Network",
+          "value": "0 calls"
+        }
+      ],
+      "flow": "-> Text -> 13 signals -> aggregate -> confidence band",
+      "stack": [
+        "JavaScript",
+        "GLTR",
+        "DetectGPT"
+      ],
+      "live": "https://pablowilliams.github.io/signalscribe-design/",
+      "source": "https://github.com/pablowilliams/signalscribe-design"
+    },
+    {
+      "key": "schemashift",
+      "ref": "W/10",
+      "title": "SchemaShift",
+      "kind": "live",
+      "category": "DEV TOOL",
+      "isLive": true,
+      "summary": "SQL migration safety reviewer. Scores migrations for breaking-change risk, flags locking hazards and destructive statements in place, then rewrites them into a safer expand, migrate, contract plan. Client side only, no database credentials ever touched.",
+      "kpis": [
+        {
+          "label": "Safety grade",
+          "value": "A to F"
+        },
+        {
+          "label": "Rewrite",
+          "value": "E·M·C"
+        },
+        {
+          "label": "Runtime",
+          "value": "browser"
+        }
+      ],
+      "flow": "-> SQL -> parse -> risk flags -> E·M·C rewrite",
+      "stack": [
+        "Python",
+        "SQL parse",
+        "Migration safety"
+      ],
+      "live": "https://pablowilliams.github.io/schemashift-design/",
+      "source": "https://github.com/pablowilliams/schemashift-design"
+    },
+    {
+      "key": "testgapfinder",
+      "ref": "W/11",
+      "title": "TestGapFinder",
+      "kind": "live",
+      "category": "DEV TOOL",
+      "isLive": true,
+      "summary": "Cobertura coverage reader that turns a raw coverage.xml into a ranked test debt queue. Scores uncovered regions by complexity, churn and public API exposure, then emits heuristic descriptions of what the missing tests should actually cover.",
+      "kpis": [
+        {
+          "label": "Input",
+          "value": "coverage.xml"
+        },
+        {
+          "label": "Output",
+          "value": "debt queue"
+        },
+        {
+          "label": "Processing",
+          "value": "local"
+        }
+      ],
+      "flow": "-> coverage.xml -> parse -> score -> ranked queue",
+      "stack": [
+        "Python",
+        "Cobertura",
+        "pytest-cov"
+      ],
+      "live": "https://pablowilliams.github.io/testgapfinder-design/",
+      "source": "https://github.com/pablowilliams/testgapfinder-design"
+    },
+    {
+      "key": "pyoptimize",
+      "ref": "W/12",
+      "title": "PyOptimize",
+      "kind": "live",
+      "category": "DEV TOOL",
+      "isLive": true,
+      "summary": "Python code quality scorer. Upload a PDF of source, get a 0 to 100 grade with flagged anti-patterns, complexity hotspots and performance concerns highlighted inline. Static analysis in the browser, handy for reviewing candidate submissions.",
+      "kpis": [
+        {
+          "label": "Score",
+          "value": "/100"
+        },
+        {
+          "label": "Input",
+          "value": "PDF"
+        },
+        {
+          "label": "Findings",
+          "value": "inline"
+        }
+      ],
+      "flow": "-> PDF -> extract -> static analysis -> score",
+      "stack": [
+        "Python",
+        "AST",
+        "Static analysis"
+      ],
+      "live": "https://pablowilliams.github.io/pyoptimize-design/",
+      "source": "https://github.com/pablowilliams/pyoptimize-design"
+    },
+    {
+      "key": "airscope",
+      "ref": "W/42",
+      "title": "AirScope",
+      "kind": "live",
+      "category": "VIZ",
+      "isLive": true,
+      "summary": "Live global air-quality dashboard. US EPA AQI computed client side from Open-Meteo, with cities ranked worst to cleanest.",
+      "kpis": [],
+      "flow": "",
+      "stack": [
+        "TypeScript",
+        "Open-Meteo",
+        "Canvas"
+      ],
+      "live": "https://pablowilliams.github.io/airscope/",
+      "source": "https://github.com/pablowilliams/airscope"
+    },
+    {
+      "key": "aurorascope",
+      "ref": "W/43",
+      "title": "AuroraScope",
+      "kind": "live",
+      "category": "SPACE",
+      "isLive": true,
+      "summary": "Live space-weather visualiser. NOAA SWPC solar wind, a Kp gauge, and an aurora-probability forecast with an animated curtain.",
+      "kpis": [],
+      "flow": "",
+      "stack": [
+        "TypeScript",
+        "NOAA SWPC",
+        "Canvas"
+      ],
+      "live": "https://pablowilliams.github.io/aurorascope/",
+      "source": "https://github.com/pablowilliams/aurorascope"
+    },
+    {
+      "key": "depthscope",
+      "ref": "W/44",
+      "title": "DepthScope",
+      "kind": "live",
+      "category": "TRADING",
+      "isLive": true,
+      "summary": "Live market-microstructure visualiser. Real-time order-book heatmap, depth chart and trade tape, with zero dependencies and accessibility gating.",
+      "kpis": [],
+      "flow": "",
+      "stack": [
+        "TypeScript",
+        "Order book",
+        "Canvas"
+      ],
+      "live": "https://pablowilliams.github.io/depthscope/",
+      "source": "https://github.com/pablowilliams/depthscope"
+    },
+    {
+      "key": "pingscope",
+      "ref": "W/45",
+      "title": "PingScope",
+      "kind": "live",
+      "category": "NETWORK",
+      "isLive": true,
+      "summary": "Client-side network latency dashboard. Live p50, p95 and p99 via the P-squared estimator, plus jitter and packet loss, with no backend.",
+      "kpis": [],
+      "flow": "",
+      "stack": [
+        "TypeScript",
+        "P² estimator",
+        "Streaming stats"
+      ],
+      "live": "https://pablowilliams.github.io/pingscope/",
+      "source": "https://github.com/pablowilliams/pingscope"
+    },
+    {
+      "key": "seismoscope",
+      "ref": "W/46",
+      "title": "SeismoScope",
+      "kind": "live",
+      "category": "VIZ",
+      "isLive": true,
+      "summary": "Live global earthquake visualiser. USGS real-time feed on a cartographic world map with shockwave ripples and an accessible event log.",
+      "kpis": [],
+      "flow": "",
+      "stack": [
+        "TypeScript",
+        "USGS",
+        "Maps"
+      ],
+      "live": "https://pablowilliams.github.io/seismoscope/",
+      "source": "https://github.com/pablowilliams/seismoscope"
+    },
+    {
+      "key": "contrast-studio",
+      "ref": "W/47",
+      "title": "Contrast Studio",
+      "kind": "live",
+      "category": "A11Y",
+      "isLive": true,
+      "summary": "WCAG 2.2 contrast checker with one-click auto-fix to AA and AAA, plus accessible palette and CSS-token export.",
+      "kpis": [],
+      "flow": "",
+      "stack": [
+        "TypeScript",
+        "WCAG 2.2",
+        "Design tokens"
+      ],
+      "live": "https://pablowilliams.github.io/contrast-studio/",
+      "source": "https://github.com/pablowilliams/contrast-studio"
+    },
+    {
+      "key": "markdown-studio",
+      "ref": "W/48",
+      "title": "Markdown Studio",
+      "kind": "live",
+      "category": "TOOL",
+      "isLive": true,
+      "summary": "Live Markdown editor with split preview, word count, autosave and HTML export. Built on a from-scratch, XSS-safe parser.",
+      "kpis": [],
+      "flow": "",
+      "stack": [
+        "TypeScript",
+        "Parser",
+        "No deps"
+      ],
+      "live": "https://pablowilliams.github.io/markdown-studio/",
+      "source": "https://github.com/pablowilliams/markdown-studio"
+    },
+    {
+      "key": "qr-studio",
+      "ref": "W/49",
+      "title": "QR Studio",
+      "kind": "live",
+      "category": "TOOL",
+      "isLive": true,
+      "summary": "Generate scannable QR codes for URLs, Wi-Fi, vCards and text. From-scratch encoder with SVG and PNG export, and no tracking.",
+      "kpis": [],
+      "flow": "",
+      "stack": [
+        "TypeScript",
+        "SVG",
+        "Encoder"
+      ],
+      "live": "https://pablowilliams.github.io/qr-studio/",
+      "source": "https://github.com/pablowilliams/qr-studio"
+    },
+    {
+      "key": "real-estate-terminal",
+      "ref": "W/13",
+      "title": "Real Estate Terminal",
+      "kind": "live",
+      "category": "REAL ESTATE",
+      "isLive": true,
+      "summary": "Terminal-style Monte Carlo dashboard for US metro housing prices. Mortgage-rate scenarios, rent-vs-buy crossover, broker chatter sentiment. Live ticks across major MSAs, all client side.",
+      "kpis": [
+        {
+          "label": "Metros",
+          "value": "30"
+        },
+        {
+          "label": "Sims",
+          "value": "10000"
+        },
+        {
+          "label": "Runtime",
+          "value": "browser"
+        }
+      ],
+      "flow": "-> Prices -> Monte Carlo -> rent-vs-buy -> terminal view",
+      "stack": [
+        "JavaScript",
+        "Monte Carlo",
+        "Canvas"
+      ],
+      "live": "https://pablowilliams.github.io/RealEstateTerminal/",
+      "source": "https://github.com/pablowilliams/RealEstateTerminal"
+    },
+    {
+      "key": "deep-sea-census-terminal",
+      "ref": "W/14",
+      "title": "Deep Sea Census Terminal",
+      "kind": "live",
+      "category": "BIO",
+      "isLive": true,
+      "summary": "Species-accumulation Monte Carlo for deep-sea biodiversity. Bathyal, abyssal and hadal richness curves, depth-pressure profiles, Chao1 and ACE estimators with full methodology.",
+      "kpis": [
+        {
+          "label": "Zones",
+          "value": "3"
+        },
+        {
+          "label": "Estimators",
+          "value": "Chao1 · ACE"
+        },
+        {
+          "label": "Depth",
+          "value": "0-11km"
+        }
+      ],
+      "flow": "-> Samples -> accumulation curve -> Chao1/ACE -> estimates",
+      "stack": [
+        "JavaScript",
+        "Chao1",
+        "ACE"
+      ],
+      "live": "https://pablowilliams.github.io/DeepSeaCensusTerminal/",
+      "source": "https://github.com/pablowilliams/DeepSeaCensusTerminal"
+    },
+    {
+      "key": "asteroid-impact-terminal",
+      "ref": "W/15",
+      "title": "Asteroid Impact Terminal",
+      "kind": "live",
+      "category": "SPACE",
+      "isLive": true,
+      "summary": "Terminal-style Monte Carlo dashboard for Near-Earth Objects with orbital-uncertainty propagation. Torino and Palermo scale gauges, astronomy chatter sentiment.",
+      "kpis": [
+        {
+          "label": "NEOs tracked",
+          "value": "20000"
+        },
+        {
+          "label": "Scales",
+          "value": "Torino · Palermo"
+        },
+        {
+          "label": "Horizon",
+          "value": "100yr"
+        }
+      ],
+      "flow": "-> Orbit elements -> uncertainty -> Torino/Palermo -> dashboard",
+      "stack": [
+        "JavaScript",
+        "Orbital mechanics",
+        "Monte Carlo"
+      ],
+      "live": "https://pablowilliams.github.io/AsteroidImpactTerminal/",
+      "source": "https://github.com/pablowilliams/AsteroidImpactTerminal"
+    },
+    {
+      "key": "gpu-compute-terminal",
+      "ref": "W/16",
+      "title": "GPU Compute Terminal",
+      "kind": "live",
+      "category": "INFRA",
+      "isLive": true,
+      "summary": "Terminal-style Monte Carlo dashboard for AI GPU and accelerator spot pricing. Hyperscaler capex tracking and token economics modelled side by side.",
+      "kpis": [
+        {
+          "label": "Accelerators",
+          "value": "H100 · MI300 · TPU"
+        },
+        {
+          "label": "Models",
+          "value": "5"
+        },
+        {
+          "label": "Mode",
+          "value": "live"
+        }
+      ],
+      "flow": "-> Spot prices -> capex curves -> token economics -> view",
+      "stack": [
+        "JavaScript",
+        "Hyperscaler",
+        "Token economics"
+      ],
+      "live": "https://pablowilliams.github.io/GPUComputeTerminal/",
+      "source": "https://github.com/pablowilliams/GPUComputeTerminal"
+    },
+    {
+      "key": "quantum-decoherence-terminal",
+      "ref": "W/17",
+      "title": "Quantum Decoherence Terminal",
+      "kind": "live",
+      "category": "QUANTUM",
+      "isLive": true,
+      "summary": "Lindblad master-equation Monte Carlo for superconducting, trapped-ion and neutral-atom QPUs. Bloch sphere, T1/T2 decoherence, circuit depth budget with full methodology and references.",
+      "kpis": [
+        {
+          "label": "Platforms",
+          "value": "3"
+        },
+        {
+          "label": "State",
+          "value": "Bloch"
+        },
+        {
+          "label": "Solver",
+          "value": "Lindblad"
+        }
+      ],
+      "flow": "-> Hamiltonian -> Lindblad -> Bloch evolution -> budget",
+      "stack": [
+        "JavaScript",
+        "Lindblad",
+        "Bloch sphere"
+      ],
+      "live": "https://pablowilliams.github.io/QuantumDecoherenceTerminal/",
+      "source": "https://github.com/pablowilliams/QuantumDecoherenceTerminal"
+    },
+    {
+      "key": "volcano-activity-terminal",
+      "ref": "W/18",
+      "title": "Volcano Activity Terminal",
+      "kind": "live",
+      "category": "GEO",
+      "isLive": true,
+      "summary": "Terminal-style Monte Carlo for active volcanoes with VEI eruption probability simulations. VEI by thermal hazard heat-matrix and volcanology chatter sentiment.",
+      "kpis": [
+        {
+          "label": "Volcanoes",
+          "value": "150"
+        },
+        {
+          "label": "Scale",
+          "value": "VEI 0-8"
+        },
+        {
+          "label": "View",
+          "value": "heat-matrix"
+        }
+      ],
+      "flow": "-> VEI history -> hazard matrix -> chatter -> dashboard",
+      "stack": [
+        "JavaScript",
+        "VEI",
+        "Hazard matrix"
+      ],
+      "live": "https://pablowilliams.github.io/VolcanoActivityTerminal/",
+      "source": "https://github.com/pablowilliams/VolcanoActivityTerminal"
+    },
+    {
+      "key": "esports-analytics-terminal",
+      "ref": "W/19",
+      "title": "Esports Analytics Terminal",
+      "kind": "live",
+      "category": "SPORTS",
+      "isLive": true,
+      "summary": "Terminal-style Monte Carlo for esports teams with Elo-driven win probability simulations. Head-to-head matrices and roster sentiment in a single view.",
+      "kpis": [
+        {
+          "label": "Teams",
+          "value": "32"
+        },
+        {
+          "label": "Engine",
+          "value": "Elo"
+        },
+        {
+          "label": "Output",
+          "value": "matrix"
+        }
+      ],
+      "flow": "-> Match history -> Elo -> win probs -> H2H matrix",
+      "stack": [
+        "JavaScript",
+        "Elo",
+        "Monte Carlo"
+      ],
+      "live": "https://pablowilliams.github.io/EsportsAnalyticsTerminal/",
+      "source": "https://github.com/pablowilliams/EsportsAnalyticsTerminal"
+    },
+    {
+      "key": "health-metrics-terminal",
+      "ref": "W/20",
+      "title": "Health Metrics Terminal",
+      "kind": "live",
+      "category": "HEALTH",
+      "isLive": true,
+      "summary": "Terminal-style Monte Carlo for personal health biomarkers. HRV, VO2max, sleep, recovery, intervention signals and coach-note sentiment in one dashboard.",
+      "kpis": [
+        {
+          "label": "Metrics",
+          "value": "12"
+        },
+        {
+          "label": "Signals",
+          "value": "live"
+        },
+        {
+          "label": "Window",
+          "value": "90 day"
+        }
+      ],
+      "flow": "-> Biomarkers -> trend -> signals -> intervention notes",
+      "stack": [
+        "JavaScript",
+        "HRV",
+        "VO2max"
+      ],
+      "live": "https://pablowilliams.github.io/HealthMetricsTerminal/",
+      "source": "https://github.com/pablowilliams/HealthMetricsTerminal"
+    },
+    {
+      "key": "gravitational-wave-terminal",
+      "ref": "W/21",
+      "title": "Gravitational Wave Terminal",
+      "kind": "live",
+      "category": "ASTRO",
+      "isLive": true,
+      "summary": "Chirp-mass posterior Monte Carlo for LIGO, Virgo and KAGRA events. Q-transform spectrograms and 4D corner plots over chirp mass, q, spin and luminosity distance.",
+      "kpis": [
+        {
+          "label": "Detectors",
+          "value": "3"
+        },
+        {
+          "label": "Posterior",
+          "value": "4D"
+        },
+        {
+          "label": "View",
+          "value": "corner"
+        }
+      ],
+      "flow": "-> Strain -> chirp mass -> posterior -> corner plot",
+      "stack": [
+        "JavaScript",
+        "LIGO",
+        "Bayesian"
+      ],
+      "live": "https://pablowilliams.github.io/GravitationalWaveTerminal/",
+      "source": "https://github.com/pablowilliams/GravitationalWaveTerminal"
+    },
+    {
+      "key": "startup-valuation-terminal",
+      "ref": "W/22",
+      "title": "Startup Valuation Terminal",
+      "kind": "live",
+      "category": "VC",
+      "isLive": true,
+      "summary": "Terminal-style Monte Carlo for a venture portfolio. Burn and runway modeling, dilution simulations and VC chatter sentiment, all in one place.",
+      "kpis": [
+        {
+          "label": "Companies",
+          "value": "20"
+        },
+        {
+          "label": "Sims",
+          "value": "5000"
+        },
+        {
+          "label": "Output",
+          "value": "fan chart"
+        }
+      ],
+      "flow": "-> Cap table -> burn -> dilution -> fan chart",
+      "stack": [
+        "JavaScript",
+        "Cap table",
+        "Burn"
+      ],
+      "live": "https://pablowilliams.github.io/StartupValuationTerminal/",
+      "source": "https://github.com/pablowilliams/StartupValuationTerminal"
+    },
+    {
+      "key": "bytecode",
+      "ref": "W/23",
+      "title": "Bytecode",
+      "kind": "live",
+      "category": "MONOGRAPH",
+      "isLive": true,
+      "summary": "An interactive monograph on the CPython interpreter. Single-page, with six live figures and a literature review. From source text to a running frame, with every step explorable.",
+      "kpis": [
+        {
+          "label": "Figures",
+          "value": "6"
+        },
+        {
+          "label": "Format",
+          "value": "single-page"
+        },
+        {
+          "label": "Topic",
+          "value": "CPython"
+        }
+      ],
+      "flow": "-> Source -> lex -> parse -> bytecode -> frame",
+      "stack": [
+        "JavaScript",
+        "CPython",
+        "Interpreters"
+      ],
+      "live": "https://pablowilliams.github.io/Bytecode/",
+      "source": "https://github.com/pablowilliams/Bytecode"
+    },
+    {
+      "key": "volatility",
+      "ref": "W/24",
+      "title": "Volatility",
+      "kind": "live",
+      "category": "MONOGRAPH",
+      "isLive": true,
+      "summary": "An interactive monograph on the quant-finance Python ecosystem. Single-page, with seven live figures and a literature review. Tools, libraries and tradeoffs walked through end to end.",
+      "kpis": [
+        {
+          "label": "Figures",
+          "value": "7"
+        },
+        {
+          "label": "Stack",
+          "value": "PyData"
+        },
+        {
+          "label": "Topic",
+          "value": "Quant"
+        }
+      ],
+      "flow": "-> Returns -> vol model -> risk -> visualisation",
+      "stack": [
+        "JavaScript",
+        "PyData",
+        "Quant"
+      ],
+      "live": "https://pablowilliams.github.io/Volatility/",
+      "source": "https://github.com/pablowilliams/Volatility"
+    },
+    {
+      "key": "retrieval",
+      "ref": "W/25",
+      "title": "Retrieval",
+      "kind": "live",
+      "category": "MONOGRAPH",
+      "isLive": true,
+      "summary": "An interactive monograph on retrieval-augmented generation. Single-page, with seven live figures and a literature review. From dense indices to rerankers, walked through with examples.",
+      "kpis": [
+        {
+          "label": "Figures",
+          "value": "7"
+        },
+        {
+          "label": "Format",
+          "value": "single-page"
+        },
+        {
+          "label": "Topic",
+          "value": "RAG"
+        }
+      ],
+      "flow": "-> Query -> embed -> retrieve -> rerank -> generate",
+      "stack": [
+        "JavaScript",
+        "Embeddings",
+        "Reranking"
+      ],
+      "live": "https://pablowilliams.github.io/Retrieval/",
+      "source": "https://github.com/pablowilliams/Retrieval"
+    },
+    {
+      "key": "transport",
+      "ref": "W/26",
+      "title": "Transport",
+      "kind": "live",
+      "category": "MONOGRAPH",
+      "isLive": true,
+      "summary": "An interactive monograph on optimal transport. Single-page, with seven live figures and a literature review. Earth-mover, Sinkhorn and Wasserstein, all explorable.",
+      "kpis": [
+        {
+          "label": "Figures",
+          "value": "7"
+        },
+        {
+          "label": "Solver",
+          "value": "Sinkhorn"
+        },
+        {
+          "label": "Metric",
+          "value": "Wasserstein"
+        }
+      ],
+      "flow": "-> Source -> cost -> Sinkhorn -> coupling",
+      "stack": [
+        "JavaScript",
+        "Sinkhorn",
+        "OT"
+      ],
+      "live": "https://pablowilliams.github.io/Transport/",
+      "source": "https://github.com/pablowilliams/Transport"
+    },
+    {
+      "key": "innovation",
+      "ref": "W/27",
+      "title": "Innovation",
+      "kind": "live",
+      "category": "MONOGRAPH",
+      "isLive": true,
+      "summary": "An interactive monograph on the Kalman filter. Single-page, with five live figures and a literature review. State, observation, gain and innovation, all derived from first principles.",
+      "kpis": [
+        {
+          "label": "Figures",
+          "value": "5"
+        },
+        {
+          "label": "Filter",
+          "value": "Kalman"
+        },
+        {
+          "label": "Topic",
+          "value": "State-space"
+        }
+      ],
+      "flow": "-> Predict -> observe -> gain -> update",
+      "stack": [
+        "JavaScript",
+        "Kalman",
+        "State-space"
+      ],
+      "live": "https://pablowilliams.github.io/Innovation/",
+      "source": "https://github.com/pablowilliams/Innovation"
+    },
+    {
+      "key": "radiance",
+      "ref": "W/28",
+      "title": "Radiance",
+      "kind": "live",
+      "category": "MONOGRAPH",
+      "isLive": true,
+      "summary": "An interactive monograph on ray tracing. Single-page, with six live figures and a literature review. From a camera ray to BRDFs and importance sampling, every step shown.",
+      "kpis": [
+        {
+          "label": "Figures",
+          "value": "6"
+        },
+        {
+          "label": "Topic",
+          "value": "Ray tracing"
+        },
+        {
+          "label": "Math",
+          "value": "BRDF"
+        }
+      ],
+      "flow": "-> Camera -> intersect -> shade -> sample -> image",
+      "stack": [
+        "JavaScript",
+        "Ray tracing",
+        "BRDF"
+      ],
+      "live": "https://pablowilliams.github.io/Radiance/",
+      "source": "https://github.com/pablowilliams/Radiance"
+    },
+    {
+      "key": "meridian",
+      "ref": "W/29",
+      "title": "Meridian",
+      "kind": "live",
+      "category": "ESSAY",
+      "isLive": true,
+      "summary": "An interactive essay on map projections. Why every flat map is wrong, and the cylindrical, conic, azimuthal and equal-area bargains.",
+      "kpis": [
+        {
+          "label": "Projections",
+          "value": "8"
+        },
+        {
+          "label": "View",
+          "value": "interactive"
+        },
+        {
+          "label": "Topic",
+          "value": "Cartography"
+        }
+      ],
+      "flow": "-> Sphere -> projection -> distortion -> use case",
+      "stack": [
+        "JavaScript",
+        "Cartography",
+        "Geometry"
+      ],
+      "live": "https://pablowilliams.github.io/Meridian/",
+      "source": "https://github.com/pablowilliams/Meridian"
+    },
+    {
+      "key": "octave",
+      "ref": "W/30",
+      "title": "Octave",
+      "kind": "live",
+      "category": "ESSAY",
+      "isLive": true,
+      "summary": "An interactive essay on procedural noise. Value noise, Perlin gradient noise, fractal Brownian motion and terrain generation.",
+      "kpis": [
+        {
+          "label": "Octaves",
+          "value": "live"
+        },
+        {
+          "label": "Topic",
+          "value": "Noise"
+        },
+        {
+          "label": "Format",
+          "value": "essay"
+        }
+      ],
+      "flow": "-> Lattice -> gradient -> fBm -> terrain",
+      "stack": [
+        "JavaScript",
+        "Perlin",
+        "fBm"
+      ],
+      "live": "https://pablowilliams.github.io/Octave/",
+      "source": "https://github.com/pablowilliams/Octave"
+    },
+    {
+      "key": "mend",
+      "ref": "W/31",
+      "title": "Mend",
+      "kind": "live",
+      "category": "ESSAY",
+      "isLive": true,
+      "summary": "An interactive essay on error-correcting codes. Repetition, parity, Hamming, Reed-Solomon and QR, explained with live editable codewords.",
+      "kpis": [
+        {
+          "label": "Codes",
+          "value": "5"
+        },
+        {
+          "label": "Demo",
+          "value": "live editable"
+        },
+        {
+          "label": "Topic",
+          "value": "Coding theory"
+        }
+      ],
+      "flow": "-> Message -> encode -> noise -> decode -> repair",
+      "stack": [
+        "JavaScript",
+        "Hamming",
+        "Reed-Solomon"
+      ],
+      "live": "https://pablowilliams.github.io/Mend/",
+      "source": "https://github.com/pablowilliams/Mend"
+    },
+    {
+      "key": "frontier",
+      "ref": "W/32",
+      "title": "Frontier",
+      "kind": "live",
+      "category": "ESSAY",
+      "isLive": true,
+      "summary": "An interactive essay on how machines find a path. BFS, Dijkstra and A* search, explained with live editable grids you can re-solve.",
+      "kpis": [
+        {
+          "label": "Algorithms",
+          "value": "3"
+        },
+        {
+          "label": "Grids",
+          "value": "editable"
+        },
+        {
+          "label": "Topic",
+          "value": "Search"
+        }
+      ],
+      "flow": "-> Start -> frontier -> expand -> goal",
+      "stack": [
+        "JavaScript",
+        "BFS",
+        "A*"
+      ],
+      "live": "https://pablowilliams.github.io/Frontier/",
+      "source": "https://github.com/pablowilliams/Frontier"
+    },
+    {
+      "key": "quantization",
+      "ref": "W/33",
+      "title": "Quantization",
+      "kind": "live",
+      "category": "MONOGRAPH",
+      "isLive": true,
+      "summary": "An interactive monograph on lossy image compression. The discrete cosine transform, quantization and the JPEG pipeline, with five live figures and a literature review.",
+      "kpis": [
+        {
+          "label": "Figures",
+          "value": "5"
+        },
+        {
+          "label": "Pipeline",
+          "value": "JPEG"
+        },
+        {
+          "label": "Topic",
+          "value": "Compression"
+        }
+      ],
+      "flow": "-> Image -> DCT -> quantize -> entropy -> file",
+      "stack": [
+        "JavaScript",
+        "DCT",
+        "JPEG"
+      ],
+      "live": "https://pablowilliams.github.io/Quantization/",
+      "source": "https://github.com/pablowilliams/Quantization"
+    },
+    {
+      "key": "localization",
+      "ref": "W/34",
+      "title": "Localization",
+      "kind": "live",
+      "category": "MONOGRAPH",
+      "isLive": true,
+      "summary": "An interactive monograph on object detection in computer vision. Single-page, with seven live figures and a literature review. From anchors to NMS, all laid out side by side.",
+      "kpis": [
+        {
+          "label": "Figures",
+          "value": "7"
+        },
+        {
+          "label": "Topic",
+          "value": "Detection"
+        },
+        {
+          "label": "Includes",
+          "value": "NMS"
+        }
+      ],
+      "flow": "-> Image -> backbone -> anchors -> NMS -> boxes",
+      "stack": [
+        "JavaScript",
+        "Detection",
+        "NMS"
+      ],
+      "live": "https://pablowilliams.github.io/Localization/",
+      "source": "https://github.com/pablowilliams/Localization"
+    },
+    {
+      "key": "tone",
+      "ref": "W/35",
+      "title": "Tone",
+      "kind": "live",
+      "category": "ESSAY",
+      "isLive": true,
+      "summary": "An interactive essay on how a synthesizer actually works. Five live demos built on the Web Audio API. Oscillator, envelope, filter, LFO and the full signal chain.",
+      "kpis": [
+        {
+          "label": "Demos",
+          "value": "5"
+        },
+        {
+          "label": "Stack",
+          "value": "Web Audio"
+        },
+        {
+          "label": "Topic",
+          "value": "Synthesis"
+        }
+      ],
+      "flow": "-> Osc -> envelope -> filter -> LFO -> out",
+      "stack": [
+        "JavaScript",
+        "Web Audio",
+        "DSP"
+      ],
+      "live": "https://pablowilliams.github.io/Tone/",
+      "source": "https://github.com/pablowilliams/Tone"
+    },
+    {
+      "key": "lensless",
+      "ref": "W/36",
+      "title": "Lensless",
+      "kind": "live",
+      "category": "ESSAY",
+      "isLive": true,
+      "summary": "Three machine learning demos that run entirely in your browser. No server, no API key, nothing leaves your laptop. ONNX models loaded once, run locally, ready to poke.",
+      "kpis": [
+        {
+          "label": "Demos",
+          "value": "3"
+        },
+        {
+          "label": "Runtime",
+          "value": "ONNX local"
+        },
+        {
+          "label": "Network",
+          "value": "0 calls"
+        }
+      ],
+      "flow": "-> Model -> download once -> inference -> in browser",
+      "stack": [
+        "JavaScript",
+        "ONNX",
+        "WebGPU"
+      ],
+      "live": "https://pablowilliams.github.io/Lensless/",
+      "source": "https://github.com/pablowilliams/Lensless"
+    },
+    {
+      "key": "glassbox",
+      "ref": "W/37",
+      "title": "Glassbox",
+      "kind": "live",
+      "category": "ESSAY",
+      "isLive": true,
+      "summary": "An interactive essay on how a neural network learns. A real MLP trains live in your browser, with every weight and activation visible. No frameworks, just primitives.",
+      "kpis": [
+        {
+          "label": "Layers",
+          "value": "live"
+        },
+        {
+          "label": "Frameworks",
+          "value": "0"
+        },
+        {
+          "label": "Topic",
+          "value": "MLP"
+        }
+      ],
+      "flow": "-> Inputs -> forward -> loss -> backprop -> step",
+      "stack": [
+        "JavaScript",
+        "MLP",
+        "Backprop"
+      ],
+      "live": "https://pablowilliams.github.io/Glassbox/",
+      "source": "https://github.com/pablowilliams/Glassbox"
+    },
+    {
+      "key": "lexicon",
+      "ref": "W/38",
+      "title": "Lexicon",
+      "kind": "live",
+      "category": "ESSAY",
+      "isLive": true,
+      "summary": "An interactive essay on how a computer reads code. Build a tiny programming language end to end, live in your browser. Lex, parse, evaluate, with every step editable.",
+      "kpis": [
+        {
+          "label": "Stages",
+          "value": "4"
+        },
+        {
+          "label": "Live",
+          "value": "in browser"
+        },
+        {
+          "label": "Topic",
+          "value": "Compilers"
+        }
+      ],
+      "flow": "-> Source -> lex -> parse -> eval -> result",
+      "stack": [
+        "JavaScript",
+        "Lexer",
+        "Parser"
+      ],
+      "live": "https://pablowilliams.github.io/Lexicon/",
+      "source": "https://github.com/pablowilliams/Lexicon"
+    },
+    {
+      "key": "phantom",
+      "ref": "W/39",
+      "title": "Phantom",
+      "kind": "live",
+      "category": "ESSAY",
+      "isLive": true,
+      "summary": "An interactive essay on phantom traffic jams. Five live simulations of the Nagel-Schreckenberg cellular automaton, running in your browser.",
+      "kpis": [
+        {
+          "label": "Sims",
+          "value": "5"
+        },
+        {
+          "label": "Model",
+          "value": "Nagel-Schreckenberg"
+        },
+        {
+          "label": "Topic",
+          "value": "Traffic"
+        }
+      ],
+      "flow": "-> Cells -> rules -> step -> emergent jam",
+      "stack": [
+        "JavaScript",
+        "Cellular automata",
+        "Traffic"
+      ],
+      "live": "https://pablowilliams.github.io/Phantom/",
+      "source": "https://github.com/pablowilliams/Phantom"
+    },
+    {
+      "key": "drawdown",
+      "ref": "W/40",
+      "title": "Drawdown",
+      "kind": "live",
+      "category": "ESSAY",
+      "isLive": true,
+      "summary": "An interactive essay on random walks, drawdowns and why stop losses behave differently than most traders expect. Five live simulations on browser only.",
+      "kpis": [
+        {
+          "label": "Sims",
+          "value": "5"
+        },
+        {
+          "label": "Metric",
+          "value": "drawdown"
+        },
+        {
+          "label": "Topic",
+          "value": "Random walk"
+        }
+      ],
+      "flow": "-> Path -> drawdown -> stop rule -> outcome",
+      "stack": [
+        "JavaScript",
+        "Random walk",
+        "Drawdown"
+      ],
+      "live": "https://pablowilliams.github.io/Drawdown/",
+      "source": "https://github.com/pablowilliams/Drawdown"
+    },
+    {
+      "key": "pinepoint",
+      "ref": "W/41",
+      "title": "Pinepoint",
+      "kind": "live",
+      "category": "DESIGN",
+      "isLive": true,
+      "summary": "A live dashboard demonstrating thirty plus AI-assisted design skills, applied to a fictional B2B SaaS. Every interaction shows a technique, not a prop.",
+      "kpis": [
+        {
+          "label": "Skills",
+          "value": "30+"
+        },
+        {
+          "label": "Theme",
+          "value": "B2B SaaS"
+        },
+        {
+          "label": "Mode",
+          "value": "live"
+        }
+      ],
+      "flow": "-> Skill -> component -> dashboard -> review",
+      "stack": [
+        "React",
+        "Tailwind",
+        "Design system"
+      ],
+      "live": "https://pablowilliams.github.io/Pinepoint/",
+      "source": "https://github.com/pablowilliams/Pinepoint"
+    },
+    {
+      "key": "pipelinepulse",
+      "ref": "R/30",
+      "title": "PipelinePulse",
+      "kind": "research",
+      "category": "Operations",
+      "theme": "ops",
+      "tags": [
+        "ops"
+      ],
+      "subtitle": "GitLab delivery analytics",
+      "summary": "Turns GitLab CI/CD and merge-request data into DORA metrics, flaky-test detection, pipeline slowdown alerts and CI cost, behind 44 data-quality checks that block publishing. On 436k seeded job runs it caught 14 of 14 injected slowdowns with no false alarms. Specified in Kiro.",
+      "stack": [
+        "DuckDB",
+        "SQL",
+        "GitLab CI",
+        "Kiro"
+      ],
+      "live": "",
+      "source": "https://github.com/pablowilliams/pipelinepulse"
+    },
+    {
+      "key": "coinlark",
+      "ref": "R/31",
+      "title": "Coinlark",
+      "kind": "research",
+      "category": "Applied ML",
+      "theme": "applied",
+      "tags": [
+        "applied"
+      ],
+      "subtitle": "Multi-currency money app in React and TypeScript",
+      "summary": "An exact integer money engine lost 0 minor units over 1,000,000 seeded bill splits where floating point lost 767,538, and a virtualised feed renders 100,000 transactions in 39 ms with 344 DOM nodes. Merchant categorisation hits 97.9 percent against 71.9 percent for keywords, with 0 axe violations.",
+      "stack": [
+        "React",
+        "TypeScript",
+        "Vite",
+        "Playwright"
+      ],
+      "live": "",
+      "source": "https://github.com/pablowilliams/coinlark"
+    },
+    {
+      "key": "stratum",
+      "ref": "R/32",
+      "title": "Stratum Analytics",
+      "kind": "research",
+      "category": "Quant finance",
+      "theme": "finance",
+      "tags": [
+        "finance"
+      ],
+      "subtitle": "Tableau investment reporting suite",
+      "summary": "Investment reporting for a simulated &euro;755m family office: a Tableau workbook with 4 dashboards and 59 calculated fields, plus a matching web dashboard. Its data checks caught all 16 planted trade errors among 9,373 trades with no false alarms, where a simple threshold rule raised 267.",
+      "stack": [
+        "Tableau",
+        "Python",
+        "DuckDB",
+        "VaR"
+      ],
+      "live": "https://pablowilliams.github.io/stratum-analytics/",
+      "source": "https://github.com/pablowilliams/stratum-analytics"
+    },
+    {
+      "key": "longstop",
+      "ref": "R/33",
+      "title": "Longstop",
+      "kind": "research",
+      "category": "Quant finance",
+      "theme": "finance",
+      "tags": [
+        "finance"
+      ],
+      "subtitle": "M&A deal-break research",
+      "summary": "Labels 10,051 US public-target mergers since 2001 straight from SEC EDGAR filings, and shows that of 437 filings that looked like failed deals, 216 were unrelated contracts and only 121 were real deal breaks. Includes an accretion and dilution merger model.",
+      "stack": [
+        "EDGAR",
+        "Python",
+        "React",
+        "M&amp;A"
+      ],
+      "live": "https://pablowilliams.github.io/longstop/",
+      "source": "https://github.com/pablowilliams/longstop"
+    },
+    {
+      "key": "processlab",
+      "ref": "R/34",
+      "title": "ProcessLab",
+      "kind": "research",
+      "category": "Operations",
+      "theme": "ops",
+      "tags": [
+        "ops"
+      ],
+      "subtitle": "Process discovery and business case",
+      "summary": "Maps queues, effort and rework in a fictional insurance-claims process handling 5,200 claims a month, then builds a stress-tested business case: about 1,070 adjuster hours a month freed and a 5.4-month payback that halves if exceptions climb.",
+      "stack": [
+        "Process mapping",
+        "Business case",
+        "JavaScript"
+      ],
+      "live": "",
+      "source": "https://github.com/pablowilliams/processlab"
+    },
+    {
+      "key": "vendorboard",
+      "ref": "R/35",
+      "title": "VendorBoard",
+      "kind": "research",
+      "category": "Operations",
+      "theme": "ops",
+      "tags": [
+        "ops"
+      ],
+      "subtitle": "Stakeholder decision analysis",
+      "summary": "Scores three fictional AI-platform vendors on five weighted criteria under four stakeholder views, with a UK data-residency knockout that removes 1 of the 3 whatever it scores. The CFO weighting changes the recommendation.",
+      "stack": [
+        "Decision analysis",
+        "Stakeholders",
+        "JavaScript"
+      ],
+      "live": "",
+      "source": "https://github.com/pablowilliams/vendorboard"
+    },
+    {
+      "key": "signalops",
+      "ref": "R/36",
+      "title": "SignalOps",
+      "kind": "research",
+      "category": "Operations",
+      "theme": "ops",
+      "tags": [
+        "ops"
+      ],
+      "subtitle": "Data incident detection and A/B analysis",
+      "summary": "Spots service incidents with 87.9 percent precision and 93.5 percent recall, against 11.9 percent precision for a rolling z-score, cutting false-alarm episodes from 111 to 4. Also runs a CUPED-adjusted A/B test analysis across 12,000 units.",
+      "stack": [
+        "dbt",
+        "FastAPI",
+        "Next.js",
+        "A/B testing"
+      ],
+      "live": "https://pablowilliams.github.io/signalops/",
+      "source": "https://github.com/pablowilliams/signalops"
+    },
+    {
+      "key": "touchstone",
+      "ref": "R/37",
+      "title": "Touchstone",
+      "kind": "research",
+      "category": "Applied ML",
+      "theme": "applied",
+      "tags": [
+        "applied"
+      ],
+      "subtitle": "Governed AI reference architecture",
+      "summary": "An AI solution architecture for a fictional regulated client, with a verifier that stopped every one of 59 attempts to slip an ungrounded number past it. Architected for Azure and validated, not deployed.",
+      "stack": [
+        "RAG",
+        "Evaluation",
+        "Azure",
+        "FastAPI"
+      ],
+      "live": "",
+      "source": "https://github.com/pablowilliams/touchstone"
+    },
+    {
+      "key": "grokking-circuits",
+      "ref": "R/01",
+      "title": "Grokking Circuits",
+      "kind": "research",
+      "category": "Interpretability",
+      "theme": "interp",
+      "tags": [
+        "interp"
+      ],
+      "subtitle": "Mechanistic interpretability of modular arithmetic",
+      "summary": "Reproduced Nanda et al. 2023 in a 1 layer transformer trained on addition mod 113. Train saturates at step 400 but test only groks at step 10,900. Reverse engineered the Fourier circuit and showed six key frequencies preserve 94.5 percent test accuracy.",
+      "stack": [
+        "PyTorch",
+        "Transformers",
+        "Fourier"
+      ],
+      "live": "",
+      "source": "https://github.com/pablowilliams/grokking-circuits/raw/main/report/Grokking_Report.pdf"
+    },
+    {
+      "key": "attention-lens",
+      "ref": "R/02",
+      "title": "Attention Lens",
+      "kind": "research",
+      "category": "Interpretability",
+      "theme": "interp",
+      "tags": [
+        "interp"
+      ],
+      "subtitle": "In browser GPT-2 attention visualiser",
+      "summary": "GPT-2 small running on WebGPU. Captures attention from all 144 heads across 12 layers and renders heatmaps, token graphs and a head overview.",
+      "stack": [
+        "Transformers.js",
+        "WebGPU",
+        "ONNX"
+      ],
+      "live": "https://pablowilliams.github.io/attention-lens/",
+      "source": "https://github.com/pablowilliams/attention-lens"
+    },
+    {
+      "key": "vol-surface-arbitrage-scanner",
+      "ref": "R/03",
+      "title": "Vol Surface Arbitrage Scanner",
+      "kind": "research",
+      "category": "Quant finance",
+      "theme": "finance",
+      "tags": [
+        "finance"
+      ],
+      "subtitle": "SVI + neural residual + arbitrage detection",
+      "summary": "Fits SVI parametric implied vol surfaces per expiry slice with a neural residual MLP on top. Detected 186 calendar violations across 250 options. SVI RMSE 0.00410, combined model RMSE 0.00512, R squared 0.99988.",
+      "stack": [
+        "PyTorch",
+        "SciPy",
+        "Three.js"
+      ],
+      "live": "",
+      "source": "https://github.com/pablowilliams/vol-surface-scanner/raw/main/report/Vol_Surface_Report.pdf"
+    },
+    {
+      "key": "optimal-execution-platform",
+      "ref": "R/04",
+      "title": "Optimal Execution Platform",
+      "kind": "research",
+      "category": "Quant finance",
+      "theme": "finance",
+      "tags": [
+        "finance"
+      ],
+      "subtitle": "Almgren Chriss vs Obizhaeva Wang vs PPO",
+      "summary": "Benchmarks three execution strategies against live LOBSTER AAPL order book data: Almgren Chriss closed form, Obizhaeva Wang transient impact and a PPO agent trained on simulated book dynamics.",
+      "stack": [
+        "PyTorch",
+        "PPO",
+        "LOBSTER"
+      ],
+      "live": "",
+      "source": "https://github.com/pablowilliams/optimal-execution/raw/main/Optimal_Execution_Research_Report.pdf"
+    },
+    {
+      "key": "calibration",
+      "ref": "R/05",
+      "title": "Calibration Optimised Equity",
+      "kind": "research",
+      "category": "Quant finance",
+      "theme": "finance",
+      "tags": [
+        "finance"
+      ],
+      "subtitle": "ECE optimised portfolio strategy",
+      "summary": "Tested whether better-calibrated classifiers pick better stocks across 457 S&P 500 names (2010 to 2024 data). Random Forest calibrated best (ECE 0.026) and its portfolio returned 68.1 percent over the 2021 to 2024 test, ahead of SPY at 66.1 percent, though with a lower Sharpe (0.77 vs 0.83).",
+      "stack": [
+        "XGBoost",
+        "LightGBM",
+        "SHAP"
+      ],
+      "live": "",
+      "source": "https://github.com/pablowilliams/MSIN0097-Calibration-Portfolio/raw/main/MSIN0097_FINAL_REPORT_25088283.pdf"
+    },
+    {
+      "key": "alphaquant-factor-timing",
+      "ref": "R/06",
+      "title": "AlphaQuant Factor Timing",
+      "kind": "research",
+      "category": "Quant finance",
+      "theme": "finance",
+      "tags": [
+        "finance"
+      ],
+      "subtitle": "Factor investing with ML regime timing",
+      "summary": "ML enhanced factor investing combining Value, Momentum, Quality and Low Volatility with XGBoost regime timing. Backtested Sharpe ratio of 0.94 with dynamic allocation driven by macro indicators.",
+      "stack": [
+        "XGBoost",
+        "Backtrader",
+        "Factors"
+      ],
+      "live": "",
+      "source": "https://github.com/pablowilliams/alphaquant-factor-timing/raw/main/report.pdf"
+    },
+    {
+      "key": "sentinel-credit-risk",
+      "ref": "R/07",
+      "title": "Sentinel Credit Risk",
+      "kind": "research",
+      "category": "Quant finance",
+      "theme": "finance",
+      "tags": [
+        "finance"
+      ],
+      "subtitle": "Consumer loan default, Lending Club",
+      "summary": "Ensemble gradient boosting model for consumer loan default. AUC ROC 0.89 with well calibrated probability estimates ready for expected loss and credit scoring.",
+      "stack": [
+        "XGBoost",
+        "LightGBM",
+        "SHAP"
+      ],
+      "live": "",
+      "source": "https://github.com/pablowilliams/sentinel-credit-risk-prediction/raw/main/report.pdf"
+    },
+    {
+      "key": "polish-corporate-bankruptcy",
+      "ref": "R/08",
+      "title": "Polish Corporate Bankruptcy",
+      "kind": "research",
+      "category": "Quant finance",
+      "theme": "finance",
+      "tags": [
+        "finance"
+      ],
+      "subtitle": "Financial distress ML pipeline",
+      "summary": "Leak proof ML pipeline on 10,503 company year records with 64 financial ratios, 50 percent missingness and a 20 to 1 class imbalance. LightGBM hit AUPRC 0.6249 and AUC ROC 0.926.",
+      "stack": [
+        "LightGBM",
+        "Optuna",
+        "Altman Z"
+      ],
+      "live": "",
+      "source": "https://github.com/pablowilliams"
+    },
+    {
+      "key": "polymarket-weather-bot",
+      "ref": "R/09",
+      "title": "Polymarket Weather Bot",
+      "kind": "research",
+      "category": "Quant finance",
+      "theme": "finance",
+      "tags": [
+        "finance"
+      ],
+      "subtitle": "Prediction market trading from NOAA + ECMWF",
+      "summary": "Prices weather contracts on Polymarket and Kalshi. Ingests NOAA and ECMWF forecasts, converts to implied probabilities, scores mispricings and places risk sized orders. Ships with a validated research log separating backtest from live PnL.",
+      "stack": [
+        "NOAA",
+        "Kalshi",
+        "Kelly"
+      ],
+      "live": "",
+      "source": "https://github.com/pablowilliams/polymarket-kalshi-weather-bot"
+    },
+    {
+      "key": "value-betting",
+      "ref": "R/10",
+      "title": "Value Betting",
+      "kind": "research",
+      "category": "Quant finance",
+      "theme": "finance",
+      "tags": [
+        "finance"
+      ],
+      "subtitle": "Statistical arbitrage on prediction markets",
+      "summary": "Ingests live odds, computes fair probabilities from historical base rates, sizes stakes with fractional Kelly and logs expected value against realised PnL for every position.",
+      "stack": [
+        "Kelly",
+        "Bayesian",
+        "Arbitrage"
+      ],
+      "live": "",
+      "source": "https://github.com/pablowilliams/ValueBetting"
+    },
+    {
+      "key": "adaptive-conformal-prediction",
+      "ref": "R/11",
+      "title": "Adaptive Conformal Prediction",
+      "kind": "research",
+      "category": "ML infrastructure",
+      "theme": "ml",
+      "tags": [
+        "ml"
+      ],
+      "subtitle": "Calibrated uncertainty under distribution shift",
+      "summary": "Reproduced Gibbs and Candes on four regimes. Adaptive conformal stays within 0.3 points of the 90 percent target while split conformal under covers by 8 to 25 points.",
+      "stack": [
+        "PyTorch",
+        "Quantile",
+        "DtACI"
+      ],
+      "live": "",
+      "source": "https://github.com/pablowilliams/adaptive-conformal/raw/main/report/Adaptive_Conformal_Report.pdf"
+    },
+    {
+      "key": "fourier-neural-operator",
+      "ref": "R/12",
+      "title": "Fourier Neural Operator",
+      "kind": "research",
+      "category": "ML infrastructure",
+      "theme": "ml",
+      "tags": [
+        "ml"
+      ],
+      "subtitle": "Spectral PDE surrogate with resolution transfer",
+      "summary": "From scratch FNO learning the one step solution map of the 1D viscous Burgers equation. Trained at N = 64 and evaluated zero shot at N = 256 plus out of distribution viscosities. Beats MLP and CNN baselines on relative L2 error and tracks ground truth energy decay within 0.35 percent.",
+      "stack": [
+        "PyTorch",
+        "Spectral",
+        "FNO"
+      ],
+      "live": "",
+      "source": "https://github.com/pablowilliams/fno-burgers/raw/main/report/FNO_Burgers_Report.pdf"
+    },
+    {
+      "key": "domain-adaptive-llm-fine-tuning",
+      "ref": "R/13",
+      "title": "Domain Adaptive LLM Fine Tuning",
+      "kind": "research",
+      "category": "ML infrastructure",
+      "theme": "ml",
+      "tags": [
+        "ml"
+      ],
+      "subtitle": "LoRA vs QLoRA vs full fine tuning",
+      "summary": "Head to head comparison on one base model for financial sentiment classification. Matched compute budgets, reports macro F1 on a held out test set and measures throughput, peak GPU memory and adapter file size.",
+      "stack": [
+        "PEFT",
+        "LoRA",
+        "bitsandbytes"
+      ],
+      "live": "",
+      "source": "https://github.com/pablowilliams/domain-llm-finetune/raw/main/LLM_FineTuning_Research_Report.pdf"
+    },
+    {
+      "key": "streaming-anomaly-detection",
+      "ref": "R/14",
+      "title": "Streaming Anomaly Detection",
+      "kind": "research",
+      "category": "ML infrastructure",
+      "theme": "ml",
+      "tags": [
+        "ml"
+      ],
+      "subtitle": "Real time financial transactions",
+      "summary": "Benchmarks a Dense Autoencoder, an LSTM Autoencoder, Isolation Forest, Local Outlier Factor and statistical baselines on the same labelled stream. Evaluates detection lag, precision at low FPR and drift behaviour.",
+      "stack": [
+        "LSTM AE",
+        "iForest",
+        "LOF"
+      ],
+      "live": "",
+      "source": "https://github.com/pablowilliams/streaming-anomaly/raw/main/Anomaly_Detection_Research_Report.pdf"
+    },
+    {
+      "key": "toneshift",
+      "ref": "R/15",
+      "title": "ToneShift",
+      "kind": "research",
+      "category": "Applied ML",
+      "theme": "applied",
+      "tags": [
+        "applied"
+      ],
+      "subtitle": "Earnings call sentiment at scale",
+      "summary": "FinBERT NLP over 1.1 million transcripts. Decodes executive sentiment, flags hedging and tone shifts, emits trading signals before market moving surprises.",
+      "stack": [
+        "FinBERT",
+        "React",
+        "Supabase"
+      ],
+      "live": "https://tone-shift.com",
+      "source": ""
+    },
+    {
+      "key": "churn-propensity",
+      "ref": "R/16",
+      "title": "Churn Propensity Modelling",
+      "kind": "research",
+      "category": "Applied ML",
+      "theme": "applied",
+      "tags": [
+        "applied"
+      ],
+      "subtitle": "Telco customer attrition",
+      "summary": "End to end churn pipeline on the IBM Telco dataset. Compares Logistic Regression, Random Forest and XGBoost with business oriented evaluation via cumulative lift, calibration analysis and decile level targeting. On 7,043 customers, targeting the riskiest 20 percent reaches 55 percent of churners, a 2.7x lift over random outreach.",
+      "stack": [
+        "XGBoost",
+        "Calibration",
+        "Lift"
+      ],
+      "live": "",
+      "source": "https://github.com/pablowilliams/churn-propensity-modelling/raw/main/paper/report.pdf"
+    },
+    {
+      "key": "topic-discovery",
+      "ref": "R/17",
+      "title": "Online Community Topic Discovery",
+      "kind": "research",
+      "category": "Applied ML",
+      "theme": "applied",
+      "tags": [
+        "applied"
+      ],
+      "subtitle": "NLP topic modelling for problem solving",
+      "summary": "Unsupervised topic modelling on 14,000 plus discussion posts. LDA found 17 topics with twice the coherence of NMF (0.65 vs 0.32). Adds urgency scoring, pain point extraction, extractive summarisation, severity clustering and topic category cross analysis.",
+      "stack": [
+        "Gensim",
+        "LDA",
+        "NMF"
+      ],
+      "live": "",
+      "source": "https://github.com/pablowilliams/consumer-complaints-topic-discovery/raw/main/paper/report.pdf"
+    },
+    {
+      "key": "core-protocol-pulse",
+      "ref": "R/18",
+      "title": "Core Protocol Pulse",
+      "kind": "research",
+      "category": "Applied ML",
+      "theme": "applied",
+      "tags": [
+        "applied"
+      ],
+      "subtitle": "SEC filing intelligence platform",
+      "summary": "Transforms SEC filings into actionable insights with anomaly detection, semantic search, predictive forecasting and an AI chat that cites back to source passages.",
+      "stack": [
+        "NLP",
+        "Supabase",
+        "RLS"
+      ],
+      "live": "https://core-protocol-pulse.lovable.app",
+      "source": ""
+    },
+    {
+      "key": "meridian-uk-property",
+      "ref": "R/19",
+      "title": "Meridian UK Property",
+      "kind": "research",
+      "category": "Applied ML",
+      "theme": "applied",
+      "tags": [
+        "applied"
+      ],
+      "subtitle": "Real estate price model",
+      "summary": "UK residential price prediction across 10 major cities. R squared 0.88 with 28,500 pound MAE, analysing location premiums, energy performance impacts and transport accessibility against Land Registry data.",
+      "stack": [
+        "LightGBM",
+        "Geo",
+        "EPC"
+      ],
+      "live": "",
+      "source": "https://github.com/pablowilliams/meridian-uk-property-prediction/raw/main/report.pdf"
+    },
+    {
+      "key": "vertex-saas-churn",
+      "ref": "R/20",
+      "title": "Vertex SaaS Churn",
+      "kind": "research",
+      "category": "Applied ML",
+      "theme": "applied",
+      "tags": [
+        "applied"
+      ],
+      "subtitle": "B2B customer retention",
+      "summary": "Ensemble ML for B2B SaaS churn hitting AUC ROC 0.91. Identifies at risk customers through engagement metrics, NPS analysis and behavioural patterns across the subscription lifecycle.",
+      "stack": [
+        "XGBoost",
+        "Survival",
+        "Lifelines"
+      ],
+      "live": "",
+      "source": "https://github.com/pablowilliams/vertex-saas-churn-prediction/raw/main/report.pdf"
+    },
+    {
+      "key": "riskterrain",
+      "ref": "R/21",
+      "title": "RiskTerrain",
+      "kind": "research",
+      "category": "Applied ML",
+      "theme": "applied",
+      "tags": [
+        "applied"
+      ],
+      "subtitle": "Geospatial S&P 500 risk intelligence",
+      "summary": "Six node LangGraph pipeline ingests live geopolitical events, runs multi hop supply chain traversal across 154 S&P 500 companies, and scores cascading risk in under 8 seconds. Built at the LangChain x SurrealDB London Hackathon.",
+      "stack": [
+        "LangGraph",
+        "SurrealDB",
+        "Three.js"
+      ],
+      "live": "",
+      "source": "https://github.com/pablowilliams/Risk-Terrain-Hackathon-SurrealDB-Langchain-Clean/raw/main/RiskTerrain_Quickstart.pdf"
+    },
+    {
+      "key": "aurora-trend-forecasting",
+      "ref": "R/22",
+      "title": "Aurora Trend Forecasting",
+      "kind": "research",
+      "category": "Fashion and retail",
+      "theme": "fashion",
+      "tags": [
+        "fashion"
+      ],
+      "subtitle": "Demand prediction",
+      "summary": "Predicts fashion product trend scores from engagement signals and product attributes. XGBoost model hits R squared 0.78, enabling inventory optimisation and marketing allocation.",
+      "stack": [
+        "XGBoost",
+        "Time series"
+      ],
+      "live": "",
+      "source": "https://github.com/pablowilliams/aurora-fashion-trend-forecasting/raw/main/report.pdf"
+    },
+    {
+      "key": "nexus-fashion-evolution",
+      "ref": "R/23",
+      "title": "Nexus Fashion Evolution",
+      "kind": "research",
+      "category": "Fashion and retail",
+      "theme": "fashion",
+      "tags": [
+        "fashion"
+      ],
+      "subtitle": "Trend analysis 2015 to 2024",
+      "summary": "ML analysis of trend evolution from 2015 to 2024, examining silhouette shifts, sustainability adoption and social media influence on propagation. XGBoost at R squared 0.82 for lifecycle prediction.",
+      "stack": [
+        "NLP",
+        "Clustering"
+      ],
+      "live": "",
+      "source": "https://github.com/pablowilliams/nexus-fashion-evolution-analytics/raw/main/report.pdf"
+    },
+    {
+      "key": "vista-zero-shot-detection",
+      "ref": "R/24",
+      "title": "Vista Zero Shot Detection",
+      "kind": "research",
+      "category": "Fashion and retail",
+      "theme": "fashion",
+      "tags": [
+        "fashion"
+      ],
+      "subtitle": "Vision language object detection",
+      "summary": "Zero shot fashion object detection using OWL ViT and CLIP for pseudo label generation and knowledge distillation to YOLOv8. Reaches 88.7 percent of supervised performance with a 99 percent annotation cost reduction.",
+      "stack": [
+        "CLIP",
+        "YOLOv8",
+        "OWL ViT"
+      ],
+      "live": "",
+      "source": "https://github.com/pablowilliams/vista-zero-shot-fashion-detection/raw/main/report.pdf"
+    },
+    {
+      "key": "styleforge-recommender",
+      "ref": "R/25",
+      "title": "StyleForge Recommender",
+      "kind": "research",
+      "category": "Fashion and retail",
+      "theme": "fashion",
+      "tags": [
+        "fashion"
+      ],
+      "subtitle": "Visual collaborative filtering",
+      "summary": "Hybrid visual collaborative recommender for fashion ecommerce that targets the cold start problem. Attention based fusion of ResNet visual features with neural collaborative filtering.",
+      "stack": [
+        "ResNet",
+        "NCF",
+        "Attention"
+      ],
+      "live": "",
+      "source": "https://github.com/pablowilliams/styleforge-hybrid-fashion-recommender/raw/main/report.pdf"
+    },
+    {
+      "key": "project-lockdown",
+      "ref": "R/26",
+      "title": "Project Lockdown",
+      "kind": "research",
+      "category": "Operations",
+      "theme": "ops",
+      "tags": [
+        "ops"
+      ],
+      "subtitle": "Emergency food distribution for 52,000 residents",
+      "summary": "Emergency food distribution system for a 28 day lockdown. Exponential smoothing demand forecasting, vehicle routing optimisation with the Google Maps API and capacity modelling.",
+      "stack": [
+        "VRP",
+        "Google Maps",
+        "Monte Carlo"
+      ],
+      "live": "",
+      "source": "https://github.com/pablowilliams/Project-Lockdown/raw/main/report.pdf"
+    },
+    {
+      "key": "retail-management-system",
+      "ref": "R/27",
+      "title": "Retail Management System",
+      "kind": "research",
+      "category": "Operations",
+      "theme": "ops",
+      "tags": [
+        "ops"
+      ],
+      "subtitle": "Enterprise O2C and P2P architecture",
+      "summary": "Enterprise system architecture for order to cash and procure to pay automation. Hierarchical data flow diagrams, structured narration tables, system flowcharts and integration specifications.",
+      "stack": [
+        "ERP",
+        "API",
+        "DFD"
+      ],
+      "live": "",
+      "source": "https://github.com/pablowilliams/retail-management-system-design/raw/main/report.pdf"
+    },
+    {
+      "key": "ai-strategy-analysis",
+      "ref": "R/28",
+      "title": "AI Strategy Analysis",
+      "kind": "research",
+      "category": "Operations",
+      "theme": "ops",
+      "tags": [
+        "ops"
+      ],
+      "subtitle": "Organisational transformation",
+      "summary": "Strategic analysis of AI adoption frameworks and organisational transformation. Socio technical systems theory, adoption lifecycle modelling and HR strategy for technology driven change.",
+      "stack": [
+        "NLP",
+        "Strategy"
+      ],
+      "live": "",
+      "source": "https://github.com/pablowilliams/AI-Strategy-Analysis/raw/main/report.pdf"
+    },
+    {
+      "key": "supply-chain-sustainability",
+      "ref": "R/29",
+      "title": "Supply Chain Sustainability",
+      "kind": "research",
+      "category": "Operations",
+      "theme": "ops",
+      "tags": [
+        "ops"
+      ],
+      "subtitle": "ESG mining analysis",
+      "summary": "Comparative sustainability analysis of Rio Tinto and Lundin Mining using the GRI framework, Resource Based View theory and a Triple Bottom Line evaluation. Ships Python tools for ESG metrics.",
+      "stack": [
+        "GRI",
+        "ESG"
+      ],
+      "live": "",
+      "source": "https://github.com/pablowilliams/supply-chain-sustainability/raw/main/report.pdf"
+    }
+  ],
+  "credentials": [
+    {
+      "issuer": "duke",
+      "title": "MLOps, Machine Learning Operations",
+      "organisation": "Duke University",
+      "date": "Dec 2025",
+      "id": "NDZG9U33A14Q",
+      "verify": "https://www.coursera.org/account/accomplishments/verify/NDZG9U33A14Q"
+    },
+    {
+      "issuer": "duke",
+      "title": "Python Essentials for MLOps",
+      "organisation": "Duke University",
+      "date": "Oct 2025",
+      "id": "U8HW0NPK08K4",
+      "verify": "https://www.coursera.org/account/accomplishments/verify/U8HW0NPK08K4"
+    },
+    {
+      "issuer": "bloomberg",
+      "title": "Bloomberg Finance Fundamentals",
+      "organisation": "Bloomberg",
+      "date": "Nov 2025",
+      "id": "FRt5BcXTaHLrxQeffdfTnEfk",
+      "verify": ""
+    },
+    {
+      "issuer": "google",
+      "title": "Data, Data, Everywhere",
+      "organisation": "Google",
+      "date": "Nov 2025",
+      "id": "Q0RBDAC7RTH5",
+      "verify": "https://www.coursera.org/account/accomplishments/verify/Q0RBDAC7RTH5"
+    },
+    {
+      "issuer": "google",
+      "title": "Ask Questions to Make Data Driven Decisions",
+      "organisation": "Google",
+      "date": "Jan 2026",
+      "id": "DHNMD8U14O83",
+      "verify": "https://www.coursera.org/account/accomplishments/verify/DHNMD8U14O83"
+    },
+    {
+      "issuer": "google",
+      "title": "Troubleshooting and Debugging",
+      "organisation": "Google",
+      "date": "Jan 2026",
+      "id": "FD7D6ISA1MAA",
+      "verify": "https://www.coursera.org/account/accomplishments/verify/FD7D6ISA1MAA"
+    },
+    {
+      "issuer": "ibm",
+      "title": "Intro to Software Engineering",
+      "organisation": "IBM",
+      "date": "Nov 2025",
+      "id": "3KU0NBFQY8MQ",
+      "verify": "https://www.coursera.org/account/accomplishments/verify/3KU0NBFQY8MQ"
+    },
+    {
+      "issuer": "ibm",
+      "title": "Exploratory Data Analysis for ML",
+      "organisation": "IBM",
+      "date": "Jan 2026",
+      "id": "2UW8JAWRXZTB",
+      "verify": "https://www.coursera.org/account/accomplishments/verify/2UW8JAWRXZTB"
+    },
+    {
+      "issuer": "ibm",
+      "title": "Machine Learning with Python",
+      "organisation": "IBM",
+      "date": "Jan 2026",
+      "id": "T485ENIUZQ8X",
+      "verify": "https://www.coursera.org/account/accomplishments/verify/T485ENIUZQ8X"
+    },
+    {
+      "issuer": "ibm",
+      "title": "Supervised ML, Classification",
+      "organisation": "IBM",
+      "date": "Jan 2026",
+      "id": "N6DRR0FNYFFF",
+      "verify": "https://www.coursera.org/account/accomplishments/verify/N6DRR0FNYFFF"
+    },
+    {
+      "issuer": "lbs",
+      "title": "Fundamentals of Financial Analysis",
+      "organisation": "London Business School",
+      "date": "Oct 2025",
+      "id": "DRH6VDV9CTXE",
+      "verify": "https://www.coursera.org/account/accomplishments/verify/DRH6VDV9CTXE"
+    },
+    {
+      "issuer": "yale",
+      "title": "Financial Markets",
+      "organisation": "Yale University",
+      "date": "Sep 2025",
+      "id": "NY549T21GLEP",
+      "verify": "https://www.coursera.org/account/accomplishments/verify/NY549T21GLEP"
+    },
+    {
+      "issuer": "edureka",
+      "title": "Building AI Agents with OpenAI",
+      "organisation": "Edureka",
+      "date": "Dec 2025",
+      "id": "UOZ6TFFN79MO",
+      "verify": "https://www.coursera.org/account/accomplishments/verify/UOZ6TFFN79MO"
+    },
+    {
+      "issuer": "edureka",
+      "title": "Design AI Agents with OpenAI AgentKit",
+      "organisation": "Edureka",
+      "date": "Dec 2025",
+      "id": "NVHLURN6I4MM",
+      "verify": "https://www.coursera.org/account/accomplishments/verify/NVHLURN6I4MM"
+    },
+    {
+      "issuer": "edureka",
+      "title": "Develop Intelligent AI Agents",
+      "organisation": "Edureka",
+      "date": "Dec 2025",
+      "id": "6MQ5M3MKZM1W",
+      "verify": "https://www.coursera.org/account/accomplishments/verify/6MQ5M3MKZM1W"
+    },
+    {
+      "issuer": "edureka",
+      "title": "Deploy AI Agents with OpenAI",
+      "organisation": "Edureka",
+      "date": "Dec 2025",
+      "id": "HCMY0KNM0U11",
+      "verify": "https://www.coursera.org/account/accomplishments/verify/HCMY0KNM0U11"
+    },
+    {
+      "issuer": "gcp",
+      "title": "Trading, ML and GCP",
+      "organisation": "Google Cloud",
+      "date": "Jan 2026",
+      "id": "HS9BT34LR91C",
+      "verify": "https://www.coursera.org/account/accomplishments/verify/HS9BT34LR91C"
+    }
+  ]
+}

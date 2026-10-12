@@ -82,6 +82,9 @@ export function auditDocument(html) {
   const description = html.match(/<meta\s+name=["']description["']\s+content=["']([^"']+)["']/i)?.[1] ?? "";
   const cards = countMatches(html, /<article\b[^>]*class=["'][^"']*\blive-card\b[^"']*["']/gi);
   const researchCards = countMatches(html, /<article\b[^>]*class=["'][^"']*\br-card\b[^"']*["']/gi);
+  const flagshipCards = countMatches(html, /<article\b[^>]*class=["'][^"']*\bflag\b[^"']*["']/gi);
+  const projectCards = countMatches(html, /<article\b[^>]*class=["'][^"']*\bcard\b[^"']*["']/gi);
+  const provenanceLabels = countMatches(html, /class=["']prov["']\s+data-p=/gi);
   const externalLinks = anchors.filter(({ href }) => /^https:\/\//.test(href));
   return {
     title,
@@ -94,6 +97,9 @@ export function auditDocument(html) {
     duplicateIds,
     liveProjectCards: cards,
     researchCards,
+    flagshipCards,
+    projectCards,
+    provenanceLabels,
     externalLinkCount: externalLinks.length,
     githubLinkCount: externalLinks.filter(({ href }) => href.includes("github.com/" )).length,
     mailtoCount: anchors.filter(({ href }) => href.startsWith("mailto:")).length,
@@ -112,13 +118,16 @@ export function auditDocument(html) {
  */
 export function publicSummary(audit, htmlBytes, cvBytes) {
   return {
-    sourceDate: "2026-09-16",
+    sourceDate: new Date().toISOString().slice(0, 10),
     page: {
       title: audit.title,
       htmlBytes,
       sectionCount: audit.sections.length,
       liveProjectCards: audit.liveProjectCards,
       researchCards: audit.researchCards,
+      flagshipCards: audit.flagshipCards,
+      projectCards: audit.projectCards,
+      provenanceLabels: audit.provenanceLabels,
       externalLinkCount: audit.externalLinkCount,
       githubLinkCount: audit.githubLinkCount,
       imageCount: audit.imageCount,
