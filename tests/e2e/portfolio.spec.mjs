@@ -98,6 +98,8 @@ test("every project is discoverable by keyboard", async ({ page }) => {
 
 test("no horizontal overflow at 320px", async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 900 });
+  // Load at the target viewport so responsive layout is settled before it is measured.
+  await page.reload();
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   expect(overflow).toBe(0);
 });
