@@ -378,7 +378,7 @@ dialog.drawer::backdrop{background:rgba(0,0,0,.72)}
 .matrix td:first-child{color:var(--text);font-weight:500;white-space:nowrap}
 .matrix td a{color:var(--accent);text-decoration:none}
 .matrix td a:hover{text-decoration:underline}
-.scroll-x{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
+.scroll-x{overflow-x:auto;width:100%;max-width:100%;min-width:0;contain:inline-size;-webkit-overflow-scrolling:touch}
 .scroll-x .matrix{min-width:540px}
 details.shelf{border:1px solid var(--line-soft);border-radius:var(--r);background:var(--surface);
   padding:14px 16px;margin-bottom:10px}
