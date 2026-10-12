@@ -20,6 +20,9 @@
   --text:#f3f3ef; --muted:#9a9a96; --faint:#6a6a66;
   --line:rgba(255,255,255,.11); --line-soft:rgba(255,255,255,.06);
   --accent:#5ce8b6; --alert:#ee765f; --ok:#5ce8b6;
+  /* Cyber UI Lab theme: phosphor (a green CRT phosphor, kept close to the site accent) */
+  --phos:#7dffb4; --phos-dim:rgba(125,255,180,.55); --phos-glow:0 0 6px rgba(125,255,180,.55),0 0 18px rgba(92,232,182,.25);
+  --phos-line:rgba(125,255,180,.28);
   --sans:"Inter","Helvetica Neue",Helvetica,Arial,sans-serif;
   --mono:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
   --r:4px; --maxw:1280px; --pad:clamp(16px,4vw,40px);
@@ -92,6 +95,32 @@ a{color:inherit}
 .hero h1{font-size:clamp(2rem,5.4vw,3.5rem);letter-spacing:-.025em;max-width:19ch;margin-bottom:22px}
 .hero-sub{font-size:clamp(1rem,1.9vw,1.14rem);color:var(--muted);max-width:60ch;margin-bottom:28px}
 .scramble{display:inline-block}
+/* X-01 decrypting headline: glyph cells keep the final character's width, so nothing reflows */
+.scramble .dw{display:inline-block;white-space:nowrap}
+.scramble .dc{display:inline-block;text-align:center;height:1.15em;line-height:1.15;vertical-align:top}
+.scramble .dw{vertical-align:top}
+.scramble .dc.live{color:var(--phos);text-shadow:var(--phos-glow);font-family:var(--mono);font-weight:400}
+.scramble .dc.lock{animation:lockin .28s ease-out}
+@keyframes lockin{from{color:var(--phos);text-shadow:var(--phos-glow)}to{color:inherit;text-shadow:none}}
+.hero h1{cursor:default}
+
+/* B-03 perspective grid floor: CSS only, confined to the hero, behind its content */
+.grid-floor{position:absolute;left:0;right:0;bottom:0;height:58%;overflow:hidden;pointer-events:none;z-index:0;
+  perspective:300px;perspective-origin:50% 0;
+  -webkit-mask-image:linear-gradient(to top,#000 0%,rgba(0,0,0,.65) 45%,transparent 100%);
+          mask-image:linear-gradient(to top,#000 0%,rgba(0,0,0,.65) 45%,transparent 100%)}
+.grid-floor::before{content:"";position:absolute;left:-60%;right:-60%;top:0;height:220%;
+  transform:rotateX(66deg);transform-origin:50% 0;opacity:.55;
+  background-image:linear-gradient(var(--phos-line) 1px,transparent 1px),
+    linear-gradient(90deg,var(--phos-line) 1px,transparent 1px);
+  background-size:64px 64px;animation:floor-run 7s linear infinite}
+.grid-floor::after{content:"";position:absolute;left:0;right:0;top:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--phos-dim) 30%,var(--phos-dim) 70%,transparent);
+  box-shadow:0 0 22px 3px rgba(125,255,180,.18)}
+.grid-floor.paused::before{animation-play-state:paused}
+@keyframes floor-run{to{background-position:0 64px}}
+.hero>.wrap{position:relative;z-index:1}
+.hero>.clock{z-index:1}
 .cap-line{font-family:var(--mono);color:var(--faint);font-size:.82rem;margin-bottom:30px;min-height:1.4em}
 .cap-line b{color:var(--accent);font-weight:400}
 .caret{display:inline-block;width:7px;background:var(--accent);margin-left:2px;
@@ -286,9 +315,10 @@ details.shelf[open] summary::after{content:"\2212"}
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;
     transition-duration:.001ms!important}
   .dot,.caret{animation:none}
+  .grid-floor::before{animation:none}
 }
 @media print{
-  .hdr,.skip-link,.actions,.toolbar,.filters,.resultbar,.drawer,.foot{display:none!important}
+  .hdr,.skip-link,.actions,.toolbar,.filters,.resultbar,.drawer,.foot,.grid-floor{display:none!important}
   body{background:#fff;color:#000;font-size:11pt}
   .sec,.hero,.evidence{border-color:#ccc}
   .card,.flag,.cert,.metric{border-color:#bbb;background:#fff;break-inside:avoid}
@@ -320,6 +350,7 @@ details.shelf[open] summary::after{content:"\2212"}
 
 <main id="main">
 <section class="hero" id="top">
+  <div class="grid-floor" aria-hidden="true"></div>
   <p class="clock mono" id="clock" aria-hidden="true"></p>
   <div class="wrap">
     <p class="eyebrow">Applied AI &amp; data systems / London</p>
@@ -1725,30 +1756,86 @@ const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 
-/* X-01 decrypt, once, under 700ms, final text already in the DOM for AT */
+/* X-01 decrypting headline (Cyber UI Lab, phosphor theme).
+   Characters resolve in a shuffled order rather than left to right, each cycling
+   through glyphs before it locks. Every glyph cell is fixed to the width of its
+   final character, so the line never reflows. Runs once on load in about 650 ms
+   and can be replayed by hovering over the headline, at most once every 4 s.
+   Assistive technology reads the final sentence throughout; reduced motion skips it. */
 (() => {
   const el = $(".scramble");
   if (!el || reduced) return;
   const final = el.dataset.final || el.textContent;
-  const pool = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  el.setAttribute("aria-label", final);
-  const span = document.createElement("span");
-  span.setAttribute("aria-hidden", "true");
-  el.textContent = "";
-  el.append(span);
-  const start = performance.now(), dur = 620;
-  const tick = (now) => {
-    const t = Math.min(1, (now - start) / dur);
-    const settled = Math.floor(final.length * t);
-    let out = final.slice(0, settled);
-    for (let i = settled; i < final.length; i++) {
-      out += final[i] === " " ? " " : pool[(Math.random() * pool.length) | 0];
-    }
-    span.textContent = out;
-    if (t < 1) requestAnimationFrame(tick);
-    else { el.textContent = final; el.removeAttribute("aria-label"); }
+  // Plain letters, digits and a little punctuation: no katakana or other hacker-film glyphs.
+  const pool = "ABCDEFGHJKLMNPQRSTUVWXYZ0123456789#%&*+/<=>?";
+  const DUR = 650, COOLDOWN = 4000;
+  let running = false, last = -Infinity;
+
+  const run = () => {
+    if (running || performance.now() - last < COOLDOWN) return;
+    running = true; last = performance.now();
+    el.setAttribute("aria-label", final);
+    const visual = document.createElement("span");
+    visual.setAttribute("aria-hidden", "true");
+    // Words stay unbreakable, so the animated line wraps exactly where the final text does.
+    const cells = [];
+    final.split(" ").forEach((word, w) => {
+      if (w) { visual.append(" "); cells.push(null); }
+      const box = document.createElement("span");
+      box.className = "dw";
+      for (const ch of word) {
+        const c = document.createElement("span");
+        c.className = "dc"; c.textContent = ch;
+        box.append(c); cells.push(c);
+      }
+      visual.append(box);
+    });
+    el.textContent = "";
+    el.append(visual);
+    // Fix each cell to its final character's width before any glyph is drawn.
+    cells.forEach((c) => { if (c) c.style.width = c.getBoundingClientRect().width + "px"; });
+    const order = cells.map((_, i) => i).filter((i) => cells[i]);
+    for (let i = order.length - 1; i > 0; i--) { const j = (Math.random() * (i + 1)) | 0; [order[i], order[j]] = [order[j], order[i]]; }
+    // Each character locks at a time drawn from its place in the shuffled order.
+    const lockAt = new Map(order.map((idx, k) => [idx, (0.25 + 0.75 * (k / order.length)) * DUR]));
+    const start = performance.now();
+    let lastSwap = 0;
+    const tick = (now) => {
+      const t = now - start;
+      const swap = now - lastSwap > 45; // change glyphs at ~22 fps so they read as flicker, not noise
+      if (swap) lastSwap = now;
+      for (const [idx, at] of lockAt) {
+        const c = cells[idx];
+        if (t >= at) {
+          if (!c.classList.contains("lock")) { c.textContent = final[idx]; c.classList.remove("live"); c.classList.add("lock"); }
+        } else if (swap) {
+          c.textContent = pool[(Math.random() * pool.length) | 0];
+          c.classList.add("live");
+        }
+      }
+      if (t < DUR + 300 && running) requestAnimationFrame(tick);
+      else finish();
+    };
+    const finish = () => {
+      if (!running) return;
+      el.textContent = final; el.removeAttribute("aria-label"); running = false;
+    };
+    requestAnimationFrame(tick);
+    // Browsers pause animation frames in background tabs; never leave the headline scrambled.
+    setTimeout(finish, DUR + 800);
   };
-  requestAnimationFrame(tick);
+
+  run();
+  const h1 = el.closest("h1");
+  h1?.addEventListener("mouseenter", run);
+})();
+
+/* B-03 perspective grid floor: pause the CSS animation while the hero is off-screen */
+(() => {
+  const floor = $(".grid-floor");
+  if (!floor || reduced || !("IntersectionObserver" in window)) return;
+  new IntersectionObserver(([e]) => floor.classList.toggle("paused", !e.isIntersecting)).observe(floor);
+  document.addEventListener("visibilitychange", () => floor.classList.toggle("paused", document.hidden));
 })();
 
 /* X-02 capability line, three phrases, one cycle, then stop */
