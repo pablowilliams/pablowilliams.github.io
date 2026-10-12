@@ -174,13 +174,14 @@ a{color:inherit}
 /* project index */
 .toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:16px}
 .search{flex:1 1 260px;display:flex;align-items:center;gap:9px;background:var(--surface);
-  border:1px solid var(--line);border-radius:var(--r);padding:0 12px;min-height:44px}
+  border:1px solid var(--line);border-radius:var(--r);padding:0 12px;min-width:0;min-height:44px}
 .search input{flex:1;background:none;border:0;color:var(--text);font:inherit;font-size:.92rem;
   padding:11px 0;min-width:0}
 .search input:focus{outline:none}
 .search:focus-within{border-color:var(--accent)}
 .kbd{font-family:var(--mono);font-size:.68rem;color:var(--faint);border:1px solid var(--line);
   border-radius:3px;padding:2px 6px;white-space:nowrap}
+@media (max-width:420px){.search .kbd{display:none}}
 .filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
 .fchip{font:inherit;font-size:.8rem;color:var(--muted);background:var(--surface);cursor:pointer;
   border:1px solid var(--line);border-radius:var(--r);padding:7px 12px;min-height:36px;
