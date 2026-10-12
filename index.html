@@ -81,9 +81,10 @@ a{color:inherit}
   background:rgba(255,255,255,.02)}
 .term-bar i{width:9px;height:9px;border-radius:50%;display:block}
 .term-bar .t{margin-left:8px;color:var(--faint);font-size:.7rem}
-.term-body{padding:13px 14px;display:grid;gap:5px;color:var(--muted);line-height:1.6}
+.term-body{padding:13px 14px;display:grid;gap:5px;color:var(--muted);line-height:1.6;overflow-wrap:anywhere}
 .term-body .p{color:var(--accent)}
 .hero-grid{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:40px;align-items:end}
+.hero-grid>*{min-width:0}
 @media (max-width:980px){.hero-grid{grid-template-columns:1fr}.term{max-width:none}.clock{display:none}}
 .hero{position:relative;padding:clamp(56px,11vh,120px) 0 clamp(40px,7vh,72px);border-bottom:1px solid var(--line-soft)}
 .eyebrow{color:var(--accent);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;
