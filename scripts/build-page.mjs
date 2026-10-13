@@ -12,8 +12,32 @@ const built = new Date().toISOString().slice(0, 10);
 
 const esc = (s = "") => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
-/** Four flagship systems. Repository URLs are fixed by the brief. */
+/** Five flagship systems. Repository URLs are fixed by the brief. */
 const FLAGSHIP = [
+  {
+    key: "footnote", name: "Footnote", kicker: "An auditable research assistant for SEC annual reports",
+    problem: "A language model will answer questions about a company's filings fluently and give no way to check the figures. In finance, a plausible wrong number costs more than no answer.",
+    system: "Routes each question to validated SQL over XBRL figures, hybrid search over 10-K text, or both. Every change is computed in code, every figure, calculation and quotation is re-verified before release, and questions the filings cannot support are refused.",
+    built: "The EDGAR ingestion and page-level lineage, the router and LangGraph pipeline, the verifier, a 72-question evaluation, and a browser build that runs the full Python pipeline on GitHub Pages with no server.",
+    matters: "Every number arrives with the statement and page it came from, and the system says so when it does not know.",
+    flow: ["SEC EDGAR", "PostgreSQL + pgvector", "Router", "SQL / hybrid retrieval", "Verifier", "Cited answer"],
+    stack: ["Python", "PostgreSQL", "pgvector", "FastAPI", "LangGraph", "Pyodide"],
+    metrics: [
+      { label: "Correct", value: "98.6%", note: "71 of 72 hand-written questions across eight categories", provenance: "measured" },
+      { label: "Refusals", value: "100%", note: "precision and recall on the 18 questions that should be declined", provenance: "measured" },
+      { label: "Corpus", value: "81 reports", note: "10-K filings from 15 companies, 97.1% of figures traced to the printed page", provenance: "measured" }
+    ],
+    source: "https://github.com/pablowilliams/footnote",
+    live: "https://pablowilliams.github.io/footnote/", liveNote: "",
+    liveLabel: "Live demo",
+    liveAria: "Open the Footnote live demo in a new tab. The first visit downloads about 120 MB and takes up to a minute",
+    caseStudy: "https://pablowilliams.github.io/footnote/docs/case-study.html",
+    shot: {
+      src: "assets/previews/footnote.webp", width: 1400, height: 954,
+      alt: "A Footnote answer marked verified: Apple's revenue rose from $383.3 billion in fiscal 2023 to $416.2 billion in fiscal 2025, with each figure cited to the consolidated statement of operations and page of the 10-K.",
+      caption: "A verified answer, each figure cited to its statement and page"
+    }
+  },
   {
     key: "longstop", name: "Longstop", kicker: "Failed-merger detection in SEC filings",
     problem: "A merger that quietly dies leaves no announcement. The evidence is scattered across 8-K exhibits and proxy fields that disagree with each other.",
@@ -151,6 +175,9 @@ const css = `
   --text:#f3f3ef; --muted:#9a9a96; --faint:#6a6a66;
   --line:rgba(255,255,255,.11); --line-soft:rgba(255,255,255,.06);
   --accent:#5ce8b6; --alert:#ee765f; --ok:#5ce8b6;
+  /* Cyber UI Lab theme: phosphor (a green CRT phosphor, kept close to the site accent) */
+  --phos:#7dffb4; --phos-dim:rgba(125,255,180,.55); --phos-glow:0 0 6px rgba(125,255,180,.55),0 0 18px rgba(92,232,182,.25);
+  --phos-line:rgba(125,255,180,.28);
   --sans:"Inter","Helvetica Neue",Helvetica,Arial,sans-serif;
   --mono:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
   --r:4px; --maxw:1280px; --pad:clamp(16px,4vw,40px);
@@ -223,6 +250,32 @@ a{color:inherit}
 .hero h1{font-size:clamp(2rem,5.4vw,3.5rem);letter-spacing:-.025em;max-width:19ch;margin-bottom:22px}
 .hero-sub{font-size:clamp(1rem,1.9vw,1.14rem);color:var(--muted);max-width:60ch;margin-bottom:28px}
 .scramble{display:inline-block}
+/* X-01 decrypting headline: glyph cells keep the final character's width, so nothing reflows */
+.scramble .dw{display:inline-block;white-space:nowrap}
+.scramble .dc{display:inline-block;text-align:center;height:1.15em;line-height:1.15;vertical-align:top}
+.scramble .dw{vertical-align:top}
+.scramble .dc.live{color:var(--phos);text-shadow:var(--phos-glow);font-family:var(--mono);font-weight:400}
+.scramble .dc.lock{animation:lockin .28s ease-out}
+@keyframes lockin{from{color:var(--phos);text-shadow:var(--phos-glow)}to{color:inherit;text-shadow:none}}
+.hero h1{cursor:default}
+
+/* B-03 perspective grid floor: CSS only, confined to the hero, behind its content */
+.grid-floor{position:absolute;left:0;right:0;bottom:0;height:58%;overflow:hidden;pointer-events:none;z-index:0;
+  perspective:300px;perspective-origin:50% 0;
+  -webkit-mask-image:linear-gradient(to top,#000 0%,rgba(0,0,0,.65) 45%,transparent 100%);
+          mask-image:linear-gradient(to top,#000 0%,rgba(0,0,0,.65) 45%,transparent 100%)}
+.grid-floor::before{content:"";position:absolute;left:-60%;right:-60%;top:0;height:220%;
+  transform:rotateX(66deg);transform-origin:50% 0;opacity:.55;
+  background-image:linear-gradient(var(--phos-line) 1px,transparent 1px),
+    linear-gradient(90deg,var(--phos-line) 1px,transparent 1px);
+  background-size:64px 64px;animation:floor-run 7s linear infinite}
+.grid-floor::after{content:"";position:absolute;left:0;right:0;top:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--phos-dim) 30%,var(--phos-dim) 70%,transparent);
+  box-shadow:0 0 22px 3px rgba(125,255,180,.18)}
+.grid-floor.paused::before{animation-play-state:paused}
+@keyframes floor-run{to{background-position:0 64px}}
+.hero>.wrap{position:relative;z-index:1}
+.hero>.clock{z-index:1}
 .cap-line{font-family:var(--mono);color:var(--faint);font-size:.82rem;margin-bottom:30px;min-height:1.4em}
 .cap-line b{color:var(--accent);font-weight:400}
 .caret{display:inline-block;width:7px;background:var(--accent);margin-left:2px;
@@ -289,6 +342,9 @@ a{color:inherit}
   color:var(--faint);margin-top:7px}
 .prov[data-p="measured"]{color:var(--ok);border-color:rgba(92,232,182,.35)}
 .prov[data-p="synthetic"]{color:var(--alert);border-color:rgba(238,118,95,.35)}
+.flag-shot{margin:18px 0 0;border:1px solid var(--line-soft);border-radius:var(--r);overflow:hidden;background:var(--surface)}
+.flag-shot img{display:block;width:100%;height:auto}
+.flag-shot figcaption{color:var(--faint);padding:8px 12px;border-top:1px solid var(--line-soft);font-size:.7rem}
 .flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;list-style:none;padding:0;margin:0}
 .flow li{font-family:var(--mono);font-size:.72rem;padding:6px 10px;border:1px solid var(--line-soft);
   border-radius:2px;background:var(--raised);color:var(--muted)}
@@ -419,9 +475,10 @@ details.shelf[open] summary::after{content:"\\2212"}
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;
     transition-duration:.001ms!important}
   .dot,.caret{animation:none}
+  .grid-floor::before{animation:none}
 }
 @media print{
-  .hdr,.skip-link,.actions,.toolbar,.filters,.resultbar,.drawer,.foot{display:none!important}
+  .hdr,.skip-link,.actions,.toolbar,.filters,.resultbar,.drawer,.foot,.grid-floor{display:none!important}
   body{background:#fff;color:#000;font-size:11pt}
   .sec,.hero,.evidence{border-color:#ccc}
   .card,.flag,.cert,.metric{border-color:#bbb;background:#fff;break-inside:avoid}
@@ -443,7 +500,8 @@ const flapNumber = (n, label) =>
 function flagshipCard(f, i) {
   const status = f.live ? (f.liveNote === "restricted" ? "restricted" : "live") : "source only";
   const links = [
-    f.live ? extLink(f.live, "Open app", `Open the ${f.name} application in a new tab`) : "",
+    f.caseStudy ? extLink(f.caseStudy, "Case study", `Read the ${f.name} case study in a new tab`) : "",
+    f.live ? extLink(f.live, f.liveLabel ?? "Open app", f.liveAria ?? `Open the ${f.name} application in a new tab`) : "",
     extLink(f.source, "Source", `View the ${f.name} source repository on GitHub in a new tab`)
   ].filter(Boolean).join("");
   return `
@@ -464,7 +522,8 @@ function flagshipCard(f, i) {
       <div class="flag-block"><span class="lab">Why it matters</span><p><strong>${esc(f.matters)}</strong></p></div>
       <div class="flag-block"><span class="lab">Architecture</span>
         <ol class="flow">${f.flow.map((/** @type {string} */ s) => `<li>${esc(s)}</li>`).join("")}</ol>
-      </div>
+      </div>${f.shot ? `
+      <figure class="flag-shot"><img src="${esc(f.shot.src)}" width="${esc(f.shot.width)}" height="${esc(f.shot.height)}" loading="lazy" decoding="async" alt="${esc(f.shot.alt)}"><figcaption class="mono">${esc(f.shot.caption)}</figcaption></figure>` : ""}
     </div>
     <div>
       <div class="flag-block"><span class="lab">Evidence</span>
@@ -589,6 +648,7 @@ const html = `<!DOCTYPE html>
 
 <main id="main">
 <section class="hero" id="top">
+  <div class="grid-floor" aria-hidden="true"></div>
   <p class="clock mono" id="clock" aria-hidden="true"></p>
   <div class="wrap">
     <p class="eyebrow">Applied AI &amp; data systems / London</p>
@@ -640,7 +700,7 @@ const html = `<!DOCTYPE html>
 <section class="sec" id="systems">
   <div class="wrap">
     <div class="sec-head"><span class="sec-n">01</span><h2>Selected systems</h2></div>
-    <p class="sec-intro">Four systems, each with the problem it answers, what I built, and what the evidence actually shows. Every figure says where it came from.</p>
+    <p class="sec-intro">Five systems, each with the problem it answers, what I built, and what the evidence actually shows. Every figure says where it came from.</p>
     ${FLAGSHIP.map(flagshipCard).join("")}
   </div>
 </section>
@@ -772,30 +832,86 @@ const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 
-/* X-01 decrypt, once, under 700ms, final text already in the DOM for AT */
+/* X-01 decrypting headline (Cyber UI Lab, phosphor theme).
+   Characters resolve in a shuffled order rather than left to right, each cycling
+   through glyphs before it locks. Every glyph cell is fixed to the width of its
+   final character, so the line never reflows. Runs once on load in about 650 ms
+   and can be replayed by hovering over the headline, at most once every 4 s.
+   Assistive technology reads the final sentence throughout; reduced motion skips it. */
 (() => {
   const el = $(".scramble");
   if (!el || reduced) return;
   const final = el.dataset.final || el.textContent;
-  const pool = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  el.setAttribute("aria-label", final);
-  const span = document.createElement("span");
-  span.setAttribute("aria-hidden", "true");
-  el.textContent = "";
-  el.append(span);
-  const start = performance.now(), dur = 620;
-  const tick = (now) => {
-    const t = Math.min(1, (now - start) / dur);
-    const settled = Math.floor(final.length * t);
-    let out = final.slice(0, settled);
-    for (let i = settled; i < final.length; i++) {
-      out += final[i] === " " ? " " : pool[(Math.random() * pool.length) | 0];
-    }
-    span.textContent = out;
-    if (t < 1) requestAnimationFrame(tick);
-    else { el.textContent = final; el.removeAttribute("aria-label"); }
+  // Plain letters, digits and a little punctuation: no katakana or other hacker-film glyphs.
+  const pool = "ABCDEFGHJKLMNPQRSTUVWXYZ0123456789#%&*+/<=>?";
+  const DUR = 650, COOLDOWN = 4000;
+  let running = false, last = -Infinity;
+
+  const run = () => {
+    if (running || performance.now() - last < COOLDOWN) return;
+    running = true; last = performance.now();
+    el.setAttribute("aria-label", final);
+    const visual = document.createElement("span");
+    visual.setAttribute("aria-hidden", "true");
+    // Words stay unbreakable, so the animated line wraps exactly where the final text does.
+    const cells = [];
+    final.split(" ").forEach((word, w) => {
+      if (w) { visual.append(" "); cells.push(null); }
+      const box = document.createElement("span");
+      box.className = "dw";
+      for (const ch of word) {
+        const c = document.createElement("span");
+        c.className = "dc"; c.textContent = ch;
+        box.append(c); cells.push(c);
+      }
+      visual.append(box);
+    });
+    el.textContent = "";
+    el.append(visual);
+    // Fix each cell to its final character's width before any glyph is drawn.
+    cells.forEach((c) => { if (c) c.style.width = c.getBoundingClientRect().width + "px"; });
+    const order = cells.map((_, i) => i).filter((i) => cells[i]);
+    for (let i = order.length - 1; i > 0; i--) { const j = (Math.random() * (i + 1)) | 0; [order[i], order[j]] = [order[j], order[i]]; }
+    // Each character locks at a time drawn from its place in the shuffled order.
+    const lockAt = new Map(order.map((idx, k) => [idx, (0.25 + 0.75 * (k / order.length)) * DUR]));
+    const start = performance.now();
+    let lastSwap = 0;
+    const tick = (now) => {
+      const t = now - start;
+      const swap = now - lastSwap > 45; // change glyphs at ~22 fps so they read as flicker, not noise
+      if (swap) lastSwap = now;
+      for (const [idx, at] of lockAt) {
+        const c = cells[idx];
+        if (t >= at) {
+          if (!c.classList.contains("lock")) { c.textContent = final[idx]; c.classList.remove("live"); c.classList.add("lock"); }
+        } else if (swap) {
+          c.textContent = pool[(Math.random() * pool.length) | 0];
+          c.classList.add("live");
+        }
+      }
+      if (t < DUR + 300 && running) requestAnimationFrame(tick);
+      else finish();
+    };
+    const finish = () => {
+      if (!running) return;
+      el.textContent = final; el.removeAttribute("aria-label"); running = false;
+    };
+    requestAnimationFrame(tick);
+    // Browsers pause animation frames in background tabs; never leave the headline scrambled.
+    setTimeout(finish, DUR + 800);
   };
-  requestAnimationFrame(tick);
+
+  run();
+  const h1 = el.closest("h1");
+  h1?.addEventListener("mouseenter", run);
+})();
+
+/* B-03 perspective grid floor: pause the CSS animation while the hero is off-screen */
+(() => {
+  const floor = $(".grid-floor");
+  if (!floor || reduced || !("IntersectionObserver" in window)) return;
+  new IntersectionObserver(([e]) => floor.classList.toggle("paused", !e.isIntersecting)).observe(floor);
+  document.addEventListener("visibilitychange", () => floor.classList.toggle("paused", document.hidden));
 })();
 
 /* X-02 capability line, three phrases, one cycle, then stop */

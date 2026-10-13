@@ -22,10 +22,10 @@ test("primary navigation reaches every landmark section", async ({ page }) => {
   }
 });
 
-test("four flagship systems each carry a source link and evidence", async ({ page }) => {
+test("five flagship systems each carry a source link and evidence", async ({ page }) => {
   const flags = page.locator("article.flag");
-  await expect(flags).toHaveCount(4);
-  for (let i = 0; i < 4; i++) {
+  await expect(flags).toHaveCount(5);
+  for (let i = 0; i < 5; i++) {
     const flag = flags.nth(i);
     await expect(flag.locator('a[href*="github.com"]')).toHaveCount(1);
     await expect(flag.locator(".metric")).not.toHaveCount(0);

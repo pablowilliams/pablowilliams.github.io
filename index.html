@@ -187,6 +187,9 @@ a{color:inherit}
   color:var(--faint);margin-top:7px}
 .prov[data-p="measured"]{color:var(--ok);border-color:rgba(92,232,182,.35)}
 .prov[data-p="synthetic"]{color:var(--alert);border-color:rgba(238,118,95,.35)}
+.flag-shot{margin:18px 0 0;border:1px solid var(--line-soft);border-radius:var(--r);overflow:hidden;background:var(--surface)}
+.flag-shot img{display:block;width:100%;height:auto}
+.flag-shot figcaption{color:var(--faint);padding:8px 12px;border-top:1px solid var(--line-soft);font-size:.7rem}
 .flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;list-style:none;padding:0;margin:0}
 .flow li{font-family:var(--mono);font-size:.72rem;padding:6px 10px;border:1px solid var(--line-soft);
   border-radius:2px;background:var(--raised);color:var(--muted)}
@@ -372,7 +375,7 @@ details.shelf[open] summary::after{content:"\2212"}
         </div>
         <div class="term-body">
           <div><span class="p">$</span> ls ~/projects</div>
-          <div>83 shipped &middot; 53 live &middot; 83 with source</div>
+          <div>84 shipped &middot; 54 live &middot; 84 with source</div>
           <div><span class="p">$</span> cat verification.log</div>
           <div>59/59 adversarial attempts blocked</div>
           <div>0 unsupported claims across 146 questions</div>
@@ -383,17 +386,17 @@ details.shelf[open] summary::after{content:"\2212"}
       <span><span class="dot"></span>London, UK</span>
       <span><b>Role</b> Applied AI Engineering Intern, QuantiFire</span>
       <span><b>Open to</b> AI engineering and quantitative roles</span>
-      <span><b>Updated</b> 2026-10-12</span>
+      <span><b>Updated</b> 2026-10-13</span>
     </p>
   </div>
 </section>
 
 <section class="evidence" aria-label="Portfolio evidence, generated from the site inventory">
   <div class="ev-grid">
-    <div class="ev-cell"><span class="ev-n flap" data-flap="83">83</span><span class="ev-l">Projects</span></div>
-    <div class="ev-cell"><span class="ev-n flap" data-flap="4">4</span><span class="ev-l">Flagship systems</span></div>
-    <div class="ev-cell"><span class="ev-n flap" data-flap="53">53</span><span class="ev-l">With a live demo</span></div>
-    <div class="ev-cell"><span class="ev-n flap" data-flap="83">83</span><span class="ev-l">With public source</span></div>
+    <div class="ev-cell"><span class="ev-n flap" data-flap="84">84</span><span class="ev-l">Projects</span></div>
+    <div class="ev-cell"><span class="ev-n flap" data-flap="5">5</span><span class="ev-l">Flagship systems</span></div>
+    <div class="ev-cell"><span class="ev-n flap" data-flap="54">54</span><span class="ev-l">With a live demo</span></div>
+    <div class="ev-cell"><span class="ev-n flap" data-flap="84">84</span><span class="ev-l">With public source</span></div>
     <div class="ev-cell"><span class="ev-n flap" data-flap="17">17</span><span class="ev-l">Certificates</span></div>
     <div class="ev-cell"><span class="ev-n flap" data-flap="8">8</span><span class="ev-l">Issuers</span></div>
   </div>
@@ -402,12 +405,53 @@ details.shelf[open] summary::after{content:"\2212"}
 <section class="sec" id="systems">
   <div class="wrap">
     <div class="sec-head"><span class="sec-n">01</span><h2>Selected systems</h2></div>
-    <p class="sec-intro">Four systems, each with the problem it answers, what I built, and what the evidence actually shows. Every figure says where it came from.</p>
+    <p class="sec-intro">Five systems, each with the problem it answers, what I built, and what the evidence actually shows. Every figure says where it came from.</p>
     
+<article class="flag" id="system-footnote">
+  <div class="flag-top">
+    <div>
+      <p class="flag-kick">01 / An auditable research assistant for SEC annual reports</p>
+      <h3>Footnote</h3>
+      <p class="tagline" data-s="live">Live</p>
+    </div>
+    <div class="flag-links"><a class="btn" href="https://pablowilliams.github.io/footnote/docs/case-study.html" target="_blank" rel="noopener noreferrer" aria-label="Read the Footnote case study in a new tab">Case study</a><a class="btn" href="https://pablowilliams.github.io/footnote/" target="_blank" rel="noopener noreferrer" aria-label="Open the Footnote live demo in a new tab. The first visit downloads about 120 MB and takes up to a minute">Live demo</a><a class="btn" href="https://github.com/pablowilliams/footnote" target="_blank" rel="noopener noreferrer" aria-label="View the Footnote source repository on GitHub in a new tab">Source</a></div>
+  </div>
+  <div class="flag-body">
+    <div>
+      <div class="flag-block"><span class="lab">Problem</span><p>A language model will answer questions about a company's filings fluently and give no way to check the figures. In finance, a plausible wrong number costs more than no answer.</p></div>
+      <div class="flag-block"><span class="lab">System</span><p>Routes each question to validated SQL over XBRL figures, hybrid search over 10-K text, or both. Every change is computed in code, every figure, calculation and quotation is re-verified before release, and questions the filings cannot support are refused.</p></div>
+      <div class="flag-block"><span class="lab">What I built</span><p>The EDGAR ingestion and page-level lineage, the router and LangGraph pipeline, the verifier, a 72-question evaluation, and a browser build that runs the full Python pipeline on GitHub Pages with no server.</p></div>
+      <div class="flag-block"><span class="lab">Why it matters</span><p><strong>Every number arrives with the statement and page it came from, and the system says so when it does not know.</strong></p></div>
+      <div class="flag-block"><span class="lab">Architecture</span>
+        <ol class="flow"><li>SEC EDGAR</li><li>PostgreSQL + pgvector</li><li>Router</li><li>SQL / hybrid retrieval</li><li>Verifier</li><li>Cited answer</li></ol>
+      </div>
+      <figure class="flag-shot"><img src="assets/previews/footnote.webp" width="1400" height="954" loading="lazy" decoding="async" alt="A Footnote answer marked verified: Apple's revenue rose from $383.3 billion in fiscal 2023 to $416.2 billion in fiscal 2025, with each figure cited to the consolidated statement of operations and page of the 10-K."><figcaption class="mono">A verified answer, each figure cited to its statement and page</figcaption></figure>
+    </div>
+    <div>
+      <div class="flag-block"><span class="lab">Evidence</span>
+        <dl class="metrics">
+          <div class="metric"><dt>Correct</dt><dd>98.6%
+            <span class="note">71 of 72 hand-written questions across eight categories</span>
+            <span class="prov" data-p="measured">measured</span></dd></div>
+          <div class="metric"><dt>Refusals</dt><dd>100%
+            <span class="note">precision and recall on the 18 questions that should be declined</span>
+            <span class="prov" data-p="measured">measured</span></dd></div>
+          <div class="metric"><dt>Corpus</dt><dd>81 reports
+            <span class="note">10-K filings from 15 companies, 97.1% of figures traced to the printed page</span>
+            <span class="prov" data-p="measured">measured</span></dd></div>
+        </dl>
+      </div>
+      <div class="flag-block"><span class="lab">Stack</span>
+        <ul class="chips"><li>Python</li><li>PostgreSQL</li><li>pgvector</li><li>FastAPI</li><li>LangGraph</li><li>Pyodide</li></ul>
+      </div>
+      <div class="flag-block"><span class="lab">Role</span><p>Sole designer and engineer.</p></div>
+    </div>
+  </div>
+</article>
 <article class="flag" id="system-longstop">
   <div class="flag-top">
     <div>
-      <p class="flag-kick">01 / Failed-merger detection in SEC filings</p>
+      <p class="flag-kick">02 / Failed-merger detection in SEC filings</p>
       <h3>Longstop</h3>
       <p class="tagline" data-s="live">Live</p>
     </div>
@@ -447,7 +491,7 @@ details.shelf[open] summary::after{content:"\2212"}
 <article class="flag" id="system-touchstone">
   <div class="flag-top">
     <div>
-      <p class="flag-kick">02 / An assistant that refuses unverified numbers</p>
+      <p class="flag-kick">03 / An assistant that refuses unverified numbers</p>
       <h3>Touchstone</h3>
       <p class="tagline" data-s="source only">Source only</p>
     </div>
@@ -487,7 +531,7 @@ details.shelf[open] summary::after{content:"\2212"}
 <article class="flag" id="system-signalops">
   <div class="flag-top">
     <div>
-      <p class="flag-kick">03 / Data incidents caught before dashboards drift</p>
+      <p class="flag-kick">04 / Data incidents caught before dashboards drift</p>
       <h3>SignalOps</h3>
       <p class="tagline" data-s="live">Live</p>
     </div>
@@ -527,7 +571,7 @@ details.shelf[open] summary::after{content:"\2212"}
 <article class="flag" id="system-stratum-analytics">
   <div class="flag-top">
     <div>
-      <p class="flag-kick">04 / Risk explained across a family-office portfolio</p>
+      <p class="flag-kick">05 / Risk explained across a family-office portfolio</p>
       <h3>Stratum Analytics</h3>
       <p class="tagline" data-s="live">Live</p>
     </div>
@@ -1736,7 +1780,7 @@ details.shelf[open] summary::after{content:"\2212"}
 
 <footer class="foot wrap">
   <span>Static site, no trackers, no runtime database.</span>
-  <span>Built 2026-10-12 from the repository inventory.</span>
+  <span>Built 2026-10-13 from the repository inventory.</span>
   <span>WCAG 2.2 AA intent, keyboard first, reduced motion respected.</span>
 </footer>
 
